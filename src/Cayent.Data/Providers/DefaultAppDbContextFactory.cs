@@ -13,7 +13,7 @@ namespace Cayent.Data.Providers
 {
     public class DefaultAppDbContextFactory : IAppDbContextFactory//,  IDesignTimeDbContextFactory<AppDbContext>	
     {
-        readonly DbContextOptions<AppDbContext> _options;
+        readonly DbContextOptions<Cayent.Data.App.DbContext.AppDbContext> _options;
         readonly IConfiguration _configuration;
         readonly ITenantProvider _tenantProvider;
 
