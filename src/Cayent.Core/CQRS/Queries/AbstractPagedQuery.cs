@@ -7,6 +7,29 @@ namespace Cayent.Core.CQRS.Queries
 {
     public abstract class AbstractPagedQuery<TResponse> : IQuery<Paged<TResponse>> where TResponse : class
     {
+        public AbstractPagedQuery(string correlationId, string criteria, int pageIndex, int pageSize, string sortField, int sortOrder)
+        {
+
+            CorrelationId = correlationId;            
+            Criteria = criteria;
+            PageIndex = pageIndex;
+            PageSize = pageSize;
+            SortField = sortField;
+            SortOrder = sortOrder;
+        }
+
+        public AbstractPagedQuery(string correlationId, string userId, string criteria, int pageIndex, int pageSize, string sortField, int sortOrder)
+        {
+
+            CorrelationId = correlationId;            
+            UserId = userId;
+            Criteria = criteria;
+            PageIndex = pageIndex;
+            PageSize = pageSize;
+            SortField = sortField;
+            SortOrder = sortOrder;
+        }
+
         public AbstractPagedQuery(string correlationId, string tenantId, string userId, string criteria, int pageIndex, int pageSize, string sortField, int sortOrder)
         {
 

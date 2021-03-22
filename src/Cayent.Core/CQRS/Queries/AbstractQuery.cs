@@ -6,6 +6,16 @@ namespace Cayent.Core.CQRS.Queries
 {
     public abstract class AbstractQuery<TResponse> : IQuery<TResponse> where TResponse : class
     {
+        public AbstractQuery(string correlationId)
+        {
+            CorrelationId = correlationId;            
+        }
+        public AbstractQuery(string correlationId, string userId)
+        {
+            CorrelationId = correlationId;            
+            UserId = userId;
+        }
+
         public AbstractQuery(string correlationId, string tenantId, string userId)
         {
             CorrelationId = correlationId;
