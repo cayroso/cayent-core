@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cayent.Core.CQRS.Commands
@@ -11,6 +12,6 @@ namespace Cayent.Core.CQRS.Commands
         /// 
         /// </summary>
         /// <param name="command"></param>
-        Task HandleAsync(TCommand command);
+        Task HandleAsync(TCommand command, CancellationToken cancellationToken);
     }
 }

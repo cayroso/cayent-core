@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cayent.Core.CQRS.Queries
@@ -14,7 +15,7 @@ namespace Cayent.Core.CQRS.Queries
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<TResponse> HandleAsync(TQuery query);
+        Task<TResponse> HandleAsync(TQuery query, CancellationToken cancellationToken);
 
     }
 }
