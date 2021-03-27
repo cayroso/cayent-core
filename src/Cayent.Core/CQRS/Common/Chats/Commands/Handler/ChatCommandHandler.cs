@@ -18,10 +18,10 @@ namespace Cayent.Core.CQRS.Common.Chats.Commands.Handler
         ICommandHandler<AddChatCommand>,
         ICommandHandler<AddChatMessageCommand>
     {
-        private readonly IAppDbContext _dbContext;
+        private readonly AppBaseDbContext _dbContext;
         private readonly IHubContext<ChatHub, IChatClient> _hubContext;
 
-        public ChatCommandHandler(IAppDbContext dbContext, IHubContext<ChatHub, IChatClient> hubContext)
+        public ChatCommandHandler(AppBaseDbContext dbContext, IHubContext<ChatHub, IChatClient> hubContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _hubContext = hubContext ?? throw new ArgumentNullException(nameof(hubContext));

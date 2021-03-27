@@ -1,8 +1,11 @@
 ﻿
 
 using Cayent.Core.Data.Fileuploads;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -10,8 +13,10 @@ using System.Threading.Tasks;
 
 namespace Cayent.Core.Data.Users
 {
-    public class User
+    [Table("User")]
+    public abstract class UserBase
     {
+        [Key]
         public string UserId { get; set; }
         public string ImageId { get; set; }
         public virtual FileUpload Image { get; set; }
@@ -28,19 +33,19 @@ namespace Cayent.Core.Data.Users
 
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+        public virtual ICollection<UserRoleBase> UserRoles { get; set; } = new List<UserRoleBase>();
     }
 
     public static class UserExtension
     {
 
-        public static void ThrowIfNull(this User me)
+        public static void ThrowIfNull(this UserBase me)
         {
             if (me == null)
                 throw new ApplicationException("User not found.");
         }
 
-        public static void ThrowIfNullOrAlreadyUpdated(this User me, string currentToken, string newToken)
+        public static void ThrowIfNullOrAlreadyUpdated(this UserBase me, string currentToken, string newToken)
         {
             me.ThrowIfNull();
 
@@ -51,6 +56,14 @@ namespace Cayent.Core.Data.Users
                 throw new ApplicationException("User already updated by another user.");
 
             me.ConcurrencyToken = newToken;
+        }
+    }
+
+    public abstract class UserConfiguration<T> : IEntityTypeConfiguration<T> where T : UserBase
+    {
+        void IEntityTypeConfiguration<T>.Configure(EntityTypeBuilder<T> builder)
+        {
+            //throw new NotImplementedException();
         }
     }
 }

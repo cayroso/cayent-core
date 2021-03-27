@@ -22,7 +22,7 @@ namespace Cayent.Core.Data.Chats
         public virtual Chat Chat { get; set; }
 
         public string SenderId { get; set; }
-        public virtual User Sender { get; set; }
+        public virtual UserBase Sender { get; set; }
 
         public string Content { get; set; }
 

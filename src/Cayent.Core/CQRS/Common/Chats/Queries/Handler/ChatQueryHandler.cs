@@ -20,8 +20,8 @@ namespace Cayent.Core.CQRS.Common.Chats.Queries.Handler
         IQueryHandler<GetChatByMemberIdQuery, GetChatByMemberIdQuery.Chat>
 
     {
-        private readonly IAppDbContext _dbContext;
-        public ChatQueryHandler(IAppDbContext dbContext)
+        private readonly AppBaseDbContext _dbContext;
+        public ChatQueryHandler(AppBaseDbContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
