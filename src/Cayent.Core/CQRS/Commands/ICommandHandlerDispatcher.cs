@@ -13,7 +13,7 @@ namespace Cayent.Core.CQRS.Commands
         /// </summary>
         /// <typeparam name="TCommand">subclass of ICommand</typeparam>
         /// <param name="command">command to execute</param>
-        Task HandleAsync<TCommand>(TCommand command) where TCommand : ICommand;
+        Task HandleAsync<TCommand>(TCommand command, CancellationToken cancellationToken) where TCommand : ICommand;
 
         //void Handle<TCommand>(TCommand[] commands) where TCommand : ICommand;
     }
