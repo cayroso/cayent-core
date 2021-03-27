@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cayent.Core.CQRS.Commands
@@ -14,20 +15,11 @@ namespace Cayent.Core.CQRS.Commands
             _factory = factory ?? throw new ArgumentNullException("factory");
         }
 
-        //public void Handle<TCommand>(TCommand command) where TCommand : ICommand
-        //{
-        //    var handler = _factory.Create<TCommand>();
-
-        //    handler.Handle(command);
-        //}
-
-        Task ICommandHandlerDispatcher.HandleAsync<TCommand>(TCommand command)
+        async Task ICommandHandlerDispatcher.HandleAsync<TCommand>(TCommand command, CancellationToken cancellationToken)
         {
             var handler = _factory.Create<TCommand>();
 
-            var result = handler.HandleAsync(command);
-
-            return result;
+            await handler.HandleAsync(command, cancellationToken);
         }
 
     }

@@ -1,26 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cayent.Core.CQRS.Queries
 {
     public sealed class QueryHandlerDispatcher : IQueryHandlerDispatcher
     {
-        readonly IQueryHandlerFactory _factory;
+        private readonly IQueryHandlerFactory _factory;
 
         public QueryHandlerDispatcher(IQueryHandlerFactory factory)
         {
             _factory = factory;
         }
 
-        public Task<TResult> HandleAsync<TQuery, TResult>(TQuery query)
-            where TQuery : IQuery<TResult>
-            where TResult : class// IResponse
+        async Task<TResult> IQueryHandlerDispatcher.HandleAsync<TQuery, TResult>(TQuery query, CancellationToken cancellationToken)
         {
             var handler = _factory.Create<TQuery, TResult>();
 
-            var result = handler.HandleAsync(query);
+            var result = await handler.HandleAsync(query, cancellationToken);
 
             return result;
         }

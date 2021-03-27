@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cayent.Core.CQRS.Queries
 {
-    public interface IQuery<out TResponse> where TResponse : class// IResponse
+    public interface IQuery<out TResponse> where TResponse : class
     {
         string CorrelationId { get; }
         string TenantId { get; }

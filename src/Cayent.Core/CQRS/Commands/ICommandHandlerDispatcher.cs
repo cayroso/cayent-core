@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cayent.Core.CQRS.Commands
@@ -14,7 +15,5 @@ namespace Cayent.Core.CQRS.Commands
         /// <typeparam name="TCommand">subclass of ICommand</typeparam>
         /// <param name="command">command to execute</param>
         Task HandleAsync<TCommand>(TCommand command, CancellationToken cancellationToken) where TCommand : ICommand;
-
-        //void Handle<TCommand>(TCommand[] commands) where TCommand : ICommand;
     }
 }

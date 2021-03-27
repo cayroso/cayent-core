@@ -6,15 +6,17 @@ namespace Cayent.Core.CQRS.Queries
 {
     public abstract class AbstractQuery<TResponse> : IQuery<TResponse> where TResponse : class
     {
+        public string CorrelationId { get; }
+        public string TenantId { get; }
+        public string UserId { get; }
+
         public AbstractQuery(string correlationId)
-        {
-            CorrelationId = correlationId;            
-        }
+            : this(correlationId, string.Empty, string.Empty)
+        { }
+
         public AbstractQuery(string correlationId, string userId)
-        {
-            CorrelationId = correlationId;            
-            UserId = userId;
-        }
+            : this(correlationId, string.Empty, userId)
+        { }
 
         public AbstractQuery(string correlationId, string tenantId, string userId)
         {
@@ -23,8 +25,5 @@ namespace Cayent.Core.CQRS.Queries
             UserId = userId;
         }
 
-        public string CorrelationId { get; }
-        public string TenantId { get; }
-        public string UserId { get; }
     }
 }

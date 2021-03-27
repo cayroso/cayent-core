@@ -12,6 +12,6 @@ namespace Cayent.Core.CQRS.Queries
         /// <typeparam name="TQuery"></typeparam>
         /// <typeparam name="TResult"></typeparam>
         /// <returns></returns>
-        IQueryHandler<TQuery, TResult> Create<TQuery, TResult>() where TQuery : IQuery<TResult> where TResult : class;// IResponse;
+        IQueryHandler<TQuery, TResult> Create<TQuery, TResult>() where TQuery : IQuery<TResult> where TResult : class;
     }
 }
