@@ -61,7 +61,7 @@ namespace Cayent.Core.Data.Users
 
     public abstract class UserConfiguration<T> : IEntityTypeConfiguration<T> where T : UserBase
     {
-        void IEntityTypeConfiguration<T>.Configure(EntityTypeBuilder<T> builder)
+        public virtual void Configure(EntityTypeBuilder<T> builder)
         {
             //throw new NotImplementedException();
         }

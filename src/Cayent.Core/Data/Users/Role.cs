@@ -20,9 +20,9 @@ namespace Cayent.Core.Data.Users
 
     public abstract class RoleConfiguration<T> : IEntityTypeConfiguration<T> where T : RoleBase
     {
-        void IEntityTypeConfiguration<T>.Configure(EntityTypeBuilder<T> builder)
+        public virtual void Configure(EntityTypeBuilder<T> builder)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }
