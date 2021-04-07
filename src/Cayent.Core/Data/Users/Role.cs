@@ -25,4 +25,22 @@ namespace Cayent.Core.Data.Users
             //throw new NotImplementedException();
         }
     }
+
+    //EXAMPLE
+    //public class Role : RoleBase
+    //{        
+    //}
+
+    //public class RoleConfiguration : RoleConfiguration<Role>
+    //{
+    //    public override void Configure(EntityTypeBuilder<Role> builder)
+    //    {
+    //        base.Configure(builder);
+    //        this.ConfigureEntity(builder);
+    //    }
+
+    //    private void ConfigureEntity(EntityTypeBuilder<Role> builder)
+    //    {            
+    //    }
+    //}
 }

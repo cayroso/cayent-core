@@ -1,4 +1,6 @@
 ﻿using Cayent.Core.Data.Chats;
+using Cayent.Core.Data.Fileuploads;
+using Cayent.Core.Data.Notifications;
 using Cayent.Core.Data.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -42,6 +44,9 @@ namespace Cayent.Core.CQRS.Services
         public DbSet<UserBase> Users { get; set; }
         public DbSet<ChatReceiver> ChatReceivers { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<FileUpload> FileUploads { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<NotificationReceiver> NotificationReceivers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

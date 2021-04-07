@@ -24,9 +24,31 @@ namespace Cayent.Core.Data.Users
     public abstract class UserRoleConfiguration<T> : IEntityTypeConfiguration<T> where T : UserRoleBase
     {
         public virtual void Configure(EntityTypeBuilder<T> builder)
-        {
-            //builder.HasKey(e => new { e.UserId, e.RoleId });
-            //throw new NotImplementedException();
+        {            
         }
     }
+
+    //  EXAMPLE
+    //public class UserRole : UserRoleBase
+    //{
+    //    //public string UserId { get; set; }
+    //    //public virtual User User { get; set; }
+
+    //    //public string RoleId { get; set; }
+    //    //public virtual Role Role { get; set; }
+
+    //}
+
+    //public class UserRoleConfiguration : UserRoleConfiguration<UserRole>
+    //{
+    //    public override void Configure(EntityTypeBuilder<UserRole> builder)
+    //    {
+    //        base.Configure(builder);
+    //        this.ConfigureEntity(builder);
+    //    }
+
+    //    private void ConfigureEntity(EntityTypeBuilder<UserRole> builder)
+    //    {            
+    //    }
+    //}
 }

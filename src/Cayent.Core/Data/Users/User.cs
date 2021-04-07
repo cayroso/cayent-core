@@ -66,4 +66,23 @@ namespace Cayent.Core.Data.Users
             //throw new NotImplementedException();
         }
     }
+
+    //  EXAMPLE
+    //public class User : UserBase
+    //{
+    //    public virtual ICollection<UserTask> UserTasks { get; set; } = new List<UserTask>();
+    //}
+
+    //public class UserConfiguration : UserConfiguration<User>
+    //{
+    //    public override void Configure(EntityTypeBuilder<User> builder)
+    //    {
+    //        base.Configure(builder);
+    //        this.ConfigureEntity(builder);
+    //    }
+
+    //    private void ConfigureEntity(EntityTypeBuilder<User> builder)
+    //    {            
+    //    }
+    //}
 }
