@@ -1,8 +1,10 @@
-﻿using Common.Extensions;
-using Data.Common;
+﻿
+using Cayent.Core.Common;
+using Cayent.Core.CQRS.Queries;
 using System;
+using Cayent.Core.Common.Extensions;
 
-namespace App.CQRS.Navbar.Common.Queries.Query
+namespace Cayent.Core.CQRS.Common.Navbar.Queries.Query
 {
     public sealed class GetUnreadChatsQuery : AbstractQuery<Paged<GetUnreadChatsQuery.ChatMessage>>
     {
@@ -23,7 +25,8 @@ namespace App.CQRS.Navbar.Common.Queries.Query
             public string LastMessageText { get; set; }
 
             private DateTime _lastDateSent { get; set; }
-            public DateTime LastDateSent {
+            public DateTime LastDateSent
+            {
                 get => _lastDateSent;
                 set => _lastDateSent = value.AsUtc();
 

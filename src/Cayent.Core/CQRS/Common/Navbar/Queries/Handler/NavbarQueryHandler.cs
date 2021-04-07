@@ -1,21 +1,23 @@
-﻿using App.CQRS.Navbar.Common.Queries.Query;
+﻿
+using Cayent.Core.Common;
+using Cayent.Core.Common.Extensions;
+using Cayent.Core.CQRS.Common.Navbar.Queries.Query;
 using Cayent.Core.CQRS.Queries;
-using Data.App.DbContext;
-using Data.Common;
+using Cayent.Core.CQRS.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace App.CQRS.Navbar.Common.Queries.Handler
+namespace Cayent.Core.CQRS.Common.Navbar.Queries.Handler
 {
     public sealed class NavbarQueryHandler :
         IQueryHandler<GetUnreadChatsQuery, Paged<GetUnreadChatsQuery.ChatMessage>>,
         IQueryHandler<GetUnreadNotificationsQuery, Paged<GetUnreadNotificationsQuery.Notification>>
     {
-        private readonly AppDbContext _dbContext;
-        public NavbarQueryHandler(AppDbContext dbContext)
+        private readonly AppBaseDbContext _dbContext;
+        public NavbarQueryHandler(AppBaseDbContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
@@ -48,7 +50,7 @@ namespace App.CQRS.Navbar.Common.Queries.Handler
                           SenderProfilePicture32 = sender.ImageId
                       };
 
-            var dto = await sql.ToPagedItemsAsync(query.PageIndex, query.PageSize);
+            var dto = await sql.ToPagedItemsAsync(query.PageIndex, query.PageSize, cancellationToken);
 
             return dto;
         }

@@ -1,8 +1,10 @@
-﻿using Common.Extensions;
-using Data.Common;
+﻿
+using Cayent.Core.Common;
+using Cayent.Core.CQRS.Queries;
 using System;
+using Cayent.Core.Common.Extensions;
 
-namespace App.CQRS.Navbar.Common.Queries.Query
+namespace Cayent.Core.CQRS.Common.Navbar.Queries.Query
 {
     public sealed class GetUnreadNotificationsQuery: AbstractQuery<Paged<GetUnreadNotificationsQuery.Notification>>
     {
