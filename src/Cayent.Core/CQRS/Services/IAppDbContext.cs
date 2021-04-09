@@ -13,19 +13,6 @@ using System.Threading.Tasks;
 
 namespace Cayent.Core.CQRS.Services
 {
-    //public interface IAppDbContext
-    //{        
-    //    DbSet<Chat> Chats { get; set; }
-    //    DbSet<UserBase> Users { get; set; }
-    //    DbSet<ChatReceiver> ChatReceivers { get; set; }
-    //    DbSet<ChatMessage> ChatMessages { get; set; }
-
-    //    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-
-    //    ValueTask<EntityEntry<TEntity>> AddAsync<TEntity>([NotNullAttribute] TEntity entity, CancellationToken cancellationToken = default) where TEntity : class;
-    //    Task AddRangeAsync([NotNullAttribute] IEnumerable<object> entities, CancellationToken cancellationToken = default);
-    //}
-
     public abstract class AppBaseDbContext: DbContext
     {
         public AppBaseDbContext(DbContextOptions<AppBaseDbContext> options)
