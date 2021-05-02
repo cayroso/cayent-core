@@ -29,6 +29,8 @@ namespace Cayent.Core.CQRS.Services
 
         public DbSet<Chat> Chats { get; set; }
         public DbSet<UserBase> Users { get; set; }
+        public DbSet<RoleBase> Roles { get; set; }
+        public DbSet<UserRoleBase> UserRoles { get; set; }
         public DbSet<ChatReceiver> ChatReceivers { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<FileUpload> FileUploads { get; set; }
