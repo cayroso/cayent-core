@@ -2,21 +2,28 @@
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark sticky-top">
         <div class="container-lg">
             <a class="navbar-brand" :href="baseUrl">
-                {{appName}}
+                {{appName}}                
+                <div class="small">{{branchStoreName}}</div>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <!--<b-navbar-toggle target="navDrawer"></b-navbar-toggle>-->
 
             <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav">
-                    <li v-for="menu in menus" class="nav-item">
-                        <router-link :to="menu.to" class="nav-link text-white">
-                            <span v-bind:class="menu.icon" class="mr-1"></span>
-                            <span v-text="menu.label" class="d-none d-md-inline"></span>
-                        </router-link>
-                    </li>
-                </ul>
+                <b-navbar-nav>
+                    <template v-for="menu in menus">
+                        <b-nav-item v-if="!menu.subMenus" :to="menu.to">
+                            <span v-bind:class="menu.icon"></span>&nbsp;{{menu.label}}
+                        </b-nav-item>
+                        <b-nav-item-dropdown v-else>
+                            <template v-slot:button-content>
+                                <span v-bind:class="menu.icon"></span>&nbsp;{{menu.label}}
+                            </template>
+                            <b-dropdown-item v-for="mnu in menu.subMenus" :to="mnu.to">
+                                <span class="mr-1" v-bind:class="mnu.icon"></span>{{mnu.label}}
+                            </b-dropdown-item>
+
+                        </b-nav-item-dropdown>
+                    </template>
+                </b-navbar-nav>
             </div>
 
             <ul class="navbar-nav ml-auto flex-row">
@@ -86,7 +93,8 @@
             baseUrl: String,
             email: String,
             uid: String,
-            authenticated: Boolean
+            branchStoreId: { type: String, required: true },
+            branchStoreName: { type: String, required: true },
         },
         data() {
             return {
@@ -96,8 +104,8 @@
                 notifications: {
                     items: [],
                     totalCount: 0
-
-                }
+                },
+                //branchStore: {}
             };
         },
         computed: {
@@ -108,8 +116,7 @@
                     path = '/';
 
                 return path;
-            },
-
+            },            
         },
 
         async mounted() {
@@ -138,6 +145,21 @@
 
         },
         methods: {
+            //getCookie(cname) {
+            //    var name = cname + "=";
+            //    var decodedCookie = decodeURIComponent(document.cookie);
+            //    var ca = decodedCookie.split(';');
+            //    for (var i = 0; i < ca.length; i++) {
+            //        var c = ca[i];
+            //        while (c.charAt(0) == ' ') {
+            //            c = c.substring(1);
+            //        }
+            //        if (c.indexOf(name) == 0) {
+            //            return c.substring(name.length, c.length);
+            //        }
+            //    }
+            //    return "";
+            //},
             async getNotifications(organizationId, uid) {
                 const vm = this;
                 const filter = {

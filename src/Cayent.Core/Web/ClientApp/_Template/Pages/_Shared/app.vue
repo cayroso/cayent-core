@@ -1,8 +1,9 @@
 ﻿<template>
     <div v-cloak>
-        <app-bar :uid="uid" :appName="appName" :urlProfilePicture="urlProfilePicture" :menus="menus"></app-bar>
+        <app-bar :uid="uid" :appName="appName" :urlProfilePicture="urlProfilePicture" :menus="menus" :branchStoreId="branchStoreId" :branchStoreName="branchStoreName"></app-bar>
+        
         <main class="container-lg main" v-bind:style="bottomNavHeightStyle">
-            <router-view :uid="uid"></router-view>
+            <router-view :uid="uid" :branchStoreId="branchStoreId"></router-view>
         </main>
 
         <bottom-nav ref="bottomNav" :menus="menus"></bottom-nav>
@@ -57,19 +58,27 @@
             uid: String,
             appName: String,
             urlProfilePicture: String,
+            branchStoreId: { type: String, required: true },
+            branchStoreName: { type: String, required: true },
         },
         data() {
             return {
                 menus: [
                     { to: '/', label: 'Dashboard', icon: 'fas fa-fw fa-tachometer-alt' },
                     { to: '/customers', label: 'Customers', icon: 'fas fa-fw fa-users' },
-                    { to: '/customer-orders', label: 'Orders', icon: 'fas fa-fw fa-shopping-cart' },
-                    //{ to: '/parents', label: 'Parents', icon: 'fas fa-fw fa-user' },
-                    //{ to: '/clinic', label: 'Clinic', icon: 'fas fa-fw fa-clinic-medical' },
+                    { to: '/customer-orders', label: 'Orders', icon: 'fas fa-fw fa-shopping-cart' },                    
+                    {
+                        to: '#', label: 'Manage', icon: 'fas fa-fw fa-cogs',
+                        subMenus: [
+                            { to: '/branches', label: 'Branches', icon: 'fas fa-fw fa-plus' },
+                            { to: '/products', label: 'Products', icon: 'fas fa-fw fa-tag' },
+                            { to: '/bottles', label: 'Bottles', icon: 'fas fa-fw fa-tags' },
+                        ]
+                    },
                     //{ to: '/staffs', label: 'Staffs', icon: 'fas fa-fw fa-user-nurse' },
 
                 ],
-                bottomNavHeightStyle: null
+                bottomNavHeightStyle: null,
             }
         },
         async mounted() {
