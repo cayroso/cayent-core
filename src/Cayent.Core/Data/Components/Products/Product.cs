@@ -8,17 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Cayent.Core.Common.Extensions;
+using Cayent.Core.Data.Enums;
 
 namespace Data.Components.Products
 {
-    public enum EnumProductAvailability
-    {
-        Unknown = 0,
-        InStock,
-        OutOfStock,
-        PreOrder
-    }
-
     public class Product
     {
         public string ProductId { get; set; }

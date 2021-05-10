@@ -3,6 +3,7 @@ using Cayent.Core.Data.Chats;
 using Cayent.Core.Data.Fileuploads;
 using Cayent.Core.Data.Notifications;
 using Cayent.Core.Data.Users;
+using Data.Components.BranchStores;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -34,14 +35,19 @@ namespace Cayent.Core.CQRS.Services
         {
         }
 
-        public DbSet<Chat> Chats { get; set; }
+        
         public DbSet<UserBase> Users { get; set; }
         public DbSet<RoleBase> Roles { get; set; }
         public DbSet<UserRoleBase> UserRoles { get; set; }
+
+        public DbSet<Calendar> Calendars { get; set; }
+        public DbSet<FileUpload> FileUploads { get; set; }
+        
+
+        public DbSet<Chat> Chats { get; set; }
         public DbSet<ChatReceiver> ChatReceivers { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
-        public DbSet<FileUpload> FileUploads { get; set; }
-        public DbSet<Calendar> Calendars { get; set; }
+        
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<NotificationReceiver> NotificationReceivers { get; set; }
 
