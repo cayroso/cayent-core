@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using Data.Components.Orders;
 using Cayent.Core.Common.Extensions;
-
+using System.ComponentModel.DataAnnotations;
+using Cayent.Core.Data.Components;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace Data.Components.Customers
 {
-    public class Customer
+    public abstract class CustomerBase
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string CustomerId { get; set; }
 
         public double LoyaltyPoints { get; set; }
@@ -18,7 +23,7 @@ namespace Data.Components.Customers
         public string PhoneNumber { get; set; }
         public string Notes { get; set; }
 
-        public virtual ICollection<CustomerAddress> CustomerAddresses { get; set; } = new List<CustomerAddress>();
+        //public virtual ICollection<CustomerAddressBase> CustomerAddresses { get; set; } = new List<CustomerAddressBase>();
 
 
         DateTime _dateCreated;
@@ -28,32 +33,52 @@ namespace Data.Components.Customers
             set => _dateCreated = value.Truncate();
         }
 
-        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+        //public virtual ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
 
         public bool Active { get; set; } = true;
 
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
     }
 
-    public static class CustomerExtension
-    {
-        public static void ThrowIfNull(this Customer me)
+    //public static class CustomerExtension
+    //{
+    //    public static void ThrowIfNull(this CustomerBase me)
+    //    {
+    //        if (me == null)
+    //            throw new ApplicationException("Customer not found.");
+    //    }
+
+    //    public static void ThrowIfNullOrAlreadyUpdated(this CustomerBase me, string currentToken, string newToken)
+    //    {
+    //        me.ThrowIfNull();
+
+    //        if (string.IsNullOrWhiteSpace(newToken))
+    //            throw new ApplicationException("Anti-forgery token not found.");
+
+    //        if (me.ConcurrencyToken != currentToken)
+    //            throw new ApplicationException("Customer already updated by another user.");
+
+    //        me.ConcurrencyToken = newToken;
+    //    }
+    //}
+
+    public class CustomerBaseConfiguration : EntityBaseConfiguration<CustomerBase>
+    {        
+        public override void Configure(EntityTypeBuilder<CustomerBase> b)
         {
-            if (me == null)
-                throw new ApplicationException("Customer not found.");
-        }
+            b.ToTable("Customer");
+            b.HasKey(e => e.CustomerId);
 
-        public static void ThrowIfNullOrAlreadyUpdated(this Customer me, string currentToken, string newToken)
-        {
-            me.ThrowIfNull();
+            b.Property(e => e.CustomerId).HasMaxLength(KeyMaxLength).IsRequired();
 
-            if (string.IsNullOrWhiteSpace(newToken))
-                throw new ApplicationException("Anti-forgery token not found.");
+            b.Property(e => e.FirstName).HasMaxLength(NameMaxLength).IsRequired();
+            b.Property(e => e.LastName).HasMaxLength(NameMaxLength).IsRequired();
+            b.Property(e => e.PhoneNumber).HasMaxLength(NameMaxLength).IsRequired();
+            //b.Property(e => e.Address).HasMaxLength(DescMaxLength);
+            b.Property(e => e.Notes).HasMaxLength(NoteMaxLength);
+            b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
 
-            if (me.ConcurrencyToken != currentToken)
-                throw new ApplicationException("Customer already updated by another user.");
-
-            me.ConcurrencyToken = newToken;
+            b.HasQueryFilter(e => e.Active);
         }
     }
 }

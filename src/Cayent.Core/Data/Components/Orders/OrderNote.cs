@@ -1,15 +1,19 @@
 ﻿using System;
 using Cayent.Core.Common.Extensions;
+using Cayent.Core.Data.Components;
 using Cayent.Core.Data.Users;
-
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace Data.Components.Orders
 {
-    public class OrderNote
+    public abstract class OrderNoteBase
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderNoteId { get; set; }
         
         public string OrderId { get; set; }
-        public virtual Order Order { get; set; }
+        public virtual OrderBase Order { get; set; }
         
         public string UserId { get; set; }
         public virtual UserBase User { get; set; }
@@ -22,6 +26,20 @@ namespace Data.Components.Orders
         {
             get => _dateCreated.AsUtc();
             set => _dateCreated = value.Truncate();
+        }
+    }
+
+    public class OrderNoteBaseConfiguration : EntityBaseConfiguration<OrderNoteBase>
+    {
+        public override void Configure(EntityTypeBuilder<OrderNoteBase> b)
+        {
+            b.ToTable("OrderNote");
+            b.HasKey(e => e.OrderNoteId);
+
+            b.Property(e => e.OrderNoteId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.OrderId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.UserId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.Note).HasMaxLength(NoteMaxLength).IsRequired();
         }
     }
 }

@@ -9,23 +9,27 @@ using System.Linq;
 using Data.Components.Orders.OrderLineItems;
 using Data.Components.BranchStores;
 using Cayent.Core.Common.Extensions;
+using Cayent.Core.Data.Components;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Components.Orders
 {
-    public class Order
+    public abstract class OrderBase
     {
+        [System.ComponentModel.DataAnnotations.Key]
         public string OrderId { get; set; }
 
         public string CustomerId { get; set; }
-        public virtual Customer Customer { get; set; }
+        public virtual CustomerBase Customer { get; set; }
 
         public string BranchStoreId { get; set; }
-        public virtual BranchStore BranchStore { get; set; }
+        public virtual BranchStoreBase BranchStore { get; set; }
 
         public string ShippingSettingId { get; set; }
-        public virtual ShippingSetting ShippingSetting { get; set; }
+        public virtual ShippingSettingBase ShippingSetting { get; set; }
 
-        public virtual OrderDeliveryAddress DeliveryAddress { get; set; }
+        public virtual OrderDeliveryAddressBase DeliveryAddress { get; set; }
 
         public string Number { get; set; }
         public EnumOrderStatus OrderStatus { get; set; }
@@ -33,80 +37,9 @@ namespace Data.Components.Orders
         public EnumPaymentMethod PaymentMethod { get; set; }
 
         [NotMapped]
-        public bool StatusModified { get; private set; } = false;
-        public void UpdateStatus(EnumOrderStatus status, string userId, string note)
-        {
-            StatusModified = true;
+        public bool StatusModified { get; protected set; } = false;
+        public abstract void UpdateStatus(EnumOrderStatus status, string userId, string note);
 
-            if (OrderStatus == EnumOrderStatus.Completed || OrderStatus == EnumOrderStatus.Cancelled)
-                throw new ApplicationException($"Order is already {OrderStatus}");
-
-            OrderStatus = status;
-
-            var now = DateTime.UtcNow;
-
-            var itemsForDelete = new List<OrderStatusHistory>();
-            switch (status)
-            {
-                case EnumOrderStatus.Placed:
-                    // accepted + processed + delivered
-                    var items1 = StatusHistories.Where(e => e.OrderStatus == EnumOrderStatus.Accepted
-                                                            || e.OrderStatus == EnumOrderStatus.Processed
-                                                            || e.OrderStatus == EnumOrderStatus.Picked
-                                                            || e.OrderStatus == EnumOrderStatus.Delivered
-                                                            );
-                    itemsForDelete.AddRange(items1);
-                    break;
-
-                case EnumOrderStatus.Accepted:
-                    // processed + delivered
-                    var items2 = StatusHistories.Where(e => e.OrderStatus == EnumOrderStatus.Processed
-                                                            || e.OrderStatus == EnumOrderStatus.Picked
-                                                            || e.OrderStatus == EnumOrderStatus.Delivered);
-                    itemsForDelete.AddRange(items2);
-                    break;
-
-                case EnumOrderStatus.Processed:
-                    //  delete delivered
-                    var items3 = StatusHistories.Where(e => e.OrderStatus == EnumOrderStatus.Picked
-                                                            || e.OrderStatus == EnumOrderStatus.Delivered);
-                    itemsForDelete.AddRange(items3);
-                    break;
-
-            }
-
-            if (itemsForDelete.Any())
-            {
-                foreach (var item in itemsForDelete)
-                {
-                    StatusHistories.Remove(item);
-                }
-            }
-
-            var history = StatusHistories.OrderBy(e => e.HistoryDateTime).FirstOrDefault(e => e.OrderStatus == OrderStatus);
-
-            if (history == null)
-            {
-                history = new OrderStatusHistory
-                {
-                    OrderId = OrderId,
-                    OrderStatus = OrderStatus,
-                    HistoryDate = now.Date,
-                    HistoryDateTime = now,
-                    UserId = userId,
-                    Note = note
-                };
-
-                StatusHistories.Add(history);
-            }
-            else
-            {
-                history.HistoryDate = now.Date;
-                history.HistoryDateTime = now;
-                history.UserId = userId;
-                history.Note = note;
-            }
-        }
 
         DateTime _orderDateTime;
         public DateTime OrderDateTime
@@ -143,25 +76,24 @@ namespace Data.Components.Orders
         public double NetPrice { get; set; }
         public double AmountPaid { get; set; }
 
-        public virtual ICollection<OrderLineItem> LineItems { get; set; } = new List<OrderLineItem>();
-        public virtual ICollection<OrderNote> OrderNotes { get; set; } = new List<OrderNote>();
-        public virtual ICollection<OrderPayment> OrderPayments { get; set; } = new List<OrderPayment>();
-        public virtual ICollection<OrderServiceFee> ServiceFees { get; set; } = new List<OrderServiceFee>();
-        public virtual ICollection<OrderStatusHistory> StatusHistories { get; set; } = new List<OrderStatusHistory>();
-        //public virtual ICollection<UserTask> UserTasks { get; set; } = new List<UserTask>();
-
+        //public virtual ICollection<OrderLineItemBase> LineItems { get; set; } = new List<OrderLineItemBase>();
+        //public virtual ICollection<OrderNoteBase> OrderNotes { get; set; } = new List<OrderNoteBase>();
+        //public virtual ICollection<OrderPaymentBase> OrderPayments { get; set; } = new List<OrderPaymentBase>();
+        //public virtual ICollection<OrderServiceFeeBase> ServiceFees { get; set; } = new List<OrderServiceFeeBase>();
+        //public virtual ICollection<OrderStatusHistoryBase> StatusHistories { get; set; } = new List<OrderStatusHistoryBase>();
+        
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
     }
 
     public static class OrderExtension
     {
-        public static void ThrowIfNull(this Order me)
+        public static void ThrowIfNull(this OrderBase me)
         {
             if (me == null)
                 throw new ApplicationException("Order not found.");
         }
 
-        public static void ThrowIfNullOrAlreadyUpdated(this Order me, string currentToken, string newToken)
+        public static void ThrowIfNullOrAlreadyUpdated(this OrderBase me, string currentToken, string newToken)
         {
             me.ThrowIfNull();
 
@@ -172,6 +104,44 @@ namespace Data.Components.Orders
                 throw new ApplicationException("Order already updated by another user.");
 
             me.ConcurrencyToken = newToken;
+        }
+    }
+
+    public class OrderBaseConfiguration : EntityBaseConfiguration<OrderBase>
+    {
+        public override void Configure(EntityTypeBuilder<OrderBase> b)
+        {
+            b.ToTable("Order");
+            b.HasKey(e => e.OrderId);
+
+            b.Property(e => e.OrderId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.CustomerId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.BranchStoreId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.ShippingSettingId).HasMaxLength(KeyMaxLength).IsRequired();
+
+            b.Property(e => e.Number).HasMaxLength(NameMaxLength).IsRequired();
+
+            b.Property(e => e.OrderDateTime).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.DeliveryDateTime).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.ExpectedMinDeliveryDateTime).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.ExpectedMaxDeliveryDateTime).HasMaxLength(KeyMaxLength).IsRequired();
+
+            b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
+
+            //b.OwnsOne(e => e.DeliveryAddress, da =>
+            //{
+            //    da.ToTable("OrderDeliveryAddress");
+            //    da.HasKey(e => e.OrderId);
+
+            //    da.WithOwner(e => e.Order);
+
+            //    //b.Property(e => e.OrderAddressId).HasMaxLength(KeyMaxLength).IsRequired();
+            //    da.Property(e => e.OrderId).HasMaxLength(KeyMaxLength).IsRequired();
+            //    da.Property(e => e.RecipientName).HasMaxLength(NameMaxLength).IsRequired();
+            //    da.Property(e => e.PhoneNumber).HasMaxLength(NameMaxLength).IsRequired();
+            //    da.Property(e => e.Address).HasMaxLength(DescMaxLength).IsRequired();
+            //});
+
         }
     }
 }

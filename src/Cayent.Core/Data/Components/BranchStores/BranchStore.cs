@@ -1,12 +1,16 @@
 ﻿
+using Cayent.Core.Data.Components;
 using Data.Components.Orders;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations.Schema;
 namespace Data.Components.BranchStores
 {
-    public class BranchStore
+    public abstract class BranchStoreBase
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string BranchStoreId { get; set; }
 
         public string Name { get; set; }
@@ -18,20 +22,20 @@ namespace Data.Components.BranchStores
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
-        public virtual ICollection<BranchStoreProduct> BranchStoreProducts { get; set; } = new List<BranchStoreProduct>();
-        public virtual ICollection<BranchStoreUser> BranchUsers { get; set; } = new List<BranchStoreUser>();
+        //public virtual ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
+        //public virtual ICollection<BranchStoreProductBase> BranchStoreProducts { get; set; } = new List<BranchStoreProductBase>();
+        //public virtual ICollection<BranchStoreUserBase> BranchUsers { get; set; } = new List<BranchStoreUserBase>();
         //public virtual ICollection<Bottle> Bottles { get; set; } = new List<Bottle>();
     }
 
     public static class BranchStoreExtension
     {
-        public static void ThrowIfNull(this BranchStore me)
+        public static void ThrowIfNull(this BranchStoreBase me)
         {
             if (me == null)
                 throw new ApplicationException("Branch Store not found.");
         }
-        public static void ThrowIfNullOrAlreadyUpdated(this BranchStore me, string currentToken, string newToken)
+        public static void ThrowIfNullOrAlreadyUpdated(this BranchStoreBase me, string currentToken, string newToken)
         {
             me.ThrowIfNull();
 
@@ -42,6 +46,23 @@ namespace Data.Components.BranchStores
                 throw new ApplicationException("Branch Store already updated by another user.");
 
             me.ConcurrencyToken = newToken;
+        }
+    }
+
+    public class BranchStoreBaseConfiguration : EntityBaseConfiguration<BranchStoreBase>
+    {
+        public override void Configure(EntityTypeBuilder<BranchStoreBase> b)
+        {
+            b.ToTable("BranchStore");
+            b.HasKey(e => e.BranchStoreId);
+            b.HasIndex(e => e.Name).IsUnique();
+
+            b.Property(e => e.BranchStoreId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.Name).HasMaxLength(NameMaxLength).IsRequired();
+            b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
+
+            b.HasQueryFilter(e => e.Active);
+
         }
     }
 }

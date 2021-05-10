@@ -5,6 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Cayent.Core.Common.Extensions;
+using Cayent.Core.Data.Components;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Components.Promotions
 {
@@ -27,8 +31,9 @@ namespace Data.Components.Promotions
         NoCode,
         GenericCode
     }
-    public class Promotion
+    public abstract class PromotionBase
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string PromotionId { get; set; }
 
         public EnumPromotionProductApplicability Applicability { get; set; }
@@ -131,7 +136,7 @@ namespace Data.Components.Promotions
         /// The item/product id of any free gift offered in the promotion.
         /// </summary>
         public string FreeGiftProductId { get; set; }
-        public virtual Product FreeGiftProduct { get; set; }
+        public virtual ProductBase FreeGiftProduct { get; set; }
 
         #endregion
 
@@ -151,18 +156,18 @@ namespace Data.Components.Promotions
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public virtual ICollection<PromotionProductFilter> PromotionFilters { get; set; } = new List<PromotionProductFilter>();
+        //public virtual ICollection<PromotionProductFilterBase> PromotionFilters { get; set; } = new List<PromotionProductFilterBase>();
     }
 
     public static class PromotionExtension
     {
-        public static void ThrowIfNull(this Promotion me)
+        public static void ThrowIfNull(this PromotionBase me)
         {
             if (me == null)
                 throw new ApplicationException("Promotion not found.");
         }
 
-        public static void ThrowIfNullOrAlreadyUpdated(this Promotion me, string currentToken, string newToken)
+        public static void ThrowIfNullOrAlreadyUpdated(this PromotionBase me, string currentToken, string newToken)
         {
             me.ThrowIfNull();
 
@@ -173,6 +178,20 @@ namespace Data.Components.Promotions
                 throw new ApplicationException("Promotion already updated by another user.");
 
             me.ConcurrencyToken = newToken;
+        }
+    }
+
+    public class PromotionBaseConfiguration : EntityBaseConfiguration<PromotionBase>
+    {
+        public override void Configure(EntityTypeBuilder<PromotionBase> b)
+        {
+            b.ToTable("Promotion");
+            b.HasKey(e => e.PromotionId);
+
+            b.Property(e => e.PromotionId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.Title).HasMaxLength(NameMaxLength).IsRequired();
+
+            b.HasQueryFilter(e => e.Active);
         }
     }
 }

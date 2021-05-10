@@ -1,5 +1,6 @@
 ﻿
 
+using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations;
@@ -7,24 +8,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cayent.Core.Data.Users
 {
-    [Table("UserRole")]
-    public abstract class UserRoleBase
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string UserRoleId { get; set; }
-
+    public class UserRoleBase
+    {        
         public string UserId { get; set; }
         public virtual UserBase User { get; set; }
-        
+
         public string RoleId { get; set; }
         public virtual RoleBase Role { get; set; }
     }
 
-    public abstract class UserRoleConfiguration<T> : IEntityTypeConfiguration<T> where T : UserRoleBase
+    public class UserRoleBaseConfiguration : EntityBaseConfiguration<UserRoleBase>
     {
-        public virtual void Configure(EntityTypeBuilder<T> builder)
-        {            
+        public override void Configure(EntityTypeBuilder<UserRoleBase> b)
+        {
+            b.ToTable("UserRole");
+            b.HasKey(e => new { e.UserId, e.RoleId });
+
+            b.Property(e => e.UserId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.RoleId).HasMaxLength(KeyMaxLength).IsRequired();
         }
     }
 

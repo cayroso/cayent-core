@@ -1,13 +1,32 @@
-﻿using Data.Components.Products;
+﻿using Cayent.Core.Data.Components;
+using Data.Components.Products;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.ComponentModel.DataAnnotations;
 
 namespace Data.Components.BranchStores
 {
-    public class BranchStoreProduct
-    {
+    public abstract class BranchStoreProductBase
+    {        
         public string BranchStoreId { get; set; }
-        public virtual BranchStore BranchStore { get; set; }
+        public virtual BranchStoreBase BranchStore { get; set; }
 
         public string ProductId { get; set; }
-        public virtual Product Product { get; set; }
+        public virtual ProductBase Product { get; set; }
     }
+
+    public class BranchStoreProductBaseConfiguration: EntityBaseConfiguration<BranchStoreProductBase>
+    {
+        public override void Configure(EntityTypeBuilder<BranchStoreProductBase> b)
+        {            
+            b.ToTable("BranchStoreProduct");
+            b.HasKey(e => new { e.BranchStoreId, e.ProductId });
+
+            b.Property(e => e.BranchStoreId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.ProductId).HasMaxLength(KeyMaxLength).IsRequired();
+
+            b.HasQueryFilter(e => e.BranchStore.Active && e.Product.Active);
+        }
+    }
+
 }

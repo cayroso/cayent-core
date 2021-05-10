@@ -1,6 +1,6 @@
 ﻿namespace Data.Components.Orders.OrderShipments
 {
-    public class OrderShipmentGroup
+    public abstract  class OrderShipmentGroupBase
     {
     }
 }

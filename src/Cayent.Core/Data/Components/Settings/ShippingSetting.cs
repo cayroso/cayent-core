@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using Data.Components.Orders;
 using Data.Enums;
 using Cayent.Core.Common.Extensions;
-
+using Cayent.Core.Data.Components;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace Data.Components.Settings
 {
-    public class ShippingSetting
+    public abstract class ShippingSettingBase
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ShippingSettingId { get; set; }
         public string Name { get; set; }
 
@@ -29,18 +33,18 @@ namespace Data.Components.Settings
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+        //public virtual ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
     }
 
     public static class ShippingSettingExtension
     {
-        public static void ThrowIfNull(this ShippingSetting me)
+        public static void ThrowIfNull(this ShippingSettingBase me)
         {
             if (me == null)
                 throw new ApplicationException("Shipping Setting not found.");
         }
 
-        public static void ThrowIfNullOrAlreadyUpdated(this ShippingSetting me, string currentToken, string newToken)
+        public static void ThrowIfNullOrAlreadyUpdated(this ShippingSettingBase me, string currentToken, string newToken)
         {
             me.ThrowIfNull();
 
@@ -51,6 +55,22 @@ namespace Data.Components.Settings
                 throw new ApplicationException("Shipping Setting already updated by another user.");
 
             me.ConcurrencyToken = newToken;
+        }
+    }
+
+    public class ShippingSettingBaseConfiguration : EntityBaseConfiguration<ShippingSettingBase>
+    {
+        public override void Configure(EntityTypeBuilder<ShippingSettingBase> b)
+        {
+            b.ToTable("ShippingSetting");
+            b.HasKey(e => e.ShippingSettingId);
+            b.HasIndex(e => e.Name).IsUnique();
+
+            b.Property(e => e.ShippingSettingId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.Name).HasMaxLength(NameMaxLength).IsRequired();
+            b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
+
+            b.HasQueryFilter(e => e.Active);
         }
     }
 }

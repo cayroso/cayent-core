@@ -2,13 +2,16 @@
 using Data.Enums;
 using Cayent.Core.Common.Extensions;
 using Cayent.Core.Data.Users;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Cayent.Core.Data.Components;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Components.Orders
 {
-    public class OrderStatusHistory
+    public abstract class OrderStatusHistoryBase
     {
         public string OrderId { get; set; }
-        public virtual Order Order { get; set; }
+        public virtual OrderBase Order { get; set; }
 
         public DateTime HistoryDate { get; set; }
 
@@ -25,5 +28,20 @@ namespace Data.Components.Orders
         public virtual UserBase User { get; set; }
 
         public string Note { get; set; }
+    }
+
+    public class OrderStatusHistoryBaseConfiguration : EntityBaseConfiguration<OrderStatusHistoryBase>
+    {
+        public override void Configure(EntityTypeBuilder<OrderStatusHistoryBase> b)
+        {
+            b.ToTable("OrderStatusHistory");
+            b.HasKey(e => new { e.OrderId, e.OrderStatus });
+
+            b.Property(e => e.OrderId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.HistoryDate).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.HistoryDateTime).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.UserId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.Note).HasMaxLength(NoteMaxLength).IsRequired();
+        }
     }
 }

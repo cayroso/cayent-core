@@ -9,15 +9,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Cayent.Core.Common.Extensions;
 using Cayent.Core.Data.Enums;
+using Cayent.Core.Data.Components;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Components.Products
 {
-    public class Product
+    public abstract class ProductBase
     {
         public string ProductId { get; set; }
 
         public string ProductCategoryId { get; set; }
-        public virtual ProductCategory ProductCategory { get; set; }
+        public virtual ProductCategoryBase ProductCategory { get; set; }
 
         public string Name { get; set; }
         public string Description { get; set; }
@@ -27,7 +30,7 @@ namespace Data.Components.Products
         #region Detail
 
         public string ItemGroupId { get; set; }
-        public virtual ItemGroup ItemGroup { get; set; }
+        public virtual ItemGroupBase ItemGroup { get; set; }
 
         public string Highlight { get; set; }
 
@@ -63,23 +66,23 @@ namespace Data.Components.Products
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public virtual ICollection<BranchStoreProduct> BranchStoreProducts { get; set; } = new List<BranchStoreProduct>();
-        public virtual ICollection<ProductImage> Images { get; set; } = new List<ProductImage>();
-        public virtual ICollection<ProductPrice> Prices { get; set; } = new List<ProductPrice>();
+        //public virtual ICollection<BranchStoreProductBase> BranchStoreProducts { get; set; } = new List<BranchStoreProductBase>();
+        //public virtual ICollection<ProductImageBase> Images { get; set; } = new List<ProductImageBase>();
+        //public virtual ICollection<ProductPriceBase> Prices { get; set; } = new List<ProductPriceBase>();
 
-        public virtual ICollection<OrderLineItem> OrderLineItems { get; set; } = new List<OrderLineItem>();
-        public virtual ICollection<PromotionProductFilter> PromotionFilters { get; set; } = new List<PromotionProductFilter>();
+        //public virtual ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
+        //public virtual ICollection<PromotionProductFilterBase> PromotionFilters { get; set; } = new List<PromotionProductFilterBase>();
     }
 
     public static class ProductExtension
     {
-        public static void ThrowIfNull(this Product me)
+        public static void ThrowIfNull(this ProductBase me)
         {
             if (me == null)
                 throw new ApplicationException("Product not found.");
         }
 
-        public static void ThrowIfNullOrAlreadyUpdated(this Product me, string currentToken, string newToken)
+        public static void ThrowIfNullOrAlreadyUpdated(this ProductBase me, string currentToken, string newToken)
         {
             me.ThrowIfNull();
 
@@ -90,6 +93,24 @@ namespace Data.Components.Products
                 throw new ApplicationException("Product already updated by another user.");
 
             me.ConcurrencyToken = newToken;
+        }
+    }
+
+    public class ProductBaseConfiguration : EntityBaseConfiguration<ProductBase>
+    {
+        public override void Configure(EntityTypeBuilder<ProductBase> b)
+        {
+            b.ToTable("Product");
+            b.HasKey(e => e.ProductId);
+            b.HasIndex(e => e.Name).IsUnique();
+
+            b.Property(e => e.ProductId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.ProductCategoryId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.Name).HasMaxLength(NameMaxLength).IsRequired();
+            b.Property(e => e.Description).HasMaxLength(DescMaxLength);
+            b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
+
+            b.HasQueryFilter(e => e.Active);
         }
     }
 }

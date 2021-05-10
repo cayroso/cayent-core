@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Cayent.Core.Common.Extensions;
+using Cayent.Core.Data.Components;
 using Data.Components.Orders.OrderLineItems;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Components.Products
 {
-    public class ProductPrice
+    public abstract class ProductPriceBase
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ProductPriceId { get; set; }
 
         public string ProductId { get; set; }
-        public virtual Product Product { get; set; }
+        public virtual ProductBase Product { get; set; }
 
         public double Cogs { get; set; }
         public double Price { get; set; }
@@ -37,6 +42,20 @@ namespace Data.Components.Products
 
         public bool Active { get; set; } = true;
 
-        public virtual ICollection<OrderLineItem> OrderLineItems { get; set; } = new List<OrderLineItem>();
+        //public virtual ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
+    }
+
+    public class ProductPriceBaseConfiguration : EntityBaseConfiguration<ProductPriceBase>
+    {
+        public override void Configure(EntityTypeBuilder<ProductPriceBase> b)
+        {
+            b.ToTable("ProductPrice");
+            b.HasKey(e => e.ProductPriceId);
+
+            b.Property(e => e.ProductPriceId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.ProductId).HasMaxLength(KeyMaxLength).IsRequired();
+
+            b.HasQueryFilter(e => e.Active);
+        }
     }
 }

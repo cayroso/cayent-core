@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cayent.Core.Data.Components;
 using Data.Components.Orders;
-
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace Data.Components.Settings
 {
-    public class ServiceFee
+    public abstract class ServiceFeeBase
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ServiceFeeId { get; set; }
 
         public string Name { get; set; }
@@ -13,19 +17,19 @@ namespace Data.Components.Settings
         public double Amount { get; set; }
         public bool Active { get; set; } = true;
 
-        public virtual ICollection<OrderServiceFee> OrderServiceFees { get; set; } = new List<OrderServiceFee>();
+        //public virtual ICollection<OrderServiceFeeBase> OrderServiceFees { get; set; } = new List<OrderServiceFeeBase>();
 
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
     }
     public static class ServiceFeeExtension
     {
-        public static void ThrowIfNull(this ServiceFee me)
+        public static void ThrowIfNull(this ServiceFeeBase me)
         {
             if (me == null)
                 throw new ApplicationException("ServiceFee not found.");
         }
 
-        public static void ThrowIfNullOrAlreadyUpdated(this ServiceFee me, string currentToken, string newToken)
+        public static void ThrowIfNullOrAlreadyUpdated(this ServiceFeeBase me, string currentToken, string newToken)
         {
             me.ThrowIfNull();
 
@@ -36,6 +40,22 @@ namespace Data.Components.Settings
                 throw new ApplicationException("ServiceFee already updated by another user.");
 
             me.ConcurrencyToken = newToken;
+        }
+    }
+
+    public class ServiceFeeBaseConfiguration : EntityBaseConfiguration<ServiceFeeBase>
+    {
+        public override void Configure(EntityTypeBuilder<ServiceFeeBase> b)
+        {
+            b.ToTable("ServiceFee");
+            b.HasKey(e => e.ServiceFeeId);
+            b.HasIndex(e => e.Name).IsUnique();
+
+            b.Property(e => e.ServiceFeeId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.Name).HasMaxLength(NameMaxLength).IsRequired();
+            b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
+
+            b.HasQueryFilter(e => e.Active);
         }
     }
 }

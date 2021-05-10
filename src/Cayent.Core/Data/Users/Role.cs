@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Cayent.Core.Data.Components;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -10,19 +11,21 @@ using System.Threading.Tasks;
 
 namespace Cayent.Core.Data.Users
 {
-    [Table("Role")]
     public abstract class RoleBase
     {
-        [Key]
         public string RoleId { get; set; }
         public string Name { get; set; }
     }
 
-    public abstract class RoleConfiguration<T> : IEntityTypeConfiguration<T> where T : RoleBase
+    public class RoleBaseConfiguration : EntityBaseConfiguration<RoleBase>
     {
-        public virtual void Configure(EntityTypeBuilder<T> builder)
+        public override void Configure(EntityTypeBuilder<RoleBase> b)
         {
-            //throw new NotImplementedException();
+            b.ToTable("Role");
+            b.HasKey(e => e.RoleId);
+
+            b.Property(e => e.RoleId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.Name).HasMaxLength(NameMaxLength).IsRequired();
         }
     }
 

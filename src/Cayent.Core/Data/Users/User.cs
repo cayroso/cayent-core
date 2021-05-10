@@ -1,5 +1,6 @@
 ﻿
 
+using Cayent.Core.Data.Components;
 using Cayent.Core.Data.Fileuploads;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -13,10 +14,8 @@ using System.Threading.Tasks;
 
 namespace Cayent.Core.Data.Users
 {
-    [Table("User")]
-    public abstract class UserBase
+    public class UserBase
     {
-        [Key]
         public string UserId { get; set; }
         public string ImageId { get; set; }
         public virtual FileUpload Image { get; set; }
@@ -59,11 +58,20 @@ namespace Cayent.Core.Data.Users
         }
     }
 
-    public abstract class UserConfiguration<T> : IEntityTypeConfiguration<T> where T : UserBase
+    public class UserBaseConfiguration : EntityBaseConfiguration<UserBase>
     {
-        public virtual void Configure(EntityTypeBuilder<T> builder)
+        public override void Configure(EntityTypeBuilder<UserBase> b)
         {
-            //throw new NotImplementedException();
+            b.ToTable("User");
+            b.HasKey(e => e.UserId);
+
+            b.Property(e => e.UserId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.FirstName).HasMaxLength(NameMaxLength).IsRequired();
+            b.Property(e => e.LastName).HasMaxLength(NameMaxLength).IsRequired();
+            b.Property(e => e.Email).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.PhoneNumber).HasMaxLength(KeyMaxLength).IsRequired();
+
+            b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
         }
     }
 
