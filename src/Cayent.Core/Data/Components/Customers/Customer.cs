@@ -33,8 +33,8 @@ namespace Cayent.Core.Data.Components.Customers
 
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public ICollection<CustomerAddressBase> CustomerAddresses { get; set; } = new List<CustomerAddressBase>();
-        public ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
+        public virtual ICollection<CustomerAddressBase> CustomerAddresses { get; set; } = new List<CustomerAddressBase>();
+        public virtual ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
     }
 
     //public static class CustomerExtension

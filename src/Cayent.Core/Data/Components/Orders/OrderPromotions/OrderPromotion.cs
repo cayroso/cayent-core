@@ -11,12 +11,12 @@ namespace Cayent.Core.Data.Components.Orders.OrderPromotions
         public string OrderPromotionId { get; set; }
 
         public string OrderId { get; set; }
-        public OrderBase Order { get; set; }
+        public virtual OrderBase Order { get; set; }
 
         public string PromotionId { get; set; }
-        public PromotionBase Promotion { get; set; }
+        public virtual PromotionBase Promotion { get; set; }
 
-        public ICollection<OrderPromotionLineItemBase> OrderPromotionLineItems { get; set; }
+        public virtual ICollection<OrderPromotionLineItemBase> OrderPromotionLineItems { get; set; }
     }
 
     public class OrderPromotionBaseConfiguration : EntityBaseConfiguration<OrderPromotionBase>
@@ -34,7 +34,8 @@ namespace Cayent.Core.Data.Components.Orders.OrderPromotions
 
             b.HasMany(e => e.OrderPromotionLineItems)
                 .WithOne(d => d.OrderPromotion)
-                .HasForeignKey(fk => fk.OrderPromotionId);
+                .HasForeignKey(fk => fk.OrderPromotionId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

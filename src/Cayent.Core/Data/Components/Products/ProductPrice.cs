@@ -14,7 +14,7 @@ namespace Cayent.Core.Data.Components.Products
         public string ProductPriceId { get; set; }
 
         public string ProductId { get; set; }
-        public ProductBase Product { get; set; }
+        public virtual ProductBase Product { get; set; }
 
         public double Cogs { get; set; }
         public double Price { get; set; }
@@ -38,7 +38,7 @@ namespace Cayent.Core.Data.Components.Products
 
         public bool Active { get; set; } = true;
 
-        public ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
+        public virtual ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
 
     }
 

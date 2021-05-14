@@ -7,10 +7,10 @@ namespace Cayent.Core.Data.Components.Orders
     public abstract class OrderServiceFeeBase
     {        
         public string OrderId { get; set; }
-        public OrderBase Order { get; set; }
+        public virtual OrderBase Order { get; set; }
 
         public string ServiceFeeId { get; set; }
-        public ServiceFeeBase ServiceFee { get; set; }
+        public virtual ServiceFeeBase ServiceFee { get; set; }
     }
 
     public class OrderServiceFeeBaseConfiguration : EntityBaseConfiguration<OrderServiceFeeBase>

@@ -20,11 +20,13 @@ namespace Cayent.Core.Data.Components.Stores
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public ICollection<StoreProductBase> StoreProducts { get; set; } = new List<StoreProductBase>();
-        public ICollection<StoreStockBase> StoreStocks { get; set; } = new List<StoreStockBase>();
-        public ICollection<StoreUserBase> StoreUsers { get; set; } = new List<StoreUserBase>();
+        public virtual ICollection<StoreProductBase> StoreProducts { get; set; } = new List<StoreProductBase>();
+        
+        public virtual ICollection<StoreStockBase> StoreStocks { get; set; } = new List<StoreStockBase>();
+        
+        public virtual ICollection<StoreUserBase> StoreUsers { get; set; } = new List<StoreUserBase>();
 
-        public ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
+        public virtual ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
     }
 
     public static class StoreBaseExtension

@@ -33,7 +33,7 @@ namespace Cayent.Core.Data.Components.Settings
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
+        public virtual ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
     }
 
     public static class ShippingSettingExtension

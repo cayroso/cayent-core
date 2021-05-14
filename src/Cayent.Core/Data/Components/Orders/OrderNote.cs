@@ -12,7 +12,7 @@ namespace Cayent.Core.Data.Components.Orders
         public string OrderNoteId { get; set; }
         
         public string OrderId { get; set; }
-        public OrderBase Order { get; set; }
+        public virtual OrderBase Order { get; set; }
         
         public string UserId { get; set; }
         public UserBase User { get; set; }

@@ -9,10 +9,10 @@ namespace Cayent.Core.Data.Users
     public abstract class UserRoleBase
     {        
         public string UserId { get; set; }
-        public UserBase User { get; set; }
+        public virtual UserBase User { get; set; }
 
         public string RoleId { get; set; }
-        public RoleBase Role { get; set; }
+        public virtual RoleBase Role { get; set; }
     }
 
     public class UserRoleBaseConfiguration : EntityBaseConfiguration<UserRoleBase>

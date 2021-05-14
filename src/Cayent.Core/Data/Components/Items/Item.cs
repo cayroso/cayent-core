@@ -12,7 +12,7 @@ namespace Cayent.Core.Data.Components.Items
         public string ItemId { get; set; }
 
         public string ItemGroupId { get; set; }
-        public ItemGroupBase ItemGroup { get; set; }
+        public virtual ItemGroupBase ItemGroup { get; set; }
 
         public string Name { get; set; }
         public string Description { get; set; }
@@ -27,7 +27,7 @@ namespace Cayent.Core.Data.Components.Items
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public ICollection<StockBase> Stocks { get; set; } = new List<StockBase>();
+        public virtual ICollection<StockBase> Stocks { get; set; } = new List<StockBase>();
     }
 
     public class ItemBaseConfiguration : EntityBaseConfiguration<ItemBase>

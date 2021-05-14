@@ -17,24 +17,24 @@ namespace Cayent.Core.Data.Components.Products
         public string Sku { get; set; }
 
         public string ItemId { get; set; }
-        public ItemBase Item { get; set; }
+        public virtual ItemBase Item { get; set; }
 
         public string ProductGroupId { get; set; }
-        public ProductGroupBase ProductGroup { get; set; }
+        public virtual ProductGroupBase ProductGroup { get; set; }
 
         public string PrimaryImageUrl { get; set; }
 
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public ICollection<ProductCategoryBase> ProductCategories { get; set; } = new List<ProductCategoryBase>();        
-        public ICollection<ProductImageBase> ProductImages { get; set; } = new List<ProductImageBase>();
-        public ICollection<ProductPriceBase> ProductPrices { get; set; } = new List<ProductPriceBase>();
-        public ICollection<ProductVariantBase> ProductVariants { get; set; } = new List<ProductVariantBase>();
+        public virtual ICollection<ProductCategoryBase> ProductCategories { get; set; } = new List<ProductCategoryBase>();        
+        public virtual ICollection<ProductImageBase> ProductImages { get; set; } = new List<ProductImageBase>();
+        public virtual ICollection<ProductPriceBase> ProductPrices { get; set; } = new List<ProductPriceBase>();
+        public virtual ICollection<ProductVariantBase> ProductVariants { get; set; } = new List<ProductVariantBase>();
 
-        public ICollection<StoreProductBase> StoreProducts { get; set; } = new List<StoreProductBase>();
-        public ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
-        public ICollection<PromotionProductFilterBase> PromotionProductFilters { get; set; } = new List<PromotionProductFilterBase>();
+        public virtual ICollection<StoreProductBase> StoreProducts { get; set; } = new List<StoreProductBase>();
+        public virtual ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
+        public virtual ICollection<PromotionProductFilterBase> PromotionProductFilters { get; set; } = new List<PromotionProductFilterBase>();
     }
 
     public static class ProductExtension

@@ -17,15 +17,15 @@ namespace Cayent.Core.Data.Components.Orders
         public string OrderId { get; set; }
 
         public string CustomerId { get; set; }
-        public CustomerBase Customer { get; set; }
+        public virtual CustomerBase Customer { get; set; }
 
         public string StoreId { get; set; }
-        public StoreBase Store { get; set; }
+        public virtual StoreBase Store { get; set; }
 
         public string ShippingSettingId { get; set; }
-        public ShippingSettingBase ShippingSetting { get; set; }
+        public virtual ShippingSettingBase ShippingSetting { get; set; }
 
-        public OrderDeliveryAddressBase DeliveryAddress { get; set; }
+        public virtual OrderDeliveryAddressBase DeliveryAddress { get; set; }
 
         public string Number { get; set; }
         public EnumOrderStatus OrderStatus { get; set; }
@@ -83,20 +83,15 @@ namespace Cayent.Core.Data.Components.Orders
         public double GrandTotal { get; set; }                
         public double AmountPaid { get; set; }
 
-        //public virtual ICollection<OrderLineItemBase> LineItems { get; set; } = new List<OrderLineItemBase>();
-        //public virtual ICollection<OrderNoteBase> OrderNotes { get; set; } = new List<OrderNoteBase>();
-        //public virtual ICollection<OrderPaymentBase> OrderPayments { get; set; } = new List<OrderPaymentBase>();
-        //public virtual ICollection<OrderServiceFeeBase> ServiceFees { get; set; } = new List<OrderServiceFeeBase>();
-        //public virtual ICollection<OrderStatusHistoryBase> StatusHistories { get; set; } = new List<OrderStatusHistoryBase>();
         
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public ICollection<OrderNoteBase> OrderNotes { get; set; } = new List<OrderNoteBase>();
-        public ICollection<OrderPaymentBase> OrderPayments { get; set; } = new List<OrderPaymentBase>();
-        public ICollection<OrderServiceFeeBase> OrderServiceFees { get; set; } = new List<OrderServiceFeeBase>();
-        public ICollection<OrderStatusHistoryBase> OrderStatusHistories { get; set; } = new List<OrderStatusHistoryBase>();
+        public virtual ICollection<OrderNoteBase> OrderNotes { get; set; } = new List<OrderNoteBase>();
+        public virtual ICollection<OrderPaymentBase> OrderPayments { get; set; } = new List<OrderPaymentBase>();
+        public virtual ICollection<OrderServiceFeeBase> OrderServiceFees { get; set; } = new List<OrderServiceFeeBase>();
+        public virtual ICollection<OrderStatusHistoryBase> OrderStatusHistories { get; set; } = new List<OrderStatusHistoryBase>();
 
-        public ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
+        public virtual ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
     }
 
     public static class OrderExtension

@@ -11,11 +11,11 @@ namespace Cayent.Core.Data.Components.Stocks
         public string StockId { get; set; }
 
         public string ItemId { get; set; }
-        public ItemBase Item { get; set; }
+        public virtual ItemBase Item { get; set; }
 
         public string Serial { get; set; }
 
-        public ICollection<StoreStockBase> StoreStocks { get; set; } = new List<StoreStockBase>();
+        public virtual ICollection<StoreStockBase> StoreStocks { get; set; } = new List<StoreStockBase>();
     }
 
     public class StockBaseConfiguration : EntityBaseConfiguration<StockBase>
@@ -26,6 +26,7 @@ namespace Cayent.Core.Data.Components.Stocks
             b.HasKey(e => e.StockId);
             b.HasIndex(e => e.Serial).IsUnique();
 
+            b.Property(e => e.StockId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.ItemId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.Serial).HasMaxLength(NameMaxLength).IsRequired();
             //b.Property(e => e.Description).HasMaxLength(DescMaxLength);

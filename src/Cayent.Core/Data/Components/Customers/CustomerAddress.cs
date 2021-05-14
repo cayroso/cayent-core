@@ -11,7 +11,7 @@ namespace Cayent.Core.Data.Components.Customers
         public string CustomerAddressId { get; set; }
 
         public string CustomerId { get; set; }
-        public CustomerBase Customer { get; set; }
+        public virtual CustomerBase Customer { get; set; }
         public EnumAddressType AddressType { get; set; }
         public bool IsPrimary { get; set; }
         public string Address { get; set; }

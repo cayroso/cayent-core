@@ -7,10 +7,10 @@ namespace Cayent.Core.Data.Components.Stores
     public abstract class StoreStockBase
     {
         public string StoreId { get; set; }
-        public StoreBase Store { get; set; }
+        public virtual StoreBase Store { get; set; }
 
         public string StockId { get; set; }
-        public StockBase Stock { get; set; }
+        public virtual StockBase Stock { get; set; }
     }
 
     public class StoreStockBaseConfiguration : EntityBaseConfiguration<StoreStockBase>

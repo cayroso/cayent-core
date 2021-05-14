@@ -10,13 +10,13 @@ namespace Cayent.Core.Data.Components.Orders.OrderLineItems
         public string OrderLineItemId { get; set; }
 
         public string OrderId { get; set; }
-        public OrderBase Order { get; set; }
+        public virtual OrderBase Order { get; set; }
 
         public string ProductId { get; set; }
-        public ProductBase Product { get; set; }
+        public virtual ProductBase Product { get; set; }
 
         public string ProductPriceId { get; set; }
-        public ProductPriceBase ProductPrice { get; set; }
+        public virtual ProductPriceBase ProductPrice { get; set; }
 
         public bool ProductOnSale { get; set; }
         public double Tax { get; set; }

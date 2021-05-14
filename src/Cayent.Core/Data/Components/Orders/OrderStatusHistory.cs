@@ -10,7 +10,7 @@ namespace Cayent.Core.Data.Components.Orders
     public abstract class OrderStatusHistoryBase
     {
         public string OrderId { get; set; }
-        public OrderBase Order { get; set; }
+        public virtual OrderBase Order { get; set; }
 
         public DateTime HistoryDate { get; set; }
 

@@ -12,9 +12,9 @@ namespace Cayent.Core.Data.Components.Orders
         public string OrderPaymentId { get; set; }
 
         public string OrderId { get; set; }
-        public OrderBase Order { get; set; }
+        public virtual OrderBase Order { get; set; }
         public string UserId { get; set; }
-        public UserBase User { get; set; }
+        public virtual UserBase User { get; set; }
 
         public double AmountDue { get; set; }
         public double AmountPaid { get; set; }

@@ -7,10 +7,10 @@ namespace Cayent.Core.Data.Components.Orders.OrderShipments
     public abstract class OrderShipmentLineItemBase
     {
         public string OrderShipmentId { get; set; }
-        public OrderShipmentBase OrderShipment { get; set; }
+        public virtual OrderShipmentBase OrderShipment { get; set; }
 
         public string OrderLineItemId { get; set; }
-        public OrderLineItemBase OrderLineItem { get; set; }
+        public virtual OrderLineItemBase OrderLineItem { get; set; }
 
         public uint Quantity { get; set; }
     }

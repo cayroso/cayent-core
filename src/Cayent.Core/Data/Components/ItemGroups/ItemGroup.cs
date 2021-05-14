@@ -12,7 +12,7 @@ namespace Cayent.Core.Data.Components.ItemGroups
         public string ItemGroupId { get; set; }
         public string Name { get; set; }
 
-        public ICollection<ItemBase> Items { get; set; } = new List<ItemBase>();
+        public virtual ICollection<ItemBase> Items { get; set; } = new List<ItemBase>();
     }
 
     public class ItemGroupBaseConfiguration : EntityBaseConfiguration<ItemGroupBase>

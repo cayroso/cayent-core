@@ -8,7 +8,7 @@ namespace Cayent.Core.Data.Components.Products
         public string ProductVariantId { get; set; }
 
         public string ProductId { get; set; }
-        public ProductBase Product { get; set; }
+        public virtual ProductBase Product { get; set; }
     }
 
     public class ProductVariantBaseConfiguration : EntityBaseConfiguration<ProductVariantBase>

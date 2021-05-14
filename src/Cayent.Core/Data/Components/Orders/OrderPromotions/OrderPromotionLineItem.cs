@@ -9,10 +9,10 @@ namespace Cayent.Core.Data.Components.Orders.OrderPromotions
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderPromotionId { get; set; }
-        public OrderPromotionBase OrderPromotion { get; set; }
+        public virtual OrderPromotionBase OrderPromotion { get; set; }
 
         public string OrderLineItemId { get; set; }
-        public OrderLineItemBase OrderLineItem { get; set; }
+        public virtual OrderLineItemBase OrderLineItem { get; set; }
 
         public double Quantity { get; set; }
     }

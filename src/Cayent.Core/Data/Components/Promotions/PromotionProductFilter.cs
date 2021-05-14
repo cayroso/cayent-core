@@ -11,13 +11,13 @@ namespace Cayent.Core.Data.Components.Promotions
         public string PromotionProductFilterId { get; set; }
 
         public string PromotionId { get; set; }
-        public PromotionBase Promotion { get; set; }
+        public virtual PromotionBase Promotion { get; set; }
 
         public string ProductId { get; set; }
-        public ProductBase Product { get; set; }
+        public virtual ProductBase Product { get; set; }
 
         public string ProductGroupId { get; set; }
-        public ProductGroupBase ProductGroup { get; set; }
+        public virtual ProductGroupBase ProductGroup { get; set; }
 
     }
 
@@ -25,7 +25,7 @@ namespace Cayent.Core.Data.Components.Promotions
     {
         public override void Configure(EntityTypeBuilder<PromotionProductFilterBase> b)
         {
-            b.ToTable("PromotionProductFilterId");
+            b.ToTable("PromotionProductFilter");
             b.HasKey(e => e.PromotionProductFilterId);
 
             b.Property(e => e.PromotionProductFilterId).HasMaxLength(KeyMaxLength).IsRequired();

@@ -8,13 +8,13 @@ namespace Cayent.Core.Data.Components.Stores
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string StoreId { get; set; }
-        public StoreBase Store { get; set; }
+        public virtual StoreBase Store { get; set; }
 
         public string UserId { get; set; }
-        public UserBase User { get; set; }
+        public virtual UserBase User { get; set; }
 
         public string RoleId { get; set; }
-        public UserBase Role { get; set; }
+        public RoleBase Role { get; set; }
     }
 
     public class StoreUserBaseConfiguration : EntityBaseConfiguration<StoreUserBase>

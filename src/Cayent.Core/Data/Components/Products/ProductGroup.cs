@@ -12,8 +12,8 @@ namespace Cayent.Core.Data.Components.Products
         public string ProductGroupId { get; set; }
         public string Name { get; set; }
 
-        public ICollection<ProductBase> Products { get; set; } = new List<ProductBase>();
-        public ICollection<PromotionProductFilterBase> PromotionProductFilters { get; set; } = new List<PromotionProductFilterBase>();
+        public virtual ICollection<ProductBase> Products { get; set; } = new List<ProductBase>();
+        public virtual ICollection<PromotionProductFilterBase> PromotionProductFilters { get; set; } = new List<PromotionProductFilterBase>();
 
     }
 

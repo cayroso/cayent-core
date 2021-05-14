@@ -28,7 +28,7 @@ namespace Cayent.Core.Data.Users
 
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public ICollection<UserRoleBase> UserRoles { get; set; } = new List<UserRoleBase>();
+        public virtual ICollection<UserRoleBase> UserRoles { get; set; } = new List<UserRoleBase>();
     }
 
     public static class UserExtension

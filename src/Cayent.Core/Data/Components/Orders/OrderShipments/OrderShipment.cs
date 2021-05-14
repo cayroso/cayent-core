@@ -13,7 +13,7 @@ namespace Cayent.Core.Data.Components.Orders.OrderShipments
         public string OrderShipmentId { get; set; }
 
         public string OrderId { get; set; }
-        public OrderBase Order { get; set; }
+        public virtual OrderBase Order { get; set; }
 
         public string TrackingNumber { get; set; }
 
@@ -24,7 +24,7 @@ namespace Cayent.Core.Data.Components.Orders.OrderShipments
             get => _createdDateTime.AsUtc();
             set => _createdDateTime = value.Truncate();
         }
-        
+
         DateTime _deliveryDate;
         public DateTime DeliveryDate
         {
@@ -37,7 +37,7 @@ namespace Cayent.Core.Data.Components.Orders.OrderShipments
         /// </summary>
         public string Status { get; set; }
 
-        public ICollection<OrderShipmentLineItemBase> OrderShipmentLineItems { get; set; } = new List<OrderShipmentLineItemBase>();
+        public virtual ICollection<OrderShipmentLineItemBase> OrderShipmentLineItems { get; set; } = new List<OrderShipmentLineItemBase>();
     }
 
     public class OrderShipmentBaseConfiguration : EntityBaseConfiguration<OrderShipmentBase>
@@ -53,7 +53,8 @@ namespace Cayent.Core.Data.Components.Orders.OrderShipments
 
             b.HasMany(e => e.OrderShipmentLineItems)
                 .WithOne(d => d.OrderShipment)
-                .HasForeignKey(fk => fk.OrderShipmentId);
+                .HasForeignKey(fk => fk.OrderShipmentId)
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
     }

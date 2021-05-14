@@ -6,7 +6,7 @@ namespace Cayent.Core.Data.Components.Orders
     public abstract class OrderDeliveryAddressBase
     {
         public string OrderId { get; set; }
-        public OrderBase Order { get; set; }
+        public virtual OrderBase Order { get; set; }
 
         public string RecipientName { get; set; }
         public string PhoneNumber { get; set; }

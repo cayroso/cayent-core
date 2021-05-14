@@ -12,10 +12,10 @@ namespace Cayent.Core.Data.Components.Products
 
         public string ProductId { get; set; }
 
-        public ProductBase Product { get; set; }
+        public virtual ProductBase Product { get; set; }
 
         public string ImageId { get; set; }
-        public FileUpload Image { get; set; }
+        public virtual FileUpload Image { get; set; }
 
         public uint SortOrder { get; set; }
     }

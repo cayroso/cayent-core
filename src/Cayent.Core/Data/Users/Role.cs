@@ -10,7 +10,7 @@ namespace Cayent.Core.Data.Users
         public string RoleId { get; set; }
         public string Name { get; set; }
 
-        public ICollection<UserRoleBase> UserRoles { get; set; } = new List<UserRoleBase>();
+        public virtual ICollection<UserRoleBase> UserRoles { get; set; } = new List<UserRoleBase>();
     }
 
     public class RoleBaseConfiguration : EntityBaseConfiguration<RoleBase>

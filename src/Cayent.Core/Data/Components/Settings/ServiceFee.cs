@@ -17,11 +17,9 @@ namespace Cayent.Core.Data.Components.Settings
         public double Amount { get; set; }
         public bool Active { get; set; } = true;
 
-        //public virtual ICollection<OrderServiceFeeBase> OrderServiceFees { get; set; } = new List<OrderServiceFeeBase>();
-
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public ICollection<OrderServiceFeeBase> OrderServiceFees { get; set; } = new List<OrderServiceFeeBase>();
+        public virtual ICollection<OrderServiceFeeBase> OrderServiceFees { get; set; } = new List<OrderServiceFeeBase>();
     }
     public static class ServiceFeeExtension
     {

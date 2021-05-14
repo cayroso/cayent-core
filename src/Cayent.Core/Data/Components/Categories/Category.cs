@@ -13,10 +13,10 @@ namespace Cayent.Core.Data.Components.Categories
         public string Name { get; set; }
 
         public string ParentId { get; set; }
-        public CategoryBase Parent { get; set; }
+        public virtual CategoryBase Parent { get; set; }
 
-        public ICollection<CategoryBase> Children { get; set; } = new List<CategoryBase>();
-        public ICollection<ProductCategoryBase> ProductCategories { get; set; } = new List<ProductCategoryBase>();
+        public virtual ICollection<CategoryBase> Children { get; set; } = new List<CategoryBase>();
+        public virtual ICollection<ProductCategoryBase> ProductCategories { get; set; } = new List<ProductCategoryBase>();
 
     }
 

@@ -8,9 +8,9 @@ namespace Cayent.Core.Data.Components.Products
     public abstract class ProductCategoryBase
     {
         public string ProductId { get; set; }
-        public ProductBase Product { get; set; }
+        public virtual ProductBase Product { get; set; }
         public string CategoryId { get; set; }
-        public CategoryBase Category { get; set; }        
+        public virtual CategoryBase Category { get; set; }        
     }
 
     public class ProductCategoryBaseConfiguration : EntityBaseConfiguration<ProductCategoryBase>
