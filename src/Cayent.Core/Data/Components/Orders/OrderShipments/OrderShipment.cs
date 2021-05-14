@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using Cayent.Core.Common.Extensions;
-using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace Data.Components.Orders.OrderShipments
+using System.Collections.Generic;
+
+namespace Cayent.Core.Data.Components.Orders.OrderShipments
 {
     public abstract class OrderShipmentBase
     {
@@ -13,7 +13,7 @@ namespace Data.Components.Orders.OrderShipments
         public string OrderShipmentId { get; set; }
 
         public string OrderId { get; set; }
-        public virtual OrderBase Order { get; set; }
+        public OrderBase Order { get; set; }
 
         public string TrackingNumber { get; set; }
 
@@ -36,8 +36,8 @@ namespace Data.Components.Orders.OrderShipments
         /// Delivered, ReadyForPickup, Shipped, Undeliverable
         /// </summary>
         public string Status { get; set; }
-       
-        //public virtual ICollection<OrderShipmentLineItemShipmentBase> LineItems { get; set; }
+
+        public ICollection<OrderShipmentLineItemBase> OrderShipmentLineItems { get; set; } = new List<OrderShipmentLineItemBase>();
     }
 
     public class OrderShipmentBaseConfiguration : EntityBaseConfiguration<OrderShipmentBase>
@@ -50,6 +50,10 @@ namespace Data.Components.Orders.OrderShipments
             b.Property(e => e.OrderShipmentId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.OrderId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.TrackingNumber).HasMaxLength(KeyMaxLength).IsRequired();
+
+            b.HasMany(e => e.OrderShipmentLineItems)
+                .WithOne(d => d.OrderShipment)
+                .HasForeignKey(fk => fk.OrderShipmentId);
 
         }
     }

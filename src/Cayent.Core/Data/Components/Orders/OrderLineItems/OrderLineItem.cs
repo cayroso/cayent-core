@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Cayent.Core.Data.Components;
-using Data.Components.Products;
+﻿using Cayent.Core.Data.Components.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace Data.Components.Orders.OrderLineItems
+namespace Cayent.Core.Data.Components.Orders.OrderLineItems
 {
     public abstract class OrderLineItemBase
     {
@@ -14,13 +10,13 @@ namespace Data.Components.Orders.OrderLineItems
         public string OrderLineItemId { get; set; }
 
         public string OrderId { get; set; }
-        public virtual OrderBase Order { get; set; }
+        public OrderBase Order { get; set; }
 
         public string ProductId { get; set; }
-        public virtual ProductBase Product { get; set; }
+        public ProductBase Product { get; set; }
 
         public string ProductPriceId { get; set; }
-        public virtual ProductPriceBase ProductPrice { get; set; }
+        public ProductPriceBase ProductPrice { get; set; }
 
         public bool ProductOnSale { get; set; }
         public double Tax { get; set; }

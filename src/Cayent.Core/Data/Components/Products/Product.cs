@@ -1,77 +1,40 @@
-﻿using Data.Components.BranchStores;
-using Data.Components.ItemGroups;
-using Data.Components.Orders.OrderLineItems;
-using Data.Components.Promotions;
+﻿
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Cayent.Core.Common.Extensions;
-using Cayent.Core.Data.Enums;
-using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Cayent.Core.Data.Components.Items;
+using Cayent.Core.Data.Components.Stores;
+using Cayent.Core.Data.Components.Orders.OrderLineItems;
+using Cayent.Core.Data.Components.Promotions;
 
-namespace Data.Components.Products
+namespace Cayent.Core.Data.Components.Products
 {
     public abstract class ProductBase
     {
         public string ProductId { get; set; }
 
-        public string ProductCategoryId { get; set; }
-        public virtual ProductCategoryBase ProductCategory { get; set; }
+        public string Sku { get; set; }
 
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string ItemId { get; set; }
+        public ItemBase Item { get; set; }
+
+        public string ProductGroupId { get; set; }
+        public ProductGroupBase ProductGroup { get; set; }
 
         public string PrimaryImageUrl { get; set; }
-
-        #region Detail
-
-        public string ItemGroupId { get; set; }
-        public virtual ItemGroupBase ItemGroup { get; set; }
-
-        public string Highlight { get; set; }
-
-        public EnumProductAvailability Availability { get; set; }
-
-        public
-        DateTime _availabilityDateTime = DateTime.MaxValue;
-        public DateTime AvailabilityDateTime
-        {
-            get => _availabilityDateTime.AsUtc();
-            set => _availabilityDateTime = value.Truncate();
-        }
-
-        DateTime _expirationDateTime = DateTime.MaxValue;
-        public DateTime ExpirationDateTime
-        {
-            get => _expirationDateTime.AsUtc();
-            set => _expirationDateTime = value.Truncate();
-        }
-
-        public uint MultiPack { get; set; } = 1;
-
-        #endregion
-
-        #region Inventory
-
-        public double Stock { get; set; }
-        public double SafetyStock { get; set; }
-        public double ReorderLevel { get; set; }
-
-        #endregion
 
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        //public virtual ICollection<BranchStoreProductBase> BranchStoreProducts { get; set; } = new List<BranchStoreProductBase>();
-        //public virtual ICollection<ProductImageBase> Images { get; set; } = new List<ProductImageBase>();
-        //public virtual ICollection<ProductPriceBase> Prices { get; set; } = new List<ProductPriceBase>();
+        public ICollection<ProductCategoryBase> ProductCategories { get; set; } = new List<ProductCategoryBase>();        
+        public ICollection<ProductImageBase> ProductImages { get; set; } = new List<ProductImageBase>();
+        public ICollection<ProductPriceBase> ProductPrices { get; set; } = new List<ProductPriceBase>();
+        public ICollection<ProductVariantBase> ProductVariants { get; set; } = new List<ProductVariantBase>();
 
-        //public virtual ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
-        //public virtual ICollection<PromotionProductFilterBase> PromotionFilters { get; set; } = new List<PromotionProductFilterBase>();
+        public ICollection<StoreProductBase> StoreProducts { get; set; } = new List<StoreProductBase>();
+        public ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
+        public ICollection<PromotionProductFilterBase> PromotionProductFilters { get; set; } = new List<PromotionProductFilterBase>();
     }
 
     public static class ProductExtension
@@ -102,13 +65,40 @@ namespace Data.Components.Products
         {
             b.ToTable("Product");
             b.HasKey(e => e.ProductId);
-            b.HasIndex(e => e.Name).IsUnique();
+            b.HasIndex(e => e.Sku).IsUnique();
 
             b.Property(e => e.ProductId).HasMaxLength(KeyMaxLength).IsRequired();
-            b.Property(e => e.ProductCategoryId).HasMaxLength(KeyMaxLength).IsRequired();
-            b.Property(e => e.Name).HasMaxLength(NameMaxLength).IsRequired();
-            b.Property(e => e.Description).HasMaxLength(DescMaxLength);
+            b.Property(e => e.ItemId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.Sku).HasMaxLength(NameMaxLength).IsRequired();
             b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
+
+            b.HasMany(e => e.ProductCategories)
+                .WithOne(d => d.Product)
+                .HasForeignKey(fk => fk.ProductId);
+
+            b.HasMany(e => e.ProductImages)
+                .WithOne(d => d.Product)
+                .HasForeignKey(fk => fk.ProductId);
+
+            b.HasMany(e => e.ProductPrices)
+                .WithOne(d => d.Product)
+                .HasForeignKey(fk => fk.ProductId);
+
+            b.HasMany(e => e.ProductVariants)
+                .WithOne(d => d.Product)
+                .HasForeignKey(fk => fk.ProductId);
+
+            b.HasMany(e => e.StoreProducts)
+                .WithOne(d => d.Product)
+                .HasForeignKey(fk => fk.ProductId);
+
+            b.HasMany(e => e.OrderLineItems)
+                .WithOne(d => d.Product)
+                .HasForeignKey(fk => fk.ProductId);
+
+            b.HasMany(e => e.PromotionProductFilters)
+                .WithOne(d => d.Product)
+                .HasForeignKey(fk => fk.ProductId);
 
             b.HasQueryFilter(e => e.Active);
         }

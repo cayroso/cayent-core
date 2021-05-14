@@ -6,15 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cayent.Core.Data.Users
 {
-    public class UserBase
+    public abstract class UserBase
     {
         public string UserId { get; set; }
         public string ImageId { get; set; }
@@ -32,7 +28,7 @@ namespace Cayent.Core.Data.Users
 
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public virtual ICollection<UserRoleBase> UserRoles { get; set; } = new List<UserRoleBase>();
+        public ICollection<UserRoleBase> UserRoles { get; set; } = new List<UserRoleBase>();
     }
 
     public static class UserExtension
@@ -72,6 +68,10 @@ namespace Cayent.Core.Data.Users
             b.Property(e => e.PhoneNumber).HasMaxLength(KeyMaxLength).IsRequired();
 
             b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
+
+            b.HasMany(e => e.UserRoles)
+                .WithOne(d => d.User)
+                .HasForeignKey(fk => fk.UserId);
         }
     }
 

@@ -1,4 +1,4 @@
-﻿namespace Data.Components.Orders.OrderShipments
+﻿namespace Cayent.Core.Data.Components.Orders.OrderShipments
 {
     public abstract  class OrderShipmentGroupBase
     {

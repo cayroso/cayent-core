@@ -1,15 +1,10 @@
-﻿using Cayent.Core.Data.Components;
-using Data.Components.Products;
-using Data.Components.Promotions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace Data.Components.ItemGroups
+using Cayent.Core.Data.Components.Items;
+
+namespace Cayent.Core.Data.Components.ItemGroups
 {
     public abstract class ItemGroupBase
     {
@@ -17,9 +12,7 @@ namespace Data.Components.ItemGroups
         public string ItemGroupId { get; set; }
         public string Name { get; set; }
 
-        //public virtual ICollection<ProductBase> Products { get; set; } = new List<ProductBase>();
-        //public virtual ICollection<PromotionProductFilterBase> PromotionFilters { get; set; } = new List<PromotionProductFilterBase>();
-
+        public ICollection<ItemBase> Items { get; set; } = new List<ItemBase>();
     }
 
     public class ItemGroupBaseConfiguration : EntityBaseConfiguration<ItemGroupBase>
@@ -33,6 +26,9 @@ namespace Data.Components.ItemGroups
             b.Property(e => e.ItemGroupId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.Name).HasMaxLength(NameMaxLength).IsRequired();
 
+            b.HasMany(e => e.Items)
+                .WithOne(d => d.ItemGroup)
+                .HasForeignKey(fk => fk.ItemGroupId);
         }
     }
 }

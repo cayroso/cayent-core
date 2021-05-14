@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Cayent.Core.Common.Extensions;
-using Cayent.Core.Data.Components;
-using Data.Components.Orders.OrderLineItems;
+using Cayent.Core.Data.Components.Orders.OrderLineItems;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Data.Components.Products
+namespace Cayent.Core.Data.Components.Products
 {
     public abstract class ProductPriceBase
     {
@@ -18,7 +14,7 @@ namespace Data.Components.Products
         public string ProductPriceId { get; set; }
 
         public string ProductId { get; set; }
-        public virtual ProductBase Product { get; set; }
+        public ProductBase Product { get; set; }
 
         public double Cogs { get; set; }
         public double Price { get; set; }
@@ -42,7 +38,8 @@ namespace Data.Components.Products
 
         public bool Active { get; set; } = true;
 
-        //public virtual ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
+        public ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
+
     }
 
     public class ProductPriceBaseConfiguration : EntityBaseConfiguration<ProductPriceBase>
@@ -56,6 +53,12 @@ namespace Data.Components.Products
             b.Property(e => e.ProductId).HasMaxLength(KeyMaxLength).IsRequired();
 
             b.HasQueryFilter(e => e.Active);
+
+            b.HasMany(e => e.OrderLineItems)
+                .WithOne(d => d.ProductPrice)
+                .HasForeignKey(d => d.ProductPriceId)
+                .OnDelete(DeleteBehavior.NoAction)
+                ;
         }
     }
 }

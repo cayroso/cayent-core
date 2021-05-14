@@ -1,16 +1,9 @@
-﻿using Cayent.Core.Data.Components;
-using Data.Enums;
+﻿using Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Data.Components.Customers
+namespace Cayent.Core.Data.Components.Customers
 {
     public abstract class CustomerAddressBase
     {        
@@ -18,7 +11,7 @@ namespace Data.Components.Customers
         public string CustomerAddressId { get; set; }
 
         public string CustomerId { get; set; }
-        public virtual CustomerBase Customer { get; set; }
+        public CustomerBase Customer { get; set; }
         public EnumAddressType AddressType { get; set; }
         public bool IsPrimary { get; set; }
         public string Address { get; set; }

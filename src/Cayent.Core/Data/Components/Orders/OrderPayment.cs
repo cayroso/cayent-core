@@ -1,11 +1,10 @@
 ﻿using System;
 using Cayent.Core.Common.Extensions;
-using Cayent.Core.Data.Components;
 using Cayent.Core.Data.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace Data.Components.Orders
+namespace Cayent.Core.Data.Components.Orders
 {
     public abstract class OrderPaymentBase
     {
@@ -13,9 +12,9 @@ namespace Data.Components.Orders
         public string OrderPaymentId { get; set; }
 
         public string OrderId { get; set; }
-        public virtual OrderBase Order { get; set; }
+        public OrderBase Order { get; set; }
         public string UserId { get; set; }
-        public virtual UserBase User { get; set; }
+        public UserBase User { get; set; }
 
         public double AmountDue { get; set; }
         public double AmountPaid { get; set; }

@@ -1,16 +1,12 @@
-﻿using Data.Components.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using Cayent.Core.Common.Extensions;
-using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
+using Cayent.Core.Data.Components.Products;
+using System.Collections.Generic;
 
-namespace Data.Components.Promotions
+namespace Cayent.Core.Data.Components.Promotions
 {
     public enum EnumPromotionType
     {
@@ -136,7 +132,7 @@ namespace Data.Components.Promotions
         /// The item/product id of any free gift offered in the promotion.
         /// </summary>
         public string FreeGiftProductId { get; set; }
-        public virtual ProductBase FreeGiftProduct { get; set; }
+        public ProductBase FreeGiftProduct { get; set; }
 
         #endregion
 
@@ -156,7 +152,7 @@ namespace Data.Components.Promotions
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        //public virtual ICollection<PromotionProductFilterBase> PromotionFilters { get; set; } = new List<PromotionProductFilterBase>();
+        public ICollection<PromotionProductFilterBase> PromotionProductFilters { get; set; } = new List<PromotionProductFilterBase>();
     }
 
     public static class PromotionExtension
@@ -192,6 +188,10 @@ namespace Data.Components.Promotions
             b.Property(e => e.Title).HasMaxLength(NameMaxLength).IsRequired();
 
             b.HasQueryFilter(e => e.Active);
+
+            b.HasMany(e => e.PromotionProductFilters)
+                   .WithOne(d => d.Promotion)
+                   .HasForeignKey(d => d.PromotionId);
         }
     }
 }

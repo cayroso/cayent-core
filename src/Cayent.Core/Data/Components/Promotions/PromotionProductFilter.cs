@@ -1,15 +1,9 @@
-﻿using Cayent.Core.Data.Components;
-using Data.Components.ItemGroups;
-using Data.Components.Products;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace Data.Components.Promotions
+using Cayent.Core.Data.Components.Products;
+
+namespace Cayent.Core.Data.Components.Promotions
 {
     public abstract class PromotionProductFilterBase
     {
@@ -17,13 +11,13 @@ namespace Data.Components.Promotions
         public string PromotionProductFilterId { get; set; }
 
         public string PromotionId { get; set; }
-        public virtual PromotionBase Promotion { get; set; }
+        public PromotionBase Promotion { get; set; }
 
         public string ProductId { get; set; }
-        public virtual ProductBase Product { get; set; }
+        public ProductBase Product { get; set; }
 
-        public string ItemGroupId { get; set; }
-        public virtual ItemGroupBase ItemGroup { get; set; }
+        public string ProductGroupId { get; set; }
+        public ProductGroupBase ProductGroup { get; set; }
 
     }
 
@@ -37,7 +31,7 @@ namespace Data.Components.Promotions
             b.Property(e => e.PromotionProductFilterId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.PromotionId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.ProductId).HasMaxLength(KeyMaxLength);
-            b.Property(e => e.ItemGroupId).HasMaxLength(KeyMaxLength);
+            b.Property(e => e.ProductGroupId).HasMaxLength(KeyMaxLength);
 
             b.HasQueryFilter(e => e.Promotion.Active);
         }

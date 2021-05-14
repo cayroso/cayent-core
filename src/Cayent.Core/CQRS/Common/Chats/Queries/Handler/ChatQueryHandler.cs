@@ -6,7 +6,6 @@ using Cayent.Core.CQRS.Queries;
 using Cayent.Core.CQRS.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;

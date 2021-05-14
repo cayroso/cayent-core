@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using Data.Enums;
-using Data.Components.Customers;
-using Data.Components.Settings;
-
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using Data.Components.Orders.OrderLineItems;
-using Data.Components.BranchStores;
 using Cayent.Core.Common.Extensions;
-using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Cayent.Core.Data.Components.Customers;
+using Cayent.Core.Data.Components.Stores;
+using Cayent.Core.Data.Components.Settings;
+using System.Collections.Generic;
+using Cayent.Core.Data.Components.Orders.OrderLineItems;
 
-namespace Data.Components.Orders
+namespace Cayent.Core.Data.Components.Orders
 {
     public abstract class OrderBase
     {
@@ -21,23 +17,21 @@ namespace Data.Components.Orders
         public string OrderId { get; set; }
 
         public string CustomerId { get; set; }
-        public virtual CustomerBase Customer { get; set; }
+        public CustomerBase Customer { get; set; }
 
-        public string BranchStoreId { get; set; }
-        public virtual BranchStoreBase BranchStore { get; set; }
+        public string StoreId { get; set; }
+        public StoreBase Store { get; set; }
 
         public string ShippingSettingId { get; set; }
-        public virtual ShippingSettingBase ShippingSetting { get; set; }
+        public ShippingSettingBase ShippingSetting { get; set; }
 
-        public virtual OrderDeliveryAddressBase DeliveryAddress { get; set; }
+        public OrderDeliveryAddressBase DeliveryAddress { get; set; }
 
         public string Number { get; set; }
         public EnumOrderStatus OrderStatus { get; set; }
 
         public EnumPaymentMethod PaymentMethod { get; set; }
 
-        [NotMapped]
-        public bool StatusModified { get; protected set; } = false;
         public abstract void UpdateStatus(EnumOrderStatus status, string userId, string note);
 
 
@@ -69,11 +63,24 @@ namespace Data.Components.Orders
             set => _expectedMaxDeliveryDateTime = value.Truncate();
         }
 
-        public double GrossPrice { get; set; }
+        /// <summary>
+        /// Total Price of the Line items
+        /// </summary>
+        public double SubTotal { get; set; }
+        /// <summary>
+        /// Sub Total + Service Fee + Delivery Fee
+        /// </summary>        
         public double ServiceFee { get; set; }
         public double DeliveryFee { get; set; }
-        public double Deduction { get; set; }
-        public double NetPrice { get; set; }
+        public double Total { get; set; }
+        /// <summary>
+        /// The total discount of the Order based on the promo code or store discount.
+        /// </summary>
+        public double Discount { get; set; }
+        /// <summary>
+        /// The grand total of the order to be paid by the customer.
+        /// </summary>
+        public double GrandTotal { get; set; }                
         public double AmountPaid { get; set; }
 
         //public virtual ICollection<OrderLineItemBase> LineItems { get; set; } = new List<OrderLineItemBase>();
@@ -83,6 +90,13 @@ namespace Data.Components.Orders
         //public virtual ICollection<OrderStatusHistoryBase> StatusHistories { get; set; } = new List<OrderStatusHistoryBase>();
         
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
+
+        public ICollection<OrderNoteBase> OrderNotes { get; set; } = new List<OrderNoteBase>();
+        public ICollection<OrderPaymentBase> OrderPayments { get; set; } = new List<OrderPaymentBase>();
+        public ICollection<OrderServiceFeeBase> OrderServiceFees { get; set; } = new List<OrderServiceFeeBase>();
+        public ICollection<OrderStatusHistoryBase> OrderStatusHistories { get; set; } = new List<OrderStatusHistoryBase>();
+
+        public ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
     }
 
     public static class OrderExtension
@@ -116,7 +130,7 @@ namespace Data.Components.Orders
 
             b.Property(e => e.OrderId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.CustomerId).HasMaxLength(KeyMaxLength).IsRequired();
-            b.Property(e => e.BranchStoreId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.StoreId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.ShippingSettingId).HasMaxLength(KeyMaxLength).IsRequired();
 
             b.Property(e => e.Number).HasMaxLength(NameMaxLength).IsRequired();
@@ -128,20 +142,27 @@ namespace Data.Components.Orders
 
             b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
 
-            //b.OwnsOne(e => e.DeliveryAddress, da =>
-            //{
-            //    da.ToTable("OrderDeliveryAddress");
-            //    da.HasKey(e => e.OrderId);
 
-            //    da.WithOwner(e => e.Order);
+            b.HasMany(e => e.OrderLineItems)
+                .WithOne(d => d.Order)
+                .HasForeignKey(d => d.OrderId);
 
-            //    //b.Property(e => e.OrderAddressId).HasMaxLength(KeyMaxLength).IsRequired();
-            //    da.Property(e => e.OrderId).HasMaxLength(KeyMaxLength).IsRequired();
-            //    da.Property(e => e.RecipientName).HasMaxLength(NameMaxLength).IsRequired();
-            //    da.Property(e => e.PhoneNumber).HasMaxLength(NameMaxLength).IsRequired();
-            //    da.Property(e => e.Address).HasMaxLength(DescMaxLength).IsRequired();
-            //});
+            b.HasMany(e => e.OrderNotes)
+                .WithOne(d => d.Order)
+                .HasForeignKey(d => d.OrderId);
 
+            b.HasMany(e => e.OrderPayments)
+                .WithOne(d => d.Order)
+                .HasForeignKey(d => d.OrderId);
+
+            b.HasMany(e => e.OrderServiceFees)
+                .WithOne(d => d.Order)
+                .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            b.HasMany(e => e.OrderStatusHistories)
+                .WithOne(d => d.Order)
+                .HasForeignKey(d => d.OrderId);
         }
     }
 }

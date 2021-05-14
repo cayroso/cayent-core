@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using Cayent.Core.Data.Components;
-using Data.Components.Orders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace Data.Components.Settings
+using Cayent.Core.Data.Components.Orders;
+using System.Collections.Generic;
+
+namespace Cayent.Core.Data.Components.Settings
 {
     public abstract class ServiceFeeBase
     {
@@ -20,6 +20,8 @@ namespace Data.Components.Settings
         //public virtual ICollection<OrderServiceFeeBase> OrderServiceFees { get; set; } = new List<OrderServiceFeeBase>();
 
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
+
+        public ICollection<OrderServiceFeeBase> OrderServiceFees { get; set; } = new List<OrderServiceFeeBase>();
     }
     public static class ServiceFeeExtension
     {
@@ -56,6 +58,10 @@ namespace Data.Components.Settings
             b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
 
             b.HasQueryFilter(e => e.Active);
+
+            b.HasMany(e => e.OrderServiceFees)
+                    .WithOne(d => d.ServiceFee)
+                    .HasForeignKey(d => d.ServiceFeeId);
         }
     }
 }

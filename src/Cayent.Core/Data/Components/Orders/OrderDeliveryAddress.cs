@@ -1,17 +1,12 @@
-﻿using Cayent.Core.Data.Components;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace Data.Components.Orders
+namespace Cayent.Core.Data.Components.Orders
 {
     public abstract class OrderDeliveryAddressBase
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string OrderDeliveryAddressId { get; set; }
-
         public string OrderId { get; set; }
-        public virtual OrderBase Order { get; set; }
+        public OrderBase Order { get; set; }
 
         public string RecipientName { get; set; }
         public string PhoneNumber { get; set; }

@@ -3,18 +3,16 @@
 using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cayent.Core.Data.Users
 {
-    public class UserRoleBase
+    public abstract class UserRoleBase
     {        
         public string UserId { get; set; }
-        public virtual UserBase User { get; set; }
+        public UserBase User { get; set; }
 
         public string RoleId { get; set; }
-        public virtual RoleBase Role { get; set; }
+        public RoleBase Role { get; set; }
     }
 
     public class UserRoleBaseConfiguration : EntityBaseConfiguration<UserRoleBase>

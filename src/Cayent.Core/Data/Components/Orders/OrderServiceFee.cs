@@ -1,17 +1,16 @@
-﻿using Cayent.Core.Data.Components;
-using Data.Components.Settings;
+﻿using Cayent.Core.Data.Components.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Data.Components.Orders
+namespace Cayent.Core.Data.Components.Orders
 {
     public abstract class OrderServiceFeeBase
     {        
         public string OrderId { get; set; }
-        public virtual OrderBase Order { get; set; }
+        public OrderBase Order { get; set; }
 
         public string ServiceFeeId { get; set; }
-        public virtual ServiceFeeBase ServiceFee { get; set; }
+        public ServiceFeeBase ServiceFee { get; set; }
     }
 
     public class OrderServiceFeeBaseConfiguration : EntityBaseConfiguration<OrderServiceFeeBase>

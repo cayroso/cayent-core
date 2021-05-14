@@ -1,22 +1,20 @@
-﻿using Cayent.Core.Data.Components;
-using Data.Components.Orders.OrderLineItems;
+﻿using Cayent.Core.Data.Components.Orders.OrderLineItems;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Data.Components.Orders.OrderPromotions
+namespace Cayent.Core.Data.Components.Orders.OrderPromotions
 {
     public abstract class OrderPromotionLineItemBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderPromotionId { get; set; }
-        public virtual OrderPromotionBase OrderPromotion { get; set; }
+        public OrderPromotionBase OrderPromotion { get; set; }
 
         public string OrderLineItemId { get; set; }
-        public virtual OrderLineItemBase OrderLineItem { get; set; }
+        public OrderLineItemBase OrderLineItem { get; set; }
 
-        public double Duantity { get; set; }
+        public double Quantity { get; set; }
     }
 
     public class OrderPromotionLineItemBaseConfiguration : EntityBaseConfiguration<OrderPromotionLineItemBase>

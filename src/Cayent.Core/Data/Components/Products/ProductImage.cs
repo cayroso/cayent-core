@@ -1,15 +1,9 @@
-﻿using Cayent.Core.Data.Components;
-using Cayent.Core.Data.Fileuploads;
+﻿using Cayent.Core.Data.Fileuploads;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Data.Components.Products
+namespace Cayent.Core.Data.Components.Products
 {
     public abstract class ProductImageBase
     {
@@ -18,10 +12,10 @@ namespace Data.Components.Products
 
         public string ProductId { get; set; }
 
-        public virtual ProductBase Product { get; set; }
+        public ProductBase Product { get; set; }
 
         public string ImageId { get; set; }
-        public virtual FileUpload Image { get; set; }
+        public FileUpload Image { get; set; }
 
         public uint SortOrder { get; set; }
     }

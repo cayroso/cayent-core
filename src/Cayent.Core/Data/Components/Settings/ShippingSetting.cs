@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using Data.Components.Orders;
 using Data.Enums;
 using Cayent.Core.Common.Extensions;
-using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace Data.Components.Settings
+using System.Collections.Generic;
+using Cayent.Core.Data.Components.Orders;
+
+namespace Cayent.Core.Data.Components.Settings
 {
     public abstract class ShippingSettingBase
     {
@@ -33,7 +33,7 @@ namespace Data.Components.Settings
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        //public virtual ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
+        public ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
     }
 
     public static class ShippingSettingExtension
@@ -71,6 +71,11 @@ namespace Data.Components.Settings
             b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
 
             b.HasQueryFilter(e => e.Active);
+
+            b.HasMany(e => e.Orders)
+                   .WithOne(d => d.ShippingSetting)
+                   .HasForeignKey(d => d.ShippingSettingId);
+            //.OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

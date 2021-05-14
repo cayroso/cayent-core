@@ -1,13 +1,7 @@
 ﻿using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cayent.Core.Data.Users
 {
@@ -15,6 +9,8 @@ namespace Cayent.Core.Data.Users
     {
         public string RoleId { get; set; }
         public string Name { get; set; }
+
+        public ICollection<UserRoleBase> UserRoles { get; set; } = new List<UserRoleBase>();
     }
 
     public class RoleBaseConfiguration : EntityBaseConfiguration<RoleBase>
@@ -26,6 +22,10 @@ namespace Cayent.Core.Data.Users
 
             b.Property(e => e.RoleId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.Name).HasMaxLength(NameMaxLength).IsRequired();
+
+            b.HasMany(e => e.UserRoles)
+                .WithOne(d => d.Role)
+                .HasForeignKey(fk => fk.RoleId);
         }
     }
 

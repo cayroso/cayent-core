@@ -1,9 +1,4 @@
-﻿using Cayent.Core.Data.Identity.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cayent.Core.Data.Providers
+﻿namespace Cayent.Core.Data.Providers
 {
     //public interface ITenantProvider
     //{

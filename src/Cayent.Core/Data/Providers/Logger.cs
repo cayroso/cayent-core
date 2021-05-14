@@ -2,8 +2,6 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cayent.Core.Data.Providers
 {

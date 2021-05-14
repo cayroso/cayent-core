@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Cayent.Core.Data.Components;
-using Data.Components.Promotions;
+﻿using Cayent.Core.Data.Components.Promotions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace Data.Components.Orders.OrderPromotions
+namespace Cayent.Core.Data.Components.Orders.OrderPromotions
 {
     public abstract class OrderPromotionBase
     {
@@ -13,12 +11,12 @@ namespace Data.Components.Orders.OrderPromotions
         public string OrderPromotionId { get; set; }
 
         public string OrderId { get; set; }
-        public virtual OrderBase Order { get; set; }
+        public OrderBase Order { get; set; }
 
         public string PromotionId { get; set; }
-        public virtual PromotionBase Promotion { get; set; }
+        public PromotionBase Promotion { get; set; }
 
-        //public virtual ICollection<OrderPromotionLineItemBase> PromotionItems { get; set; }
+        public ICollection<OrderPromotionLineItemBase> OrderPromotionLineItems { get; set; }
     }
 
     public class OrderPromotionBaseConfiguration : EntityBaseConfiguration<OrderPromotionBase>
@@ -33,6 +31,10 @@ namespace Data.Components.Orders.OrderPromotions
             b.Property(e => e.PromotionId).HasMaxLength(KeyMaxLength).IsRequired();
 
             b.HasQueryFilter(e => e.Promotion.Active);
+
+            b.HasMany(e => e.OrderPromotionLineItems)
+                .WithOne(d => d.OrderPromotion)
+                .HasForeignKey(fk => fk.OrderPromotionId);
         }
     }
 }

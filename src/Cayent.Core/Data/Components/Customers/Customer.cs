@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using Data.Components.Orders;
 using Cayent.Core.Common.Extensions;
-using System.ComponentModel.DataAnnotations;
-using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace Data.Components.Customers
+using System.Collections.Generic;
+using Cayent.Core.Data.Components.Orders;
+
+namespace Cayent.Core.Data.Components.Customers
 {
     public abstract class CustomerBase
     {
@@ -23,9 +22,6 @@ namespace Data.Components.Customers
         public string PhoneNumber { get; set; }
         public string Notes { get; set; }
 
-        //public virtual ICollection<CustomerAddressBase> CustomerAddresses { get; set; } = new List<CustomerAddressBase>();
-
-
         DateTime _dateCreated;
         public DateTime DateCreated
         {
@@ -33,11 +29,12 @@ namespace Data.Components.Customers
             set => _dateCreated = value.Truncate();
         }
 
-        //public virtual ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
-
         public bool Active { get; set; } = true;
 
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
+
+        public ICollection<CustomerAddressBase> CustomerAddresses { get; set; } = new List<CustomerAddressBase>();
+        public ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
     }
 
     //public static class CustomerExtension
@@ -79,6 +76,14 @@ namespace Data.Components.Customers
             b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
 
             b.HasQueryFilter(e => e.Active);
+
+            b.HasMany(e => e.CustomerAddresses)
+                .WithOne(d => d.Customer)
+                .HasForeignKey(fk => fk.CustomerId);
+
+            b.HasMany(e => e.Orders)
+                .WithOne(d => d.Customer)
+                .HasForeignKey(fk => fk.CustomerId);
         }
     }
 }
