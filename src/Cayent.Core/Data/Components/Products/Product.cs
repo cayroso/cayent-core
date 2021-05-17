@@ -10,11 +10,9 @@ using Cayent.Core.Data.Components.Promotions;
 
 namespace Cayent.Core.Data.Components.Products
 {
-    public abstract class ProductBase
+    public class ProductBase
     {
         public string ProductId { get; set; }
-
-        public string Sku { get; set; }
 
         public string ItemId { get; set; }
         public virtual ItemBase Item { get; set; }
@@ -22,17 +20,18 @@ namespace Cayent.Core.Data.Components.Products
         public string ProductGroupId { get; set; }
         public virtual ProductGroupBase ProductGroup { get; set; }
 
+        public string Sku { get; set; }
+        public string Summary { get; set; }
         public string PrimaryImageUrl { get; set; }
 
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public virtual ICollection<ProductCategoryBase> ProductCategories { get; set; } = new List<ProductCategoryBase>();        
+        public virtual ICollection<ProductCategoryBase> ProductCategories { get; set; } = new List<ProductCategoryBase>();
         public virtual ICollection<ProductImageBase> ProductImages { get; set; } = new List<ProductImageBase>();
         public virtual ICollection<ProductPriceBase> ProductPrices { get; set; } = new List<ProductPriceBase>();
         public virtual ICollection<ProductVariantBase> ProductVariants { get; set; } = new List<ProductVariantBase>();
 
-        public virtual ICollection<StoreProductBase> StoreProducts { get; set; } = new List<StoreProductBase>();
         public virtual ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
         public virtual ICollection<PromotionProductFilterBase> PromotionProductFilters { get; set; } = new List<PromotionProductFilterBase>();
     }
@@ -72,6 +71,11 @@ namespace Cayent.Core.Data.Components.Products
             b.Property(e => e.Sku).HasMaxLength(NameMaxLength).IsRequired();
             b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
 
+            b.HasOne(e => e.Item)
+                .WithOne()
+                .HasForeignKey<ProductBase>(fk => fk.ProductId);
+
+
             b.HasMany(e => e.ProductCategories)
                 .WithOne(d => d.Product)
                 .HasForeignKey(fk => fk.ProductId);
@@ -85,10 +89,6 @@ namespace Cayent.Core.Data.Components.Products
                 .HasForeignKey(fk => fk.ProductId);
 
             b.HasMany(e => e.ProductVariants)
-                .WithOne(d => d.Product)
-                .HasForeignKey(fk => fk.ProductId);
-
-            b.HasMany(e => e.StoreProducts)
                 .WithOne(d => d.Product)
                 .HasForeignKey(fk => fk.ProductId);
 

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Cayent.Core.Data.Components.Orders.OrderShipments
 {
-    public abstract class OrderShipmentLineItemBase
+    public class OrderShipmentLineItemBase
     {
         public string OrderShipmentId { get; set; }
         public virtual OrderShipmentBase OrderShipment { get; set; }

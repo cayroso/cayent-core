@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cayent.Core.Data.Components.Products
 {
-    public abstract class ProductGroupBase
+    public class ProductGroupBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ProductGroupId { get; set; }

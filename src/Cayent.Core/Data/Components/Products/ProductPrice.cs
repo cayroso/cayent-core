@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Cayent.Core.Data.Components.Products
 {
-    public abstract class ProductPriceBase
+    public class ProductPriceBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ProductPriceId { get; set; }
@@ -39,7 +39,6 @@ namespace Cayent.Core.Data.Components.Products
         public bool Active { get; set; } = true;
 
         public virtual ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
-
     }
 
     public class ProductPriceBaseConfiguration : EntityBaseConfiguration<ProductPriceBase>
@@ -52,13 +51,13 @@ namespace Cayent.Core.Data.Components.Products
             b.Property(e => e.ProductPriceId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.ProductId).HasMaxLength(KeyMaxLength).IsRequired();
 
-            b.HasQueryFilter(e => e.Active);
-
             b.HasMany(e => e.OrderLineItems)
                 .WithOne(d => d.ProductPrice)
                 .HasForeignKey(d => d.ProductPriceId)
                 .OnDelete(DeleteBehavior.NoAction)
                 ;
+
+            b.HasQueryFilter(e => e.Active);
         }
     }
 }

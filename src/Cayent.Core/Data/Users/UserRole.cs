@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Cayent.Core.Data.Users
 {
-    public abstract class UserRoleBase
+    public class UserRoleBase
     {        
         public string UserId { get; set; }
         public virtual UserBase User { get; set; }

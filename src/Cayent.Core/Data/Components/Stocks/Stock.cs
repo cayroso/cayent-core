@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Cayent.Core.Data.Components.Stocks
 {
-    public abstract class StockBase
+    public class StockBase
     {
         public string StockId { get; set; }
 
@@ -14,8 +14,6 @@ namespace Cayent.Core.Data.Components.Stocks
         public virtual ItemBase Item { get; set; }
 
         public string Serial { get; set; }
-
-        public virtual ICollection<StoreStockBase> StoreStocks { get; set; } = new List<StoreStockBase>();
     }
 
     public class StockBaseConfiguration : EntityBaseConfiguration<StockBase>
@@ -29,14 +27,6 @@ namespace Cayent.Core.Data.Components.Stocks
             b.Property(e => e.StockId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.ItemId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.Serial).HasMaxLength(NameMaxLength).IsRequired();
-            //b.Property(e => e.Description).HasMaxLength(DescMaxLength);
-            //b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
-
-            //b.HasQueryFilter(e => e.Active);
-
-            b.HasMany(e => e.StoreStocks)
-                .WithOne(d => d.Stock)
-                .HasForeignKey(fk => fk.StockId);
         }
     }
 }

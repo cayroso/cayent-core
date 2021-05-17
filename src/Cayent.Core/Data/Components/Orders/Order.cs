@@ -11,19 +11,10 @@ using Cayent.Core.Data.Components.Orders.OrderLineItems;
 
 namespace Cayent.Core.Data.Components.Orders
 {
-    public abstract class OrderBase
+    public class OrderBase
     {
         [System.ComponentModel.DataAnnotations.Key]
         public string OrderId { get; set; }
-
-        public string CustomerId { get; set; }
-        public virtual CustomerBase Customer { get; set; }
-
-        public string StoreId { get; set; }
-        public virtual StoreBase Store { get; set; }
-
-        public string ShippingSettingId { get; set; }
-        public virtual ShippingSettingBase ShippingSetting { get; set; }
 
         public virtual OrderDeliveryAddressBase DeliveryAddress { get; set; }
 
@@ -32,7 +23,10 @@ namespace Cayent.Core.Data.Components.Orders
 
         public EnumPaymentMethod PaymentMethod { get; set; }
 
-        public abstract void UpdateStatus(EnumOrderStatus status, string userId, string note);
+        public virtual void UpdateStatus(EnumOrderStatus status, string userId, string note)
+        {
+            throw new NotImplementedException();
+        }
 
 
         DateTime _orderDateTime;
@@ -80,10 +74,9 @@ namespace Cayent.Core.Data.Components.Orders
         /// <summary>
         /// The grand total of the order to be paid by the customer.
         /// </summary>
-        public double GrandTotal { get; set; }                
+        public double GrandTotal { get; set; }
         public double AmountPaid { get; set; }
 
-        
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
         public virtual ICollection<OrderNoteBase> OrderNotes { get; set; } = new List<OrderNoteBase>();
@@ -124,9 +117,7 @@ namespace Cayent.Core.Data.Components.Orders
             b.HasKey(e => e.OrderId);
 
             b.Property(e => e.OrderId).HasMaxLength(KeyMaxLength).IsRequired();
-            b.Property(e => e.CustomerId).HasMaxLength(KeyMaxLength).IsRequired();
-            b.Property(e => e.StoreId).HasMaxLength(KeyMaxLength).IsRequired();
-            b.Property(e => e.ShippingSettingId).HasMaxLength(KeyMaxLength).IsRequired();
+            
 
             b.Property(e => e.Number).HasMaxLength(NameMaxLength).IsRequired();
 

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cayent.Core.Data.Components.Orders.OrderPromotions
 {
-    public abstract class OrderPromotionLineItemBase
+    public class OrderPromotionLineItemBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderPromotionId { get; set; }

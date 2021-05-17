@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Cayent.Core.Data.Components.Products
 {
-    public abstract class ProductCategoryBase
+    public class ProductCategoryBase
     {
         public string ProductId { get; set; }
         public virtual ProductBase Product { get; set; }

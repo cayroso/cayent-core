@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Cayent.Core.Data.Components.Stores
 {
-    public abstract class StoreProductBase
+    public class StoreProductBase
     {        
         public string StoreId { get; set; }
         public virtual StoreBase Store { get; set; }
@@ -23,7 +23,7 @@ namespace Cayent.Core.Data.Components.Stores
             b.Property(e => e.StoreId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.ProductId).HasMaxLength(KeyMaxLength).IsRequired();
 
-            b.HasQueryFilter(e => e.Store.Active && e.Product.Active);
+            //b.HasQueryFilter(e => e.Store.Active && e.Product.Active);
         }
     }
 

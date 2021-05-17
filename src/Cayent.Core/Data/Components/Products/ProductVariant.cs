@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cayent.Core.Data.Components.Products
 {
-    public abstract class ProductVariantBase
+    public class ProductVariantBase
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ProductVariantId { get; set; }
 
         public string ProductId { get; set; }

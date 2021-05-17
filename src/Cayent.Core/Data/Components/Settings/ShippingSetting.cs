@@ -9,7 +9,7 @@ using Cayent.Core.Data.Components.Orders;
 
 namespace Cayent.Core.Data.Components.Settings
 {
-    public abstract class ShippingSettingBase
+    public class ShippingSettingBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ShippingSettingId { get; set; }
@@ -32,8 +32,6 @@ namespace Cayent.Core.Data.Components.Settings
 
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
-
-        public virtual ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
     }
 
     public static class ShippingSettingExtension
@@ -71,11 +69,6 @@ namespace Cayent.Core.Data.Components.Settings
             b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
 
             b.HasQueryFilter(e => e.Active);
-
-            b.HasMany(e => e.Orders)
-                   .WithOne(d => d.ShippingSetting)
-                   .HasForeignKey(d => d.ShippingSettingId);
-            //.OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

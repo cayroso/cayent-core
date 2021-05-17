@@ -5,29 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using Cayent.Core.Data.Components.Products;
 using System.Collections.Generic;
+using Cayent.Core.Data.Enums;
 
 namespace Cayent.Core.Data.Components.Promotions
 {
-    public enum EnumPromotionType
-    {
-        Unknown = 0,
-        Discounts,
-        Shipping,
-    }
-
-    public enum EnumPromotionProductApplicability
-    {
-        Unknown = 0,
-        AllProducts = 1,
-        SpecificProducts = 2
-    }
-    public enum EnumPromotionOfferType
-    {
-        Unknown = 0,
-        NoCode,
-        GenericCode
-    }
-    public abstract class PromotionBase
+    public class PromotionBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string PromotionId { get; set; }

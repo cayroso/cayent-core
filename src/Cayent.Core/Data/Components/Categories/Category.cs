@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cayent.Core.Data.Components.Categories
 {
-    public abstract class CategoryBase
+    public class CategoryBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string CategoryId { get; set; }
@@ -16,8 +16,6 @@ namespace Cayent.Core.Data.Components.Categories
         public virtual CategoryBase Parent { get; set; }
 
         public virtual ICollection<CategoryBase> Children { get; set; } = new List<CategoryBase>();
-        public virtual ICollection<ProductCategoryBase> ProductCategories { get; set; } = new List<ProductCategoryBase>();
-
     }
 
     public class CategoryBaseConfiguration : EntityBaseConfiguration<CategoryBase>
@@ -34,11 +32,7 @@ namespace Cayent.Core.Data.Components.Categories
                 .WithOne(d => d.Parent)
                 .HasForeignKey(e => e.ParentId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            b.HasMany(e => e.ProductCategories)
-                .WithOne(d => d.Category)
-                .HasForeignKey(e => e.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);            
+        
         }
     }
 }

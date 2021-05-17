@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Cayent.Core.Data.Components.Stores
 {
-    public abstract class StoreBase
+    public class StoreBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string StoreId { get; set; }
@@ -21,12 +21,12 @@ namespace Cayent.Core.Data.Components.Stores
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
         public virtual ICollection<StoreProductBase> StoreProducts { get; set; } = new List<StoreProductBase>();
-        
+
         public virtual ICollection<StoreStockBase> StoreStocks { get; set; } = new List<StoreStockBase>();
-        
+
         public virtual ICollection<StoreUserBase> StoreUsers { get; set; } = new List<StoreUserBase>();
 
-        public virtual ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
+
     }
 
     public static class StoreBaseExtension
@@ -78,10 +78,7 @@ namespace Cayent.Core.Data.Components.Stores
                 .WithOne(d => d.Store)
                 .HasForeignKey(d => d.StoreId);
 
-            b.HasMany(e => e.Orders)
-                .WithOne(d => d.Store)
-                .HasForeignKey(d => d.StoreId)
-                ;
+
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Cayent.Core.Data.Components.Orders.OrderShipments
 {
-    public abstract class OrderShipmentBase
+    public class OrderShipmentBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderShipmentId { get; set; }

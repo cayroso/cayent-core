@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cayent.Core.Data.Components.Orders
 {
-    public abstract class OrderStatusHistoryBase
+    public class OrderStatusHistoryBase
     {
         public string OrderId { get; set; }
         public virtual OrderBase Order { get; set; }

@@ -6,7 +6,7 @@ using Cayent.Core.Data.Components.Items;
 
 namespace Cayent.Core.Data.Components.ItemGroups
 {
-    public abstract class ItemGroupBase
+    public class ItemGroupBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ItemGroupId { get; set; }

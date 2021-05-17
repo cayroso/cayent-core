@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Cayent.Core.Data.Components.Items
 {
-    public abstract class ItemBase
+    public class ItemBase
     {
         public string ItemId { get; set; }
 
@@ -16,13 +16,6 @@ namespace Cayent.Core.Data.Components.Items
 
         public string Name { get; set; }
         public string Description { get; set; }
-
-        public uint MultiPack { get; set; } = 1;
-
-        public double Stock { get; set; }
-        public double SafetyStock { get; set; }
-        public double ReorderLevel { get; set; }
-
 
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();

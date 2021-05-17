@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Cayent.Core.Data.Components.Orders
 {
-    public abstract class OrderNoteBase
+    public class OrderNoteBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderNoteId { get; set; }

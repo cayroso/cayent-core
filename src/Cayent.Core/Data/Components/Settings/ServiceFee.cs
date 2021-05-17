@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Cayent.Core.Data.Components.Settings
 {
-    public abstract class ServiceFeeBase
+    public class ServiceFeeBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ServiceFeeId { get; set; }

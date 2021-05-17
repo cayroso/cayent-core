@@ -4,13 +4,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Cayent.Core.Data.Components.Stores
 {
-    public abstract class StoreStockBase
+    public class StoreStockBase
     {
         public string StoreId { get; set; }
         public virtual StoreBase Store { get; set; }
 
         public string StockId { get; set; }
         public virtual StockBase Stock { get; set; }
+
+        public int Quantity { get; set; }
+        public int SafetyQuantity { get; set; }
     }
 
     public class StoreStockBaseConfiguration : EntityBaseConfiguration<StoreStockBase>

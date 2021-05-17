@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Cayent.Core.Data.Components.Orders
 {
-    public abstract class OrderDeliveryAddressBase
+    public class OrderDeliveryAddressBase
     {
         public string OrderId { get; set; }
         public virtual OrderBase Order { get; set; }

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cayent.Core.Data.Components.Products
 {
-    public abstract class ProductImageBase
+    public class ProductImageBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ProductImageId { get; set; }

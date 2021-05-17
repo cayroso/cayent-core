@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cayent.Core.Data.Components.Customers
 {
-    public abstract class CustomerAddressBase
+    public class CustomerAddressBase
     {        
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string CustomerAddressId { get; set; }

@@ -5,7 +5,7 @@ using Cayent.Core.Data.Components.Products;
 
 namespace Cayent.Core.Data.Components.Promotions
 {
-    public abstract class PromotionProductFilterBase
+    public class PromotionProductFilterBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string PromotionProductFilterId { get; set; }

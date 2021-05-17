@@ -4,9 +4,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Cayent.Core.Data.Components.Stores
 {
-    public abstract class StoreUserBase
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public class StoreUserBase
+    {        
         public string StoreId { get; set; }
         public virtual StoreBase Store { get; set; }
 
