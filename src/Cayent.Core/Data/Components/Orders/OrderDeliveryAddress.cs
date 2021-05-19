@@ -9,6 +9,7 @@ namespace Cayent.Core.Data.Components.Orders
         public virtual OrderBase Order { get; set; }
 
         public string RecipientName { get; set; }
+        public string Email { get; set; }
         public string PhoneNumber { get; set; }
 
         public string Address { get; set; }
@@ -28,6 +29,7 @@ namespace Cayent.Core.Data.Components.Orders
             //b.Property(e => e.OrderAddressId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.OrderId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.RecipientName).HasMaxLength(NameMaxLength).IsRequired();
+            b.Property(e => e.Email).HasMaxLength(DescMaxLength).IsRequired();
             b.Property(e => e.PhoneNumber).HasMaxLength(NameMaxLength).IsRequired();
             b.Property(e => e.Address).HasMaxLength(DescMaxLength).IsRequired();
         }
