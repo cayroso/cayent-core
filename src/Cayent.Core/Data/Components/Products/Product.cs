@@ -30,8 +30,7 @@ namespace Cayent.Core.Data.Components.Products
         public virtual ICollection<ProductCategoryBase> ProductCategories { get; set; } = new List<ProductCategoryBase>();
         public virtual ICollection<ProductImageBase> ProductImages { get; set; } = new List<ProductImageBase>();
         public virtual ICollection<ProductPriceBase> ProductPrices { get; set; } = new List<ProductPriceBase>();
-        public virtual ICollection<ProductVariantBase> ProductVariants { get; set; } = new List<ProductVariantBase>();
-
+        
         public virtual ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
         public virtual ICollection<PromotionProductFilterBase> PromotionProductFilters { get; set; } = new List<PromotionProductFilterBase>();
     }
@@ -88,9 +87,9 @@ namespace Cayent.Core.Data.Components.Products
                 .WithOne(d => d.Product)
                 .HasForeignKey(fk => fk.ProductId);
 
-            b.HasMany(e => e.ProductVariants)
-                .WithOne(d => d.Product)
-                .HasForeignKey(fk => fk.ProductId);
+            //b.HasMany(e => e.ProductVariants)
+            //    .WithOne(d => d.Product)
+            //    .HasForeignKey(fk => fk.ProductId);
 
             b.HasMany(e => e.OrderLineItems)
                 .WithOne(d => d.Product)

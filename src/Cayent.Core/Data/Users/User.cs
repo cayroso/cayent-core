@@ -57,7 +57,7 @@ namespace Cayent.Core.Data.Users
     public class UserBaseConfiguration : EntityBaseConfiguration<UserBase>
     {
         public override void Configure(EntityTypeBuilder<UserBase> b)
-        {
+        {            
             b.ToTable("User");
             b.HasKey(e => e.UserId);
 

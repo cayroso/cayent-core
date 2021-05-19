@@ -32,6 +32,7 @@ namespace Cayent.Core.Data.Components.Items
             b.HasIndex(e => e.Name).IsUnique();
 
             b.Property(e => e.ItemId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.ItemGroupId).HasMaxLength(KeyMaxLength);
             b.Property(e => e.Name).HasMaxLength(NameMaxLength).IsRequired();
             b.Property(e => e.Description).HasMaxLength(DescMaxLength);
             b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();

@@ -19,6 +19,8 @@ namespace Cayent.Core.Data.Components.Promotions
         public string GenericRedemptionCode { get; set; }
 
         public EnumPromotionType PromotionType { get; set; }
+
+        public EnumPromotionVisibility PromotionVisibility { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
 
