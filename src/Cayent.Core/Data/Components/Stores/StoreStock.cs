@@ -14,6 +14,7 @@ namespace Cayent.Core.Data.Components.Stores
 
         public int Quantity { get; set; }
         public int SafetyQuantity { get; set; }
+        public int ReorderQuantity { get; set; }
     }
 
     public class StoreStockBaseConfiguration : EntityBaseConfiguration<StoreStockBase>
