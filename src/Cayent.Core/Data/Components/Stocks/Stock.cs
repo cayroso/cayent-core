@@ -22,11 +22,11 @@ namespace Cayent.Core.Data.Components.Stocks
         {
             b.ToTable("Stock");
             b.HasKey(e => e.StockId);
-            b.HasIndex(e => e.Serial).IsUnique();
+            b.HasIndex(e => new { e.ItemId, e.Serial }).IsUnique();
 
             b.Property(e => e.StockId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.ItemId).HasMaxLength(KeyMaxLength).IsRequired();
-            b.Property(e => e.Serial).HasMaxLength(NameMaxLength).IsRequired();
+            b.Property(e => e.Serial).HasMaxLength(NameMaxLength);
         }
     }
 }

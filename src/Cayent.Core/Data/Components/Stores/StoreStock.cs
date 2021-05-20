@@ -23,6 +23,7 @@ namespace Cayent.Core.Data.Components.Stores
         {
             b.ToTable("StoreStock");
             b.HasKey(e => new { e.StoreId, e.StockId });
+            //b.HasIndex(e => e.StockId).IsUnique();
 
             b.Property(e => e.StoreId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.StockId).HasMaxLength(KeyMaxLength).IsRequired();

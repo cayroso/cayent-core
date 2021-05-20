@@ -1,6 +1,7 @@
 ﻿using Cayent.Core.Data.Components.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Collections.Generic;
 
 namespace Cayent.Core.Data.Components.Stores
 {
@@ -21,9 +22,7 @@ namespace Cayent.Core.Data.Components.Stores
             b.HasKey(e => new { e.StoreId, e.ProductId });
 
             b.Property(e => e.StoreId).HasMaxLength(KeyMaxLength).IsRequired();
-            b.Property(e => e.ProductId).HasMaxLength(KeyMaxLength).IsRequired();
-
-            //b.HasQueryFilter(e => e.Store.Active && e.Product.Active);
+            b.Property(e => e.ProductId).HasMaxLength(KeyMaxLength).IsRequired();            
         }
     }
 
