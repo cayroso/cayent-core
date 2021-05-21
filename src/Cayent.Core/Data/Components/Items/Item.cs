@@ -20,7 +20,7 @@ namespace Cayent.Core.Data.Components.Items
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public virtual ICollection<StockBase> Stocks { get; set; } = new List<StockBase>();
+        //public virtual ICollection<StockBase> Stocks { get; set; } = new List<StockBase>();
     }
 
     public class ItemBaseConfiguration : EntityBaseConfiguration<ItemBase>
@@ -39,9 +39,9 @@ namespace Cayent.Core.Data.Components.Items
 
             b.HasQueryFilter(e => e.Active);
 
-            b.HasMany(e => e.Stocks)
-                .WithOne(d => d.Item)
-                .HasForeignKey(fk => fk.ItemId);
+            //b.HasMany(e => e.Stocks)
+            //    .WithOne(d => d.Item)
+            //    .HasForeignKey(fk => fk.ItemId);
 
         }
     }

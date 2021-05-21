@@ -22,7 +22,7 @@ namespace Cayent.Core.Data.Components.Stores
 
         public virtual ICollection<StoreProductBase> StoreProducts { get; set; } = new List<StoreProductBase>();
 
-        public virtual ICollection<StoreStockBase> StoreStocks { get; set; } = new List<StoreStockBase>();
+        //public virtual ICollection<StoreStockBase> StoreStocks { get; set; } = new List<StoreStockBase>();
 
         public virtual ICollection<StoreUserBase> StoreUsers { get; set; } = new List<StoreUserBase>();
 
@@ -70,9 +70,9 @@ namespace Cayent.Core.Data.Components.Stores
                 .HasForeignKey(d => d.StoreId)
                 ;
 
-            b.HasMany(e => e.StoreStocks)
-                .WithOne(d => d.Store)
-                .HasForeignKey(d => d.StoreId);
+            //b.HasMany(e => e.StoreStocks)
+            //    .WithOne(d => d.Store)
+            //    .HasForeignKey(d => d.StoreId);
 
             b.HasMany(e => e.StoreUsers)
                 .WithOne(d => d.Store)
