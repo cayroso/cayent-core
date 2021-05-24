@@ -1,0 +1,208 @@
+﻿OrderStatus
+UNPAID
+READY_TO_SHIP
+PROCESSED
+RETRY_SHIP
+SHIPPED
+TO_CONFIRM_RECEIVE
+IN_CANCEL
+CANCELLED
+TO_RETURN
+COMPLETED
+
+ReturnStatus
+REQUESTED
+ACCEPTED
+CANCELLED
+JUDGING
+REFUND_PAID
+CLOSED
+PROCESSING
+SELLER_DISPUTE
+
+ReturnReason
+NONE
+NOT_RECEIPT
+WRONG_ITEM
+ITEM_DAMAGED
+DIFFERENT_DESCRIPTION
+MUTUAL_AGREE
+OTHER
+ITEM_WRONGDAMAGED(only for Vietnam)
+CHANGE_MIND
+ITEM_MISSING
+EXPECTATION_FAILED
+ITEM_FAKE
+PHYSICAL_DMG
+FUNCTIONAL_DMG
+
+LogisticsStatus
+LOGISTICS_NOT_START
+LOGISTICS_REQUEST_CREATED
+LOGISTICS_PICKUP_DONE
+LOGISTICS_PICKUP_RETRY
+LOGISTICS_PICKUP_FAILED
+LOGISTICS_DELIVERY_DONE
+LOGISTICS_DELIVERY_FAILED
+LOGISTICS_REQUEST_CANCELED
+LOGISTICS_COD_REJECTED
+LOGISTICS_READY
+LOGISTICS_INVALID
+LOGISTICS_LOST
+LOGISTICS_UNKNOWN
+
+ReturnDisputeReason
+Reason                                              Description
+
+NON_RECEIPT                                  I would like to reject the non-receipt claim
+
+OTHER                                               I would like to reject the request
+
+NOT_RECEIVED                                I agree with the return request,but I did not receive the product(s)
+
+UNKNOWN
+
+AttributeType
+INT_TYPE
+STRING_TYPE
+ENUM_TYPE
+FLOAT_TYPE
+DATE_TYPE
+TIMESTAMP_TYPE
+
+AttributeInputType
+DROP_DOWN
+TEXT_FILED
+COMBO_BOX
+MULTIPLE_SELECT
+﻿MULTIPLE_SELECT_COMBO_BOX
+
+CancelReason
+OUT_OF_STOCK
+CUSTOMER_REQUEST
+UNDELIVERABLE_AREA
+COD_NOT_SUPPORTED
+FeeType
+SIZE_SELECTION
+SIZE_INPUT
+FIXED_DEFAULT_PRICE
+CUSTOM_PRICE
+
+PaymentMethod
+Cybersource [ID, VN, TW, SG, MY, TH, PH]
+Nicepay Credit Card [ID]
+IPay88 Credit Card [MY]
+Airpay Credit Card [PH]
+Stripe CC [PH]
+Airpay Credit Card [ID, VN, TW, TH]
+Bank Transfer [ID]
+Bank BCA (Manual Transfer) [ID]
+Bank Mandiri (Manual Transfer) [ID]
+Bank BNI (Manual Transfer) [ID]
+Bank BRI (Manual Transfer) [ID]
+Bank CIMB Niaga (Manual Transfer) [ID]
+Bank Transfer [VN]
+Fubon Bank Transfer [TW]
+Esun Bank Transfer [TW]
+Bank Transfer [TW]
+Esun CB Bank Transfer [TW]
+Bank Transfer [SG]
+Bank Transfer [MY]
+ATM Payment [TH]
+ATM Payment (BBL) [TH]
+Bank Transfer [TH]
+ATM Payment (KBANK) [TH]
+ATM Payment (KTB) [TH]
+ATM Payment (SCB) [TH]
+ATM Payment (BAY) [TH]
+Online Payment (KBANK) [TH]
+Online Payment (BAY) [TH]
+Bank Transfer [PH]
+Cash on Delivery [ID, VN, SG, MY, TH, PH]
+現付 [TW]
+Shopee Seller Wallet [ID]
+Shopee Wallet [ID, VN, TW, SG, MY, TH, PH]
+Indomaret [ID]
+Bank BRI (Virtual Account) [ID]
+Bank BCA (Virtual Account) [ID]
+Bank Mandiri (Virtual Account) [ID]
+Bank BNI (Virtual Account) [ID]
+Virtual Account Parent [ID]
+Android Pay [SG]
+MOLPay [MY]
+iPay 88 [MY]
+iBanking Payment [TH]
+iBanking Payment (BBL) [TH]
+iBanking Payment (KTB) [TH]
+iBanking Payment (SCB) [TH]
+Dragonpay - Remittance Center [PH]
+Dragonpay - OTC [PH]
+Dragonpay - Online Payment [PH]
+Buyer-Seller Self Arrange [ID, VN, TW, SG, MY, TH, PH]
+Kredivo [ID]
+Kredivo - BNPL [ID]
+Kredivo - 3 Months Installment [ID]
+Kredivo - 6 Months Installment [ID]
+Kredivo - 12 Months Installment [ID]
+Nicepay Credit Card Installment [ID]
+BCA One Klik [ID]
+Akulaku [ID]
+Free [Vn, TW, SG, MY, TH, PH]
+iPay88 CC Installment [MY]
+Ebanx Credit Card [BR]
+Ebanx Credit Card Installment [BR]
+Ebanx Credit Card Installment 1x installment plan [BR]
+Ebanx Credit Card Installment 2x installment plan [BR]
+Ebanx Credit Card Installment 3x installment plan [BR]
+Ebanx Credit Card Installment 4x installment plan [BR]
+Ebanx Credit Card Installment 5x installment plan [BR]
+Ebanx Credit Card Installment 6x installment plan [BR]
+Ebanx Boleto [BR]
+
+CancelReason
+OUT_OF_STOCK
+CUSTOMER_REQUEST
+UNDELIVERABLE_AREA
+COD_NOT_SUPPORTED
+
+ShippingDocumentType
+NORMAL_AIR_WAYBILL
+THERMAL_AIR_WAYBILL
+NORMAL_JOB_AIR_WAYBILL
+THERMAL_JOB_AIR_WAYBILL
+
+
+ItemStatus
+NORMAL
+DELETED
+BANNED
+UNLIST
+
+StockType
+1: Shopee Warehouse Stock
+2: Seller Stock
+Language
+zh-hans
+zh-hant
+ms-my
+en-my
+en
+id
+vi
+th
+pt-br
+
+PromotionType
+Campaign
+Discount Promotions
+Flash Sale
+Whole Sale
+Group Buy
+Bundle Deal
+Welcome Package
+Flash Sale
+Add-on Discount
+Brand Sale
+In ShopFlash Sale
+Gift with purchase
+﻿Exclusive Price

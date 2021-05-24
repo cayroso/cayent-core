@@ -17,8 +17,8 @@ namespace Cayent.Core.Data.Components.Products
         public string ItemId { get; set; }
         public virtual ItemBase Item { get; set; }
 
-        public string ProductGroupId { get; set; }
-        public virtual ProductGroupBase ProductGroup { get; set; }
+        public string ProductVariantId { get; set; }
+        public virtual ProductVariantBase ProductVariant { get; set; }
 
         public string Sku { get; set; }
         public string Summary { get; set; }
@@ -67,6 +67,7 @@ namespace Cayent.Core.Data.Components.Products
 
             b.Property(e => e.ProductId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.ItemId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.ProductVariantId).HasMaxLength(KeyMaxLength);
             b.Property(e => e.Sku).HasMaxLength(NameMaxLength).IsRequired();
             b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
 
