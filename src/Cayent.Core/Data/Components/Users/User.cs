@@ -8,9 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Cayent.Core.Data.Users
+namespace Cayent.Core.Data.Components.Users
 {
-    public abstract class UserBase
+    internal abstract class UserBase
     {
         public string UserId { get; set; }
         public string ImageId { get; set; }
@@ -31,7 +31,7 @@ namespace Cayent.Core.Data.Users
         public virtual ICollection<UserRoleBase> UserRoles { get; set; } = new List<UserRoleBase>();
     }
 
-    public static class UserExtension
+    internal static class UserExtension
     {
 
         public static void ThrowIfNull(this UserBase me)
@@ -54,7 +54,7 @@ namespace Cayent.Core.Data.Users
         }
     }
 
-    public class UserBaseConfiguration : EntityBaseConfiguration<UserBase>
+    internal class UserBaseConfiguration : EntityBaseConfiguration<UserBase>
     {
         public override void Configure(EntityTypeBuilder<UserBase> b)
         {            

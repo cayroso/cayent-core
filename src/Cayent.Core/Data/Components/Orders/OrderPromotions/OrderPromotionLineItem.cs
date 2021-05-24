@@ -5,9 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cayent.Core.Data.Components.Orders.OrderPromotions
 {
-    public class OrderPromotionLineItemBase
+    internal class OrderPromotionLineItemBase
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderPromotionId { get; set; }
         public virtual OrderPromotionBase OrderPromotion { get; set; }
 
@@ -17,7 +16,7 @@ namespace Cayent.Core.Data.Components.Orders.OrderPromotions
         public double Quantity { get; set; }
     }
 
-    public class OrderPromotionLineItemBaseConfiguration : EntityBaseConfiguration<OrderPromotionLineItemBase>
+    internal class OrderPromotionLineItemBaseConfiguration : EntityBaseConfiguration<OrderPromotionLineItemBase>
     {
         public override void Configure(EntityTypeBuilder<OrderPromotionLineItemBase> b)
         {

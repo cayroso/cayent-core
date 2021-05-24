@@ -6,13 +6,13 @@ using System.Text;
 
 namespace Cayent.Core.Data.Components.Brands
 {
-    public class BrandBase
+    internal class BrandBase
     {
         public string BrandId { get; set; }
         public string Name { get; set; }
     }
 
-    public class BrandBaseConfiguration : EntityBaseConfiguration<BrandBase>
+    internal class BrandBaseConfiguration : EntityBaseConfiguration<BrandBase>
     {
         public override void Configure(EntityTypeBuilder<BrandBase> b)
         {

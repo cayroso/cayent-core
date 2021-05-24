@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Cayent.Core.Data.Components.Products
 {
-    public class ProductCategoryBase
+    internal class ProductCategoryBase
     {
         public string ProductId { get; set; }
         public virtual ProductBase Product { get; set; }
@@ -13,7 +13,7 @@ namespace Cayent.Core.Data.Components.Products
         public virtual CategoryBase Category { get; set; }        
     }
 
-    public class ProductCategoryBaseConfiguration : EntityBaseConfiguration<ProductCategoryBase>
+    internal class ProductCategoryBaseConfiguration : EntityBaseConfiguration<ProductCategoryBase>
     {
         public override void Configure(EntityTypeBuilder<ProductCategoryBase> b)
         {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cayent.Core.Data.Components.Settings
 {
-    class ShippingLabel
+    internal class ShippingLabel
     {
         //https://support.google.com/merchants/answer/6324504
     }

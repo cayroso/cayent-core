@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cayent.Core.Data.Components.Customers
 {
-    public class CustomerAddressBase
+    internal class CustomerAddressBase
     {        
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string CustomerAddressId { get; set; }
@@ -19,7 +19,7 @@ namespace Cayent.Core.Data.Components.Customers
         public double GeoY { get; set; }
     }
 
-    public class CustomerAddressBaseConfiguration : EntityBaseConfiguration<CustomerAddressBase>
+    internal class CustomerAddressBaseConfiguration : EntityBaseConfiguration<CustomerAddressBase>
     {
         public override void Configure(EntityTypeBuilder<CustomerAddressBase> b)
         {

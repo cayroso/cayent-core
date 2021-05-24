@@ -6,7 +6,7 @@ using Cayent.Core.Data.Components.Items;
 
 namespace Cayent.Core.Data.Components.ItemGroups
 {
-    public class ItemGroupBase
+    internal class ItemGroupBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ItemGroupId { get; set; }
@@ -15,7 +15,7 @@ namespace Cayent.Core.Data.Components.ItemGroups
         public virtual ICollection<ItemBase> Items { get; set; } = new List<ItemBase>();
     }
 
-    public class ItemGroupBaseConfiguration : EntityBaseConfiguration<ItemGroupBase>
+    internal class ItemGroupBaseConfiguration : EntityBaseConfiguration<ItemGroupBase>
     {
         public override void Configure(EntityTypeBuilder<ItemGroupBase> b)
         {

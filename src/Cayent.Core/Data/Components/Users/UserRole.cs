@@ -4,9 +4,9 @@ using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Cayent.Core.Data.Users
+namespace Cayent.Core.Data.Components.Users
 {
-    public class UserRoleBase
+    internal class UserRoleBase
     {        
         public string UserId { get; set; }
         public virtual UserBase User { get; set; }
@@ -15,7 +15,7 @@ namespace Cayent.Core.Data.Users
         public virtual RoleBase Role { get; set; }
     }
 
-    public class UserRoleBaseConfiguration : EntityBaseConfiguration<UserRoleBase>
+    internal class UserRoleBaseConfiguration : EntityBaseConfiguration<UserRoleBase>
     {
         public override void Configure(EntityTypeBuilder<UserRoleBase> b)
         {

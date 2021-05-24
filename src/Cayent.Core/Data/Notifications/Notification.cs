@@ -3,7 +3,7 @@ using Cayent.Core.Common.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Cayent.Core.Data.Users;
+using Cayent.Core.Data.Components.Users;
 
 namespace Cayent.Core.Data.Notifications
 {
@@ -18,7 +18,7 @@ namespace Cayent.Core.Data.Notifications
         Error
     }
 
-    public class Notification
+    internal class Notification
     {
         public string NotificationId { get; set; }
         public EnumNotificationType NotificationType { get; set; }
@@ -39,7 +39,7 @@ namespace Cayent.Core.Data.Notifications
         public string ConcurrencyStamp { get; set; } = Guid.NewGuid().ToString();
     }
 
-    public class NotificationReceiver
+    internal class NotificationReceiver
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string NotificationReceiverId { get; set; }

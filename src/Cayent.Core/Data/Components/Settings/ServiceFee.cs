@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Cayent.Core.Data.Components.Settings
 {
-    public class ServiceFeeBase
+    internal class ServiceFeeBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ServiceFeeId { get; set; }
@@ -21,7 +21,7 @@ namespace Cayent.Core.Data.Components.Settings
 
         public virtual ICollection<OrderServiceFeeBase> OrderServiceFees { get; set; } = new List<OrderServiceFeeBase>();
     }
-    public static class ServiceFeeExtension
+    internal static class ServiceFeeExtension
     {
         public static void ThrowIfNull(this ServiceFeeBase me)
         {
@@ -43,7 +43,7 @@ namespace Cayent.Core.Data.Components.Settings
         }
     }
 
-    public class ServiceFeeBaseConfiguration : EntityBaseConfiguration<ServiceFeeBase>
+    internal class ServiceFeeBaseConfiguration : EntityBaseConfiguration<ServiceFeeBase>
     {
         public override void Configure(EntityTypeBuilder<ServiceFeeBase> b)
         {

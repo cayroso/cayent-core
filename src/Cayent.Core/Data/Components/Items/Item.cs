@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Cayent.Core.Data.Components.Items
 {
-    public class ItemBase
+    internal class ItemBase
     {
         public string ItemId { get; set; }
 
@@ -23,7 +23,7 @@ namespace Cayent.Core.Data.Components.Items
         //public virtual ICollection<StockBase> Stocks { get; set; } = new List<StockBase>();
     }
 
-    public class ItemBaseConfiguration : EntityBaseConfiguration<ItemBase>
+    internal class ItemBaseConfiguration : EntityBaseConfiguration<ItemBase>
     {
         public override void Configure(EntityTypeBuilder<ItemBase> b)
         {

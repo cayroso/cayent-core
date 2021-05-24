@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Cayent.Core.Data.Components.Stores
 {
-    public class StoreProductBase
+    internal class StoreProductBase
     {        
         public string StoreId { get; set; }
         public virtual StoreBase Store { get; set; }
@@ -14,7 +14,7 @@ namespace Cayent.Core.Data.Components.Stores
         public virtual ProductBase Product { get; set; }
     }
 
-    public class StoreProductBaseConfiguration : EntityBaseConfiguration<StoreProductBase>
+    internal class StoreProductBaseConfiguration : EntityBaseConfiguration<StoreProductBase>
     {
         public override void Configure(EntityTypeBuilder<StoreProductBase> b)
         {            

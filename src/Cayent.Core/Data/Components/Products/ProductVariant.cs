@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cayent.Core.Data.Components.Products
 {
-    public class ProductVariantBase
+    internal class ProductVariantBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ProductVariantId { get; set; }
@@ -17,7 +17,7 @@ namespace Cayent.Core.Data.Components.Products
 
     }
 
-    public class ProductVariantBaseConfiguration : EntityBaseConfiguration<ProductVariantBase>
+    internal class ProductVariantBaseConfiguration : EntityBaseConfiguration<ProductVariantBase>
     {
         public override void Configure(EntityTypeBuilder<ProductVariantBase> b)
         {

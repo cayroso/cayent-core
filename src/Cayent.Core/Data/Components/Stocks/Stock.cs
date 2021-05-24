@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Cayent.Core.Data.Components.Stocks
 {
-    public class StockBase
+    internal class StockBase
     {
         public string StockId { get; set; }
 
@@ -16,7 +16,7 @@ namespace Cayent.Core.Data.Components.Stocks
         public string Serial { get; set; }
     }
 
-    public class StockBaseConfiguration : EntityBaseConfiguration<StockBase>
+    internal class StockBaseConfiguration : EntityBaseConfiguration<StockBase>
     {
         public override void Configure(EntityTypeBuilder<StockBase> b)
         {

@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Collections.Generic;
 
-namespace Cayent.Core.Data.Users
+namespace Cayent.Core.Data.Components.Users
 {
-    public abstract class RoleBase
+    internal abstract class RoleBase
     {
         public string RoleId { get; set; }
         public string Name { get; set; }
@@ -13,7 +13,7 @@ namespace Cayent.Core.Data.Users
         public virtual ICollection<UserRoleBase> UserRoles { get; set; } = new List<UserRoleBase>();
     }
 
-    public class RoleBaseConfiguration : EntityBaseConfiguration<RoleBase>
+    internal class RoleBaseConfiguration : EntityBaseConfiguration<RoleBase>
     {
         public override void Configure(EntityTypeBuilder<RoleBase> b)
         {

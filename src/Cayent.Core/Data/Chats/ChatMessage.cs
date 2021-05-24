@@ -1,5 +1,5 @@
 ﻿using Cayent.Core.Common.Extensions;
-using Cayent.Core.Data.Users;
+using Cayent.Core.Data.Components.Users;
 using System;
 
 namespace Cayent.Core.Data.Chats
@@ -10,7 +10,7 @@ namespace Cayent.Core.Data.Chats
         User = 1
     }
 
-    public class ChatMessage
+    internal class ChatMessage
     {
         public string ChatMessageId { get; set; }
 

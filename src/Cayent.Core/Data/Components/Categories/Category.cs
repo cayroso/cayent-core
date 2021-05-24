@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cayent.Core.Data.Components.Categories
 {
-    public class CategoryBase
+    internal class CategoryBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string CategoryId { get; set; }
@@ -18,7 +18,7 @@ namespace Cayent.Core.Data.Components.Categories
         public virtual ICollection<CategoryBase> Children { get; set; } = new List<CategoryBase>();
     }
 
-    public class CategoryBaseConfiguration : EntityBaseConfiguration<CategoryBase>
+    internal class CategoryBaseConfiguration : EntityBaseConfiguration<CategoryBase>
     {
         public override void Configure(EntityTypeBuilder<CategoryBase> b)
         {

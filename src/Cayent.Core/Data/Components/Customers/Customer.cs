@@ -8,7 +8,7 @@ using Cayent.Core.Data.Components.Orders;
 
 namespace Cayent.Core.Data.Components.Customers
 {
-    public class CustomerBase
+    internal class CustomerBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string CustomerId { get; set; }
@@ -36,7 +36,7 @@ namespace Cayent.Core.Data.Components.Customers
         
     }
 
-    public class CustomerBaseConfiguration : EntityBaseConfiguration<CustomerBase>
+    internal class CustomerBaseConfiguration : EntityBaseConfiguration<CustomerBase>
     {
         public override void Configure(EntityTypeBuilder<CustomerBase> b)
         {

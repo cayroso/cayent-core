@@ -9,7 +9,7 @@ using Cayent.Core.Data.Components.Orders;
 
 namespace Cayent.Core.Data.Components.Settings
 {
-    public class ShippingSettingBase
+    internal class ShippingSettingBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ShippingSettingId { get; set; }
@@ -34,7 +34,7 @@ namespace Cayent.Core.Data.Components.Settings
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
     }
 
-    public static class ShippingSettingExtension
+    internal static class ShippingSettingExtension
     {
         public static void ThrowIfNull(this ShippingSettingBase me)
         {
@@ -56,7 +56,7 @@ namespace Cayent.Core.Data.Components.Settings
         }
     }
 
-    public class ShippingSettingBaseConfiguration : EntityBaseConfiguration<ShippingSettingBase>
+    internal class ShippingSettingBaseConfiguration : EntityBaseConfiguration<ShippingSettingBase>
     {
         public override void Configure(EntityTypeBuilder<ShippingSettingBase> b)
         {

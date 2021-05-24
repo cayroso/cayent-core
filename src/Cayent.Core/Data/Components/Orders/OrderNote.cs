@@ -1,12 +1,13 @@
 ﻿using System;
-using Cayent.Core.Common.Extensions;
-using Cayent.Core.Data.Users;
+using Cayent.Core.Common.Extensions; 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
+using Cayent.Core.Data.Components.Users;
+
 namespace Cayent.Core.Data.Components.Orders
 {
-    public class OrderNoteBase
+    internal class OrderNoteBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderNoteId { get; set; }
@@ -28,7 +29,7 @@ namespace Cayent.Core.Data.Components.Orders
         }
     }
 
-    public class OrderNoteBaseConfiguration : EntityBaseConfiguration<OrderNoteBase>
+    internal class OrderNoteBaseConfiguration : EntityBaseConfiguration<OrderNoteBase>
     {
         public override void Configure(EntityTypeBuilder<OrderNoteBase> b)
         {

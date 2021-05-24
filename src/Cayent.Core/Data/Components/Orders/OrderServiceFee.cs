@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Cayent.Core.Data.Components.Orders
 {
-    public class OrderServiceFeeBase
+    internal class OrderServiceFeeBase
     {        
         public string OrderId { get; set; }
         public virtual OrderBase Order { get; set; }
@@ -13,7 +13,7 @@ namespace Cayent.Core.Data.Components.Orders
         public virtual ServiceFeeBase ServiceFee { get; set; }
     }
 
-    public class OrderServiceFeeBaseConfiguration : EntityBaseConfiguration<OrderServiceFeeBase>
+    internal class OrderServiceFeeBaseConfiguration : EntityBaseConfiguration<OrderServiceFeeBase>
     {
         public override void Configure(EntityTypeBuilder<OrderServiceFeeBase> b)
         {

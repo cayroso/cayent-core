@@ -10,7 +10,7 @@ using Cayent.Core.Data.Components.Promotions;
 
 namespace Cayent.Core.Data.Components.Products
 {
-    public class ProductBase
+    internal class ProductBase
     {
         public string ProductId { get; set; }
 
@@ -35,7 +35,7 @@ namespace Cayent.Core.Data.Components.Products
         public virtual ICollection<PromotionProductFilterBase> PromotionProductFilters { get; set; } = new List<PromotionProductFilterBase>();
     }
 
-    public static class ProductExtension
+    internal static class ProductExtension
     {
         public static void ThrowIfNull(this ProductBase me)
         {
@@ -57,7 +57,7 @@ namespace Cayent.Core.Data.Components.Products
         }
     }
 
-    public class ProductBaseConfiguration : EntityBaseConfiguration<ProductBase>
+    internal class ProductBaseConfiguration : EntityBaseConfiguration<ProductBase>
     {
         public override void Configure(EntityTypeBuilder<ProductBase> b)
         {

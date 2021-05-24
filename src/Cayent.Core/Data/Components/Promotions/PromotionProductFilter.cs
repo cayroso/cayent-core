@@ -6,7 +6,7 @@ using Cayent.Core.Data.Components.Categories;
 
 namespace Cayent.Core.Data.Components.Promotions
 {
-    public class PromotionProductFilterBase
+    internal class PromotionProductFilterBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string PromotionProductFilterId { get; set; }
@@ -24,7 +24,7 @@ namespace Cayent.Core.Data.Components.Promotions
         public virtual CategoryBase Category { get; set; }
     }
 
-    public class PromotionProductFilterBaseConfiguration : EntityBaseConfiguration<PromotionProductFilterBase>
+    internal class PromotionProductFilterBaseConfiguration : EntityBaseConfiguration<PromotionProductFilterBase>
     {
         public override void Configure(EntityTypeBuilder<PromotionProductFilterBase> b)
         {

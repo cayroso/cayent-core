@@ -1,10 +1,10 @@
-﻿using Cayent.Core.Data.Users;
+﻿using Cayent.Core.Data.Components.Users;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cayent.Core.Data.Chats
 {
-    public class ChatReceiver
+    internal class ChatReceiver
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ChatReceiverId { get; set; }

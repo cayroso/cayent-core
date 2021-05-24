@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Cayent.Core.Data.Components.Products
 {
-    public class ProductPriceBase
+    internal class ProductPriceBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ProductPriceId { get; set; }
@@ -41,7 +41,7 @@ namespace Cayent.Core.Data.Components.Products
         public virtual ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
     }
 
-    public class ProductPriceBaseConfiguration : EntityBaseConfiguration<ProductPriceBase>
+    internal class ProductPriceBaseConfiguration : EntityBaseConfiguration<ProductPriceBase>
     {
         public override void Configure(EntityTypeBuilder<ProductPriceBase> b)
         {

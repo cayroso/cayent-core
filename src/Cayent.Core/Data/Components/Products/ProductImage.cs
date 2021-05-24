@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cayent.Core.Data.Components.Products
 {
-    public class ProductImageBase
+    internal class ProductImageBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ProductImageId { get; set; }
@@ -20,7 +20,7 @@ namespace Cayent.Core.Data.Components.Products
         public uint SortOrder { get; set; }
     }
 
-    public class ProductImageBaseConfiguration : EntityBaseConfiguration<ProductImageBase>
+    internal class ProductImageBaseConfiguration : EntityBaseConfiguration<ProductImageBase>
     {
         public override void Configure(EntityTypeBuilder<ProductImageBase> b)
         {

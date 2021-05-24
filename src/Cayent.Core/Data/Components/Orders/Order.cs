@@ -11,7 +11,7 @@ using Cayent.Core.Data.Components.Orders.OrderLineItems;
 
 namespace Cayent.Core.Data.Components.Orders
 {
-    public class OrderBase
+    internal class OrderBase
     {
         [System.ComponentModel.DataAnnotations.Key]
         public string OrderId { get; set; }
@@ -87,7 +87,7 @@ namespace Cayent.Core.Data.Components.Orders
         public virtual ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
     }
 
-    public static class OrderExtension
+    internal static class OrderExtension
     {
         public static void ThrowIfNull(this OrderBase me)
         {
@@ -109,7 +109,7 @@ namespace Cayent.Core.Data.Components.Orders
         }
     }
 
-    public class OrderBaseConfiguration : EntityBaseConfiguration<OrderBase>
+    internal class OrderBaseConfiguration : EntityBaseConfiguration<OrderBase>
     {
         public override void Configure(EntityTypeBuilder<OrderBase> b)
         {

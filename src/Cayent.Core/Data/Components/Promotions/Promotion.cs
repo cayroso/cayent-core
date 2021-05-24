@@ -9,7 +9,7 @@ using Cayent.Core.Data.Enums;
 
 namespace Cayent.Core.Data.Components.Promotions
 {
-    public class PromotionBase
+    internal class PromotionBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string PromotionId { get; set; }
@@ -139,7 +139,7 @@ namespace Cayent.Core.Data.Components.Promotions
         public virtual ICollection<PromotionProductFilterBase> PromotionProductFilters { get; set; } = new List<PromotionProductFilterBase>();
     }
 
-    public static class PromotionExtension
+    internal static class PromotionExtension
     {
         public static void ThrowIfNull(this PromotionBase me)
         {
@@ -161,7 +161,7 @@ namespace Cayent.Core.Data.Components.Promotions
         }
     }
 
-    public class PromotionBaseConfiguration : EntityBaseConfiguration<PromotionBase>
+    internal class PromotionBaseConfiguration : EntityBaseConfiguration<PromotionBase>
     {
         public override void Configure(EntityTypeBuilder<PromotionBase> b)
         {

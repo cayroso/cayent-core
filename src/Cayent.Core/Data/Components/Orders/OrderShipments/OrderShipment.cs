@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Cayent.Core.Data.Components.Orders.OrderShipments
 {
-    public class OrderShipmentBase
+    internal class OrderShipmentBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderShipmentId { get; set; }
@@ -40,7 +40,7 @@ namespace Cayent.Core.Data.Components.Orders.OrderShipments
         public virtual ICollection<OrderShipmentLineItemBase> OrderShipmentLineItems { get; set; } = new List<OrderShipmentLineItemBase>();
     }
 
-    public class OrderShipmentBaseConfiguration : EntityBaseConfiguration<OrderShipmentBase>
+    internal class OrderShipmentBaseConfiguration : EntityBaseConfiguration<OrderShipmentBase>
     {
         public override void Configure(EntityTypeBuilder<OrderShipmentBase> b)
         {

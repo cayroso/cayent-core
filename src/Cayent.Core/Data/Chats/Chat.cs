@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Cayent.Core.Data.Chats
 {
-    public class Chat
+    internal class Chat
     {
         public string ChatId { get; set; }
 

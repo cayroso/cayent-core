@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Cayent.Core.Data.Components.Stores
 {
-    public class StoreStockBase
+    internal class StoreStockBase
     {
         public string StoreId { get; set; }
         public virtual StoreBase Store { get; set; }
@@ -17,7 +17,7 @@ namespace Cayent.Core.Data.Components.Stores
         public int ReorderQuantity { get; set; }
     }
 
-    public class StoreStockBaseConfiguration : EntityBaseConfiguration<StoreStockBase>
+    internal class StoreStockBaseConfiguration : EntityBaseConfiguration<StoreStockBase>
     {
         public override void Configure(EntityTypeBuilder<StoreStockBase> b)
         {

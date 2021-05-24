@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Cayent.Core.Data.Components.Orders.OrderLineItems
 {
-    public class OrderLineItemBase
+    internal class OrderLineItemBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderLineItemId { get; set; }
@@ -26,7 +26,7 @@ namespace Cayent.Core.Data.Components.Orders.OrderLineItems
         public uint QuantityOrdered { get; set; }        
     }
 
-    public class OrderLineItemBaseConfiguration : EntityBaseConfiguration<OrderLineItemBase>
+    internal class OrderLineItemBaseConfiguration : EntityBaseConfiguration<OrderLineItemBase>
     {
         public override void Configure(EntityTypeBuilder<OrderLineItemBase> b)
         {

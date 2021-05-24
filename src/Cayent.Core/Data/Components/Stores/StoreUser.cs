@@ -1,10 +1,10 @@
-﻿using Cayent.Core.Data.Users;
+﻿using Cayent.Core.Data.Components.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Cayent.Core.Data.Components.Stores
 {
-    public class StoreUserBase
+    internal class StoreUserBase
     {        
         public string StoreId { get; set; }
         public virtual StoreBase Store { get; set; }
@@ -16,7 +16,7 @@ namespace Cayent.Core.Data.Components.Stores
         public RoleBase Role { get; set; }
     }
 
-    public class StoreUserBaseConfiguration : EntityBaseConfiguration<StoreUserBase>
+    internal class StoreUserBaseConfiguration : EntityBaseConfiguration<StoreUserBase>
     {
         public override void Configure(EntityTypeBuilder<StoreUserBase> b)
         {

@@ -1,13 +1,13 @@
 ﻿using System;
 using Data.Enums;
 using Cayent.Core.Common.Extensions;
-using Cayent.Core.Data.Users;
+using Cayent.Core.Data.Components.Users;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cayent.Core.Data.Components.Orders
 {
-    public class OrderStatusHistoryBase
+    internal class OrderStatusHistoryBase
     {
         public string OrderId { get; set; }
         public virtual OrderBase Order { get; set; }
@@ -29,7 +29,7 @@ namespace Cayent.Core.Data.Components.Orders
         public string Note { get; set; }
     }
 
-    public class OrderStatusHistoryBaseConfiguration : EntityBaseConfiguration<OrderStatusHistoryBase>
+    internal class OrderStatusHistoryBaseConfiguration : EntityBaseConfiguration<OrderStatusHistoryBase>
     {
         public override void Configure(EntityTypeBuilder<OrderStatusHistoryBase> b)
         {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Cayent.Core.Data.Components.Orders.OrderShipments
 {
-    public class OrderShipmentLineItemBase
+    internal class OrderShipmentLineItemBase
     {
         public string OrderShipmentId { get; set; }
         public virtual OrderShipmentBase OrderShipment { get; set; }
@@ -15,7 +15,7 @@ namespace Cayent.Core.Data.Components.Orders.OrderShipments
         public uint Quantity { get; set; }
     }
 
-    public class OrderShipmentLineItemBaseConfiguration : EntityBaseConfiguration<OrderShipmentLineItemBase>
+    internal class OrderShipmentLineItemBaseConfiguration : EntityBaseConfiguration<OrderShipmentLineItemBase>
     {
         public override void Configure(EntityTypeBuilder<OrderShipmentLineItemBase> b)
         {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Cayent.Core.Data.Components.Orders
 {
-    public class OrderDeliveryAddressBase
+    internal class OrderDeliveryAddressBase
     {
         public string OrderId { get; set; }
         public virtual OrderBase Order { get; set; }
@@ -17,7 +17,7 @@ namespace Cayent.Core.Data.Components.Orders
         public double GeoY { get; set; }
     }
 
-    public class OrderDeliveryAddressBaseConfiguration : EntityBaseConfiguration<OrderDeliveryAddressBase>
+    internal class OrderDeliveryAddressBaseConfiguration : EntityBaseConfiguration<OrderDeliveryAddressBase>
     {
         public override void Configure(EntityTypeBuilder<OrderDeliveryAddressBase> b)
         {

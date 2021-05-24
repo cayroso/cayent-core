@@ -21,7 +21,7 @@
   <ItemGroup>
     <Folder Include="CQRS\Common\Chats\" />
     <Folder Include="Data\Chats\" />
-    <Folder Include="Data\Users\" />
+    <Folder Include="Data\Components\Users\" />
   </ItemGroup>
 
 </Project>

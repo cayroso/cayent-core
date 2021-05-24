@@ -1,12 +1,13 @@
 ﻿using System;
 using Cayent.Core.Common.Extensions;
-using Cayent.Core.Data.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
+using Cayent.Core.Data.Components.Users;
+
 namespace Cayent.Core.Data.Components.Orders
 {
-    public class OrderPaymentBase
+    internal class OrderPaymentBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderPaymentId { get; set; }
@@ -29,7 +30,7 @@ namespace Cayent.Core.Data.Components.Orders
         }
     }
 
-    public class OrderPaymentBaseConfiguration : EntityBaseConfiguration<OrderPaymentBase>
+    internal class OrderPaymentBaseConfiguration : EntityBaseConfiguration<OrderPaymentBase>
     {
         public override void Configure(EntityTypeBuilder<OrderPaymentBase> b)
         {

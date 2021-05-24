@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Cayent.Core.Data.Components.Stores
 {
-    public class StoreBase
+    internal class StoreBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string StoreId { get; set; }
@@ -29,7 +29,7 @@ namespace Cayent.Core.Data.Components.Stores
 
     }
 
-    public static class StoreBaseExtension
+    internal static class StoreBaseExtension
     {
         public static void ThrowIfNull(this StoreBase me)
         {
@@ -50,7 +50,7 @@ namespace Cayent.Core.Data.Components.Stores
         }
     }
 
-    public class StoreBaseConfiguration : EntityBaseConfiguration<StoreBase>
+    internal class StoreBaseConfiguration : EntityBaseConfiguration<StoreBase>
     {
         public override void Configure(EntityTypeBuilder<StoreBase> b)
         {
