@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cayent.Core.Common.Extensions;
+using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-
 namespace Cayent.Core.Data.Components.Orders.OrderShipments
 {
-    internal class OrderShipmentBase
+    internal abstract class OrderShipmentBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderShipmentId { get; set; }
@@ -24,7 +24,7 @@ namespace Cayent.Core.Data.Components.Orders.OrderShipments
             get => _createdDateTime.AsUtc();
             set => _createdDateTime = value.Truncate();
         }
-
+        
         DateTime _deliveryDate;
         public DateTime DeliveryDate
         {
@@ -36,8 +36,8 @@ namespace Cayent.Core.Data.Components.Orders.OrderShipments
         /// Delivered, ReadyForPickup, Shipped, Undeliverable
         /// </summary>
         public string Status { get; set; }
-
-        public virtual ICollection<OrderShipmentLineItemBase> OrderShipmentLineItems { get; set; } = new List<OrderShipmentLineItemBase>();
+       
+        //public virtual ICollection<OrderShipmentLineItemShipmentBase> LineItems { get; set; }
     }
 
     internal class OrderShipmentBaseConfiguration : EntityBaseConfiguration<OrderShipmentBase>
@@ -50,11 +50,6 @@ namespace Cayent.Core.Data.Components.Orders.OrderShipments
             b.Property(e => e.OrderShipmentId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.OrderId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.TrackingNumber).HasMaxLength(KeyMaxLength).IsRequired();
-
-            b.HasMany(e => e.OrderShipmentLineItems)
-                .WithOne(d => d.OrderShipment)
-                .HasForeignKey(fk => fk.OrderShipmentId)
-                .OnDelete(DeleteBehavior.Restrict);
 
         }
     }

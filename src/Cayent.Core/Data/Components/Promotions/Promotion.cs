@@ -1,15 +1,37 @@
-﻿using System;
+﻿using Cayent.Core.Data.Components.Products;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Cayent.Core.Common.Extensions;
+using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
-using Cayent.Core.Data.Components.Products;
-using System.Collections.Generic;
-using Cayent.Core.Data.Enums;
 
 namespace Cayent.Core.Data.Components.Promotions
 {
-    internal class PromotionBase
+    public enum EnumPromotionType
+    {
+        Unknown = 0,
+        Discounts,
+        Shipping,
+    }
+
+    public enum EnumPromotionProductApplicability
+    {
+        Unknown = 0,
+        AllProducts = 1,
+        SpecificProducts = 2
+    }
+    public enum EnumPromotionOfferType
+    {
+        Unknown = 0,
+        NoCode,
+        GenericCode
+    }
+    internal abstract class PromotionBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string PromotionId { get; set; }
@@ -19,8 +41,6 @@ namespace Cayent.Core.Data.Components.Promotions
         public string GenericRedemptionCode { get; set; }
 
         public EnumPromotionType PromotionType { get; set; }
-
-        public EnumPromotionVisibility PromotionVisibility { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
 
@@ -116,7 +136,7 @@ namespace Cayent.Core.Data.Components.Promotions
         /// The item/product id of any free gift offered in the promotion.
         /// </summary>
         public string FreeGiftProductId { get; set; }
-        public ProductBase FreeGiftProduct { get; set; }
+        public virtual ProductBase FreeGiftProduct { get; set; }
 
         #endregion
 
@@ -136,7 +156,7 @@ namespace Cayent.Core.Data.Components.Promotions
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
 
-        public virtual ICollection<PromotionProductFilterBase> PromotionProductFilters { get; set; } = new List<PromotionProductFilterBase>();
+        //public virtual ICollection<PromotionProductFilterBase> PromotionFilters { get; set; } = new List<PromotionProductFilterBase>();
     }
 
     internal static class PromotionExtension
@@ -172,10 +192,6 @@ namespace Cayent.Core.Data.Components.Promotions
             b.Property(e => e.Title).HasMaxLength(NameMaxLength).IsRequired();
 
             b.HasQueryFilter(e => e.Active);
-
-            b.HasMany(e => e.PromotionProductFilters)
-                   .WithOne(d => d.Promotion)
-                   .HasForeignKey(d => d.PromotionId);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Cayent.Core.Data.Components.Promotions;
+﻿
+using Cayent.Core.Data.Components.Products;
+using Cayent.Core.Data.Components.Promotions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Collections.Generic;
@@ -28,13 +30,13 @@ namespace Cayent.Core.Data.Components.Products
             b.Property(e => e.ProductVariantId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.Name).HasMaxLength(NameMaxLength).IsRequired();
 
-            b.HasMany(e => e.Products)
-                .WithOne(d => d.ProductVariant)
-                .HasForeignKey(fk => fk.ProductVariantId);
+            //b.HasMany(e => e.Products)
+            //    .WithOne(d => d.ProductVariant)
+            //    .HasForeignKey(fk => fk.ProductVariantId);
 
-            b.HasMany(e => e.PromotionProductFilters)
-                .WithOne(d => d.ProductVariant)
-                .HasForeignKey(fk => fk.ProductVariantId);
+            //b.HasMany(e => e.PromotionProductFilters)
+            //    .WithOne(d => d.ProductVariant)
+            //    .HasForeignKey(fk => fk.ProductVariantId);
         }
     }
 }

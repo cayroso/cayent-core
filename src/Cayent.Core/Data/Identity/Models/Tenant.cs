@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace Cayent.Core.Data.Identity.Models
 {
-    public class Tenant
+    internal class Tenant
     {
         [Required]
         public string TenantId { get; set; }
@@ -23,7 +24,7 @@ namespace Cayent.Core.Data.Identity.Models
         public virtual ICollection<IdentityWebUser> Users { get; set; } = new List<IdentityWebUser>();
     }
 
-    public static class TenantExtension
+    internal static class TenantExtension
     {
 
         public static void ThrowIfNull(this Tenant me)

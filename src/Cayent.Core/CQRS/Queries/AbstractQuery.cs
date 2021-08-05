@@ -1,4 +1,8 @@
-﻿namespace Cayent.Core.CQRS.Queries
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Cayent.Core.CQRS.Queries
 {
     public abstract class AbstractQuery<TResponse> : IQuery<TResponse> where TResponse : class
     {

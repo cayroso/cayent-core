@@ -1,10 +1,14 @@
-﻿using Cayent.Core.Data.Components.Products;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Cayent.Core.Data.Components;
+using Cayent.Core.Data.Components.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Cayent.Core.Data.Components.Orders.OrderLineItems
 {
-    internal class OrderLineItemBase
+    internal abstract class OrderLineItemBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderLineItemId { get; set; }
@@ -19,11 +23,19 @@ namespace Cayent.Core.Data.Components.Orders.OrderLineItems
         public virtual ProductPriceBase ProductPrice { get; set; }
 
         public bool ProductOnSale { get; set; }
+        public double Tax { get; set; }
 
         public string LineNumber { get; set; }
         public double ExtendedPrice { get; set; }
 
-        public uint QuantityOrdered { get; set; }        
+        public uint QuantityOrdered { get; set; }
+        public uint QuantityPending { get; set; }
+        public uint QuantityShipped { get; set; }
+        public uint QuantityDelivered { get; set; }
+        public uint QuantityReturned { get; set; }
+        public uint QuantityCancelled { get; set; }
+        public uint QuantityUndeliverable { get; set; }
+        public uint QuantityReadyForPickup { get; set; }
     }
 
     internal class OrderLineItemBaseConfiguration : EntityBaseConfiguration<OrderLineItemBase>
@@ -38,7 +50,7 @@ namespace Cayent.Core.Data.Components.Orders.OrderLineItems
             b.Property(e => e.ProductId).HasMaxLength(KeyMaxLength).IsRequired();
             b.Property(e => e.ProductPriceId).HasMaxLength(KeyMaxLength).IsRequired();
 
-            //b.HasQueryFilter(e => e.Product.Active);
+            b.HasQueryFilter(e => e.Product.Active);
         }
     }
 }

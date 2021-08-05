@@ -1,11 +1,13 @@
 ﻿using Cayent.Core.Common.Extensions;
 using Cayent.Core.Data.Identity.Models.Users;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
 namespace Cayent.Core.Data.Identity.Models
 {
-    public class LoginAudit
+    internal class LoginAudit
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string LoginAuditId { get; set; }

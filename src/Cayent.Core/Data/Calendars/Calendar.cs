@@ -1,9 +1,11 @@
 ﻿using Cayent.Core.Common.Extensions;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Cayent.Core.Data.Calendars
 {
-    public class Calendar
+    internal class Calendar
     {
         public Calendar()
         {

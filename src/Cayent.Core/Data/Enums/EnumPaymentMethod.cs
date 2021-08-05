@@ -1,4 +1,4 @@
-﻿namespace Data.Enums
+﻿namespace Cayent.Core.Data.Enums
 {
     public enum EnumPaymentMethod
     {

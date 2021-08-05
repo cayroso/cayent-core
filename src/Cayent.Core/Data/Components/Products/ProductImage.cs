@@ -1,11 +1,17 @@
-﻿using Cayent.Core.Data.Fileuploads;
+﻿using Cayent.Core.Data.Components;
+using Cayent.Core.Data.Fileuploads;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Cayent.Core.Data.Components.Products
 {
-    internal class ProductImageBase
+    internal abstract class ProductImageBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ProductImageId { get; set; }

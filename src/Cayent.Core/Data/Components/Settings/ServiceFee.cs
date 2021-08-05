@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using Cayent.Core.Data.Components;
+using Cayent.Core.Data.Components.Orders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
-using Cayent.Core.Data.Components.Orders;
-using System.Collections.Generic;
-
 namespace Cayent.Core.Data.Components.Settings
 {
-    internal class ServiceFeeBase
+    internal abstract class ServiceFeeBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ServiceFeeId { get; set; }
@@ -17,9 +17,9 @@ namespace Cayent.Core.Data.Components.Settings
         public double Amount { get; set; }
         public bool Active { get; set; } = true;
 
-        public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
+        //public virtual ICollection<OrderServiceFeeBase> OrderServiceFees { get; set; } = new List<OrderServiceFeeBase>();
 
-        public virtual ICollection<OrderServiceFeeBase> OrderServiceFees { get; set; } = new List<OrderServiceFeeBase>();
+        public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
     }
     internal static class ServiceFeeExtension
     {
@@ -56,10 +56,6 @@ namespace Cayent.Core.Data.Components.Settings
             b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
 
             b.HasQueryFilter(e => e.Active);
-
-            b.HasMany(e => e.OrderServiceFees)
-                    .WithOne(d => d.ServiceFee)
-                    .HasForeignKey(d => d.ServiceFeeId);
         }
     }
 }

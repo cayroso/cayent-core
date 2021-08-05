@@ -1,13 +1,14 @@
 ﻿using System;
-using Data.Enums;
 using Cayent.Core.Common.Extensions;
-using Cayent.Core.Data.Components.Users;
+using Cayent.Core.Data.Users;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore;
+using Cayent.Core.Data.Enums;
 
 namespace Cayent.Core.Data.Components.Orders
 {
-    internal class OrderStatusHistoryBase
+    internal abstract class OrderStatusHistoryBase
     {
         public string OrderId { get; set; }
         public virtual OrderBase Order { get; set; }
@@ -24,7 +25,7 @@ namespace Cayent.Core.Data.Components.Orders
         public EnumOrderStatus OrderStatus { get; set; }
 
         public string UserId { get; set; }
-        public UserBase User { get; set; }
+        public virtual UserBase User { get; set; }
 
         public string Note { get; set; }
     }

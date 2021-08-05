@@ -1,20 +1,33 @@
 ﻿using System;
-using Data.Enums;
+using System.Collections.Generic;
+using Cayent.Core.Data.Enums;
+using Cayent.Core.Data.Components.Customers;
+using Cayent.Core.Data.Components.Settings;
+
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using Cayent.Core.Data.Components.Orders.OrderLineItems;
+using Cayent.Core.Data.Components.BranchStores;
 using Cayent.Core.Common.Extensions;
+using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using Cayent.Core.Data.Components.Customers;
-using Cayent.Core.Data.Components.Stores;
-using Cayent.Core.Data.Components.Settings;
-using System.Collections.Generic;
-using Cayent.Core.Data.Components.Orders.OrderLineItems;
 
 namespace Cayent.Core.Data.Components.Orders
 {
-    internal class OrderBase
+    internal abstract class OrderBase
     {
         [System.ComponentModel.DataAnnotations.Key]
         public string OrderId { get; set; }
+
+        public string CustomerId { get; set; }
+        public virtual CustomerBase Customer { get; set; }
+
+        public string BranchStoreId { get; set; }
+        public virtual BranchStoreBase BranchStore { get; set; }
+
+        public string ShippingSettingId { get; set; }
+        public virtual ShippingSettingBase ShippingSetting { get; set; }
 
         public virtual OrderDeliveryAddressBase DeliveryAddress { get; set; }
 
@@ -23,10 +36,9 @@ namespace Cayent.Core.Data.Components.Orders
 
         public EnumPaymentMethod PaymentMethod { get; set; }
 
-        public virtual void UpdateStatus(EnumOrderStatus status, string userId, string note)
-        {
-            throw new NotImplementedException();
-        }
+        [NotMapped]
+        public bool StatusModified { get; protected set; } = false;
+        public abstract void UpdateStatus(EnumOrderStatus status, string userId, string note);
 
 
         DateTime _orderDateTime;
@@ -57,34 +69,20 @@ namespace Cayent.Core.Data.Components.Orders
             set => _expectedMaxDeliveryDateTime = value.Truncate();
         }
 
-        /// <summary>
-        /// Total Price of the Line items
-        /// </summary>
-        public double SubTotal { get; set; }
-        /// <summary>
-        /// Sub Total + Service Fee + Delivery Fee
-        /// </summary>        
+        public double GrossPrice { get; set; }
         public double ServiceFee { get; set; }
         public double DeliveryFee { get; set; }
-        public double Total { get; set; }
-        /// <summary>
-        /// The total discount of the Order based on the promo code or store discount.
-        /// </summary>
-        public double Discount { get; set; }
-        /// <summary>
-        /// The grand total of the order to be paid by the customer.
-        /// </summary>
-        public double GrandTotal { get; set; }
+        public double Deduction { get; set; }
+        public double NetPrice { get; set; }
         public double AmountPaid { get; set; }
 
+        //public virtual ICollection<OrderLineItemBase> LineItems { get; set; } = new List<OrderLineItemBase>();
+        //public virtual ICollection<OrderNoteBase> OrderNotes { get; set; } = new List<OrderNoteBase>();
+        //public virtual ICollection<OrderPaymentBase> OrderPayments { get; set; } = new List<OrderPaymentBase>();
+        //public virtual ICollection<OrderServiceFeeBase> ServiceFees { get; set; } = new List<OrderServiceFeeBase>();
+        //public virtual ICollection<OrderStatusHistoryBase> StatusHistories { get; set; } = new List<OrderStatusHistoryBase>();
+        
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
-
-        public virtual ICollection<OrderNoteBase> OrderNotes { get; set; } = new List<OrderNoteBase>();
-        public virtual ICollection<OrderPaymentBase> OrderPayments { get; set; } = new List<OrderPaymentBase>();
-        public virtual ICollection<OrderServiceFeeBase> OrderServiceFees { get; set; } = new List<OrderServiceFeeBase>();
-        public virtual ICollection<OrderStatusHistoryBase> OrderStatusHistories { get; set; } = new List<OrderStatusHistoryBase>();
-
-        public virtual ICollection<OrderLineItemBase> OrderLineItems { get; set; } = new List<OrderLineItemBase>();
     }
 
     internal static class OrderExtension
@@ -117,7 +115,9 @@ namespace Cayent.Core.Data.Components.Orders
             b.HasKey(e => e.OrderId);
 
             b.Property(e => e.OrderId).HasMaxLength(KeyMaxLength).IsRequired();
-            
+            b.Property(e => e.CustomerId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.BranchStoreId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.ShippingSettingId).HasMaxLength(KeyMaxLength).IsRequired();
 
             b.Property(e => e.Number).HasMaxLength(NameMaxLength).IsRequired();
 
@@ -128,27 +128,20 @@ namespace Cayent.Core.Data.Components.Orders
 
             b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
 
+            //b.OwnsOne(e => e.DeliveryAddress, da =>
+            //{
+            //    da.ToTable("OrderDeliveryAddress");
+            //    da.HasKey(e => e.OrderId);
 
-            b.HasMany(e => e.OrderLineItems)
-                .WithOne(d => d.Order)
-                .HasForeignKey(d => d.OrderId);
+            //    da.WithOwner(e => e.Order);
 
-            b.HasMany(e => e.OrderNotes)
-                .WithOne(d => d.Order)
-                .HasForeignKey(d => d.OrderId);
+            //    //b.Property(e => e.OrderAddressId).HasMaxLength(KeyMaxLength).IsRequired();
+            //    da.Property(e => e.OrderId).HasMaxLength(KeyMaxLength).IsRequired();
+            //    da.Property(e => e.RecipientName).HasMaxLength(NameMaxLength).IsRequired();
+            //    da.Property(e => e.PhoneNumber).HasMaxLength(NameMaxLength).IsRequired();
+            //    da.Property(e => e.Address).HasMaxLength(DescMaxLength).IsRequired();
+            //});
 
-            b.HasMany(e => e.OrderPayments)
-                .WithOne(d => d.Order)
-                .HasForeignKey(d => d.OrderId);
-
-            b.HasMany(e => e.OrderServiceFees)
-                .WithOne(d => d.Order)
-                .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            b.HasMany(e => e.OrderStatusHistories)
-                .WithOne(d => d.Order)
-                .HasForeignKey(d => d.OrderId);
         }
     }
 }

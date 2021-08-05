@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Cayent.Core.Data.Identity.Models.Users
 {
-    public class IdentityWebUser : IdentityUser
+    internal class IdentityWebUser : IdentityUser
     {
         public string TenantId { get; set; }
         public virtual Tenant Tenant { get; set; }

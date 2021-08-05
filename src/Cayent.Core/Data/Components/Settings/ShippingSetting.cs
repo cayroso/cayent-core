@@ -1,15 +1,15 @@
 ﻿using System;
-using Data.Enums;
+using System.Collections.Generic;
+using Cayent.Core.Data.Components.Orders;
+using Cayent.Core.Data.Enums;
 using Cayent.Core.Common.Extensions;
+using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using Cayent.Core.Data.Components.Orders;
-
 namespace Cayent.Core.Data.Components.Settings
 {
-    internal class ShippingSettingBase
+    internal abstract class ShippingSettingBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ShippingSettingId { get; set; }
@@ -32,6 +32,8 @@ namespace Cayent.Core.Data.Components.Settings
 
         public bool Active { get; set; } = true;
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
+
+        //public virtual ICollection<OrderBase> Orders { get; set; } = new List<OrderBase>();
     }
 
     internal static class ShippingSettingExtension

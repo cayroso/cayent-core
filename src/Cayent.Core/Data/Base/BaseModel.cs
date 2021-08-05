@@ -1,6 +1,8 @@
 ﻿using Cayent.Core.Common.Extensions;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace Cayent.Core.Data.Base
 {

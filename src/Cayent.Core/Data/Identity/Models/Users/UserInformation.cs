@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
 namespace Cayent.Core.Data.Identity.Models.Users
 {
-    public class UserInformation
+    internal class UserInformation
     {
         public string UserId { get; set; }
         public virtual IdentityWebUser User { get; set; }
@@ -34,7 +36,7 @@ namespace Cayent.Core.Data.Identity.Models.Users
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
     }
 
-    public static class UserInformationExtension
+    internal static class UserInformationExtension
     {
         public static void ThrowIfNull(this UserInformation me)
         {

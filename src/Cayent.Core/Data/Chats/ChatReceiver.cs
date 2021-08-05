@@ -1,6 +1,10 @@
-﻿using Cayent.Core.Data.Components.Users;
+﻿using Cayent.Core.Data.Users;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Cayent.Core.Data.Chats
 {

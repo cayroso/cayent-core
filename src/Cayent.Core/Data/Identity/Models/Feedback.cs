@@ -2,12 +2,14 @@
 using Cayent.Core.Data.Enums;
 using Cayent.Core.Data.Identity.Models.Users;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
 namespace Cayent.Core.Data.Identity.Models
 {
-    public class Feedback
+    internal class Feedback
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string FeedbackId { get; set; }

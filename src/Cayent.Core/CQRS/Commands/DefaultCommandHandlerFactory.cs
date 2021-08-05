@@ -1,5 +1,7 @@
 ﻿using Cayent.Core.CQRS.Services;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Cayent.Core.CQRS.Commands
 {

@@ -1,4 +1,8 @@
-﻿namespace Cayent.Core.Common
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Cayent.Core.Common
 {
     public class IdName
     {

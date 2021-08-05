@@ -1,5 +1,6 @@
-﻿using Cayent.Core.Data.Components.ItemGroups;
+﻿
 using Cayent.Core.Data.Components.Stocks;
+using Cayent.Core.Data.Components.ItemGroups;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

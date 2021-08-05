@@ -1,12 +1,12 @@
-﻿
+﻿using Cayent.Core.Data.Components;
 using Cayent.Core.Data.Components.Orders.OrderLineItems;
-using Cayent.Core.Data.Components.Orders.OrderShipments;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace Cayent.Core.Data.Components.Orders.OrderShipments
 {
-    internal class OrderShipmentLineItemBase
+    internal abstract class OrderShipmentLineItemShipmentBase
     {
         public string OrderShipmentId { get; set; }
         public virtual OrderShipmentBase OrderShipment { get; set; }
@@ -17,11 +17,11 @@ namespace Cayent.Core.Data.Components.Orders.OrderShipments
         public uint Quantity { get; set; }
     }
 
-    internal class OrderShipmentLineItemBaseConfiguration : EntityBaseConfiguration<OrderShipmentLineItemBase>
+    internal class OrderShipmentLineItemShipmentBaseConfiguration : EntityBaseConfiguration<OrderShipmentLineItemShipmentBase>
     {
-        public override void Configure(EntityTypeBuilder<OrderShipmentLineItemBase> b)
+        public override void Configure(EntityTypeBuilder<OrderShipmentLineItemShipmentBase> b)
         {
-            b.ToTable("OrderShipmentLineItem");
+            b.ToTable("OrderShipmentLineItemShipment");
             b.HasKey(e => new { e.OrderShipmentId, e.OrderLineItemId });
 
             b.Property(e => e.OrderShipmentId).HasMaxLength(KeyMaxLength).IsRequired();

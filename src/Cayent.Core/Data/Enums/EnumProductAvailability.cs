@@ -1,4 +1,8 @@
-﻿namespace Cayent.Core.Data.Enums
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Cayent.Core.Data.Enums
 {
 
     public enum EnumProductAvailability

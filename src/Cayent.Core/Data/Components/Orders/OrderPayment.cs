@@ -1,13 +1,13 @@
 ﻿using System;
 using Cayent.Core.Common.Extensions;
+using Cayent.Core.Data.Components;
+using Cayent.Core.Data.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
-using Cayent.Core.Data.Components.Users;
-
 namespace Cayent.Core.Data.Components.Orders
 {
-    internal class OrderPaymentBase
+    internal abstract class OrderPaymentBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderPaymentId { get; set; }

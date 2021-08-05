@@ -2,13 +2,20 @@
 using Cayent.Core.Data.Chats;
 using Cayent.Core.Data.Fileuploads;
 using Cayent.Core.Data.Notifications;
-using Cayent.Core.Data.Components.Users;
+using Cayent.Core.Data.Users;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 
 namespace Cayent.Core.CQRS.Services
 {
-    public abstract class AppBaseDbContext: DbContext
+    internal abstract class AppBaseDbContext: DbContext
     {
         protected const int KeyMaxLength = 36;
         protected const int NameMaxLength = 256;
@@ -27,21 +34,21 @@ namespace Cayent.Core.CQRS.Services
         {
         }
 
-
-        //internal DbSet<UserBase> Users { get; set; }
-        //internal DbSet<RoleBase> Roles { get; set; }
-        //internal DbSet<UserRoleBase> UserRoles { get; set; }
+        
+        public DbSet<UserBase> Users { get; set; }
+        public DbSet<RoleBase> Roles { get; set; }
+        public DbSet<UserRoleBase> UserRoles { get; set; }
 
         public DbSet<Calendar> Calendars { get; set; }
         public DbSet<FileUpload> FileUploads { get; set; }
         
 
-        //internal DbSet<Chat> Chats { get; set; }
-        //internal DbSet<ChatReceiver> ChatReceivers { get; set; }
-        //internal DbSet<ChatMessage> ChatMessages { get; set; }
-
-        //internal DbSet<Notification> Notifications { get; set; }
-        //internal DbSet<NotificationReceiver> NotificationReceivers { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<ChatReceiver> ChatReceivers { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
+        
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<NotificationReceiver> NotificationReceivers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

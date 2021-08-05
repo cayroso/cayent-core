@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Cayent.Core.Data.Identity.Models.Users
 {
-    public class UserAddress
+    internal class UserAddress
     {
         public string UserAddressId { get; set; }
 
@@ -18,7 +20,7 @@ namespace Cayent.Core.Data.Identity.Models.Users
         public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
     }
 
-    public static class UserAddressExtension
+    internal static class UserAddressExtension
     {
         public static void ThrowIfNull(this UserAddress me)
         {

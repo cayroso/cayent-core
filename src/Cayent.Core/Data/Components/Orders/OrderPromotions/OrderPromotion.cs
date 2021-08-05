@@ -1,11 +1,13 @@
-﻿using Cayent.Core.Data.Components.Promotions;
+﻿using System;
+using System.Collections.Generic;
+using Cayent.Core.Data.Components;
+using Cayent.Core.Data.Components.Promotions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Cayent.Core.Data.Components.Orders.OrderPromotions
 {
-    internal class OrderPromotionBase
+    internal abstract class OrderPromotionBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderPromotionId { get; set; }
@@ -16,7 +18,7 @@ namespace Cayent.Core.Data.Components.Orders.OrderPromotions
         public string PromotionId { get; set; }
         public virtual PromotionBase Promotion { get; set; }
 
-        public virtual ICollection<OrderPromotionLineItemBase> OrderPromotionLineItems { get; set; }
+        //public virtual ICollection<OrderPromotionLineItemBase> PromotionItems { get; set; }
     }
 
     internal class OrderPromotionBaseConfiguration : EntityBaseConfiguration<OrderPromotionBase>
@@ -31,11 +33,6 @@ namespace Cayent.Core.Data.Components.Orders.OrderPromotions
             b.Property(e => e.PromotionId).HasMaxLength(KeyMaxLength).IsRequired();
 
             b.HasQueryFilter(e => e.Promotion.Active);
-
-            b.HasMany(e => e.OrderPromotionLineItems)
-                .WithOne(d => d.OrderPromotion)
-                .HasForeignKey(fk => fk.OrderPromotionId)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

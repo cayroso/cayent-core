@@ -1,9 +1,11 @@
 ﻿using Cayent.Core.Common.Extensions;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Cayent.Core.Data.Fileuploads
 {
-    public class FileUpload
+    internal class FileUpload
     {
         public string FileUploadId { get; set; }
         public string Url { get; set; }

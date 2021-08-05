@@ -1,13 +1,13 @@
 ﻿using System;
-using Cayent.Core.Common.Extensions; 
+using Cayent.Core.Common.Extensions;
+using Cayent.Core.Data.Components;
+using Cayent.Core.Data.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
-using Cayent.Core.Data.Components.Users;
-
 namespace Cayent.Core.Data.Components.Orders
 {
-    internal class OrderNoteBase
+    internal abstract class OrderNoteBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderNoteId { get; set; }
@@ -16,7 +16,7 @@ namespace Cayent.Core.Data.Components.Orders
         public virtual OrderBase Order { get; set; }
         
         public string UserId { get; set; }
-        public UserBase User { get; set; }
+        public virtual UserBase User { get; set; }
 
         public string Note { get; set; }
         public bool SystemGenerated { get; set; } = false;

@@ -1,11 +1,18 @@
-﻿using Data.Enums;
+﻿using Cayent.Core.Data.Components;
+using Cayent.Core.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Cayent.Core.Data.Components.Customers
 {
-    internal class CustomerAddressBase
+    internal abstract class CustomerAddressBase
     {        
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string CustomerAddressId { get; set; }
