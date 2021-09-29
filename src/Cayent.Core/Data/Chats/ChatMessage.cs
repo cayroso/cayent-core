@@ -1,5 +1,6 @@
 ﻿using Cayent.Core.Common.Extensions;
 using Cayent.Core.Data.Users;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,5 +37,18 @@ namespace Cayent.Core.Data.Chats
         }
 
         public string ConcurrencyStamp { get; set; } = Guid.NewGuid().ToString();
+    }
+
+    internal class ChatMessageConfiguration : Cayent.Core.Data.Components.EntityBaseConfiguration<ChatMessage>
+    {
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<ChatMessage> b)
+        {
+            b.ToTable("ChatMessage");
+            b.HasKey(e => e.ChatMessageId);
+
+            b.Property(e => e.ChatMessageId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.ChatId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.SenderId).HasMaxLength(KeyMaxLength).IsRequired();
+        }
     }
 }

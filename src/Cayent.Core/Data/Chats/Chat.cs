@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,21 @@ namespace Cayent.Core.Data.Chats
         public virtual ICollection<ChatReceiver> Receivers { get; set; } = new List<ChatReceiver>();
         public virtual ICollection<ChatMessage> Messages { get; set; } = new List<ChatMessage>();
 
-        public string ConcurrencyStamp { get; set; } = Guid.NewGuid().ToString();
+        public string ConcurrencyToken { get; set; } = Guid.NewGuid().ToString();
+    }
+
+    internal class ChatConfiguration : Cayent.Core.Data.Components.EntityBaseConfiguration<Chat>
+    {
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Chat> b)
+        {
+            b.ToTable("Chat");
+            b.HasKey(e => e.ChatId);
+
+            b.Property(e => e.ChatId).HasMaxLength(KeyMaxLength).IsRequired();
+            b.Property(e => e.LastChatMessageId).HasMaxLength(KeyMaxLength);
+
+            b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
+
+        }
     }
 }
