@@ -1,0 +1,18 @@
+﻿add-migration Initial -context identitywebcontext -outputdir migrations\identity
+
+add-migration Initial -context appdbcontext -outputdir migrations\app
+
+
+Resetting all migrations
+In some extreme cases, it may be necessary to remove all migrations and start over. 
+This can be easily done by deleting your Migrations folder and dropping your database; 
+at that point you can create a new initial migration, which will contain your entire current schema.
+
+It's also possible to reset all migrations and create a single one without losing your data. 
+This is sometimes called "squashing", and involves some manual work:
+
+- Delete your Migrations folder
+- Create a new migration and generate a SQL script for it
+- In your database, delete all rows from the migrations history table
+- Insert a single row into the migrations history, to record that the first migration has already been applied, 
+  since your tables are already there. The insert SQL is the last operation in the SQL script generated above.
