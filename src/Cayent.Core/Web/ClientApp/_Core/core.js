@@ -39,6 +39,14 @@ Vue.filter('prettyJson', function (value) {
     return JSON.stringify(value, null,1);
 });
 
+Vue.filter('truncate', function (text, length, suffix) {
+    if (text.length > length) {
+        return text.substring(0, length) + suffix;
+    } else {
+        return text;
+    }
+});
+
 import '../_Core/Plugins/bootstrap-vue';
 
 //  global components
