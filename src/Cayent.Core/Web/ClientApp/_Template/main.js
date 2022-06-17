@@ -12,14 +12,20 @@ Vue.use(VueObserveVisibility);
 import common from '../_Core/Plugins/common';
 Vue.use(common);
 
-import VueRouter from 'vue-router';
-Vue.use(VueRouter);
+import '../_Core/Plugins/bootstrap-vue';
 
-import Router from './router';
+//  global components
+//import Pagination from '../_Core/Components/pagination.vue';
+//import SortField from '../_Core/Components/sortfield.vue';
+//import TableList from '../_Core/Components/table-list.vue';
+
+//Vue.component('m-pagination', Pagination);
+//Vue.component('m-pagination', Pagination);
+//Vue.component('sort-field', SortField);
+//Vue.component('table-list', TableList);
 
 new Vue({
     el: '#app',
-    router: Router,
     components: {
         App
     },
@@ -27,5 +33,16 @@ new Vue({
         $(document).ready(function () {
             $('.main').addClass('main-loaded');
         });
+
+        //let theme = localStorage.getItem('theme') || '';
+
+        //if (theme) {
+        //    //debugger;
+        //    let style = document.createElement('link');
+        //    style.type = "text/css";
+        //    style.rel = "stylesheet";
+        //    style.href = theme;// 'https://bootswatch.com/4/yeti/bootstrap.min.css';
+        //    document.head.appendChild(style);
+        //}
     }
 });

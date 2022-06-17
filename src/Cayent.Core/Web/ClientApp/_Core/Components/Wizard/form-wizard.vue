@@ -1,39 +1,57 @@
-﻿<template>
+﻿<style scoped>
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+    }
+
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0;
+    }
+</style>
+<template>
     <div class="vue-step-wizard">
         <div class="card">
             <div class="progress" style="height: 3px">
                 <div class="progress-bar bg-success" role="progressbar" :style="{ width: progress + '%'}">
                 </div>
             </div>
-            <div class="card-header p-2">
+            <div class="card-header p-0">
 
-                <nav class="nav nav-pills flex-column flex-sm-row">
-                    <div @click.prevent.stop="selectTab(index)" v-bind:class="{ 'active': tab.isActive, 'validated': tab.isValidated }" v-for="(tab, index) in tabs" v-bind:key="`tab-${index}`">
-                        <a class="nav-link" href="#" v-bind:class="{ 'active': tab.isActive }">
-                            <span class="" v-bind:class="{'badge badge-success': tab.isValidated}">{{index+1}}</span>
+                <nav class="nav nav-pills nav-fill">
+
+                    <a href="#" @click.prevent.stop="selectTab(index)" class="nav-link" v-bind:class="{ 'active': tab.isActive, 'validated': tab.isValidated }" v-for="(tab, index) in tabs" v-bind:key="`tab-${index}`">
+                        <span class="" v-bind:class="{'badge badge-success': tab.isValidated}">{{index+1}}</span>
+                        <span class="tabLabel">{{tab.title}}</span>
+                    </a>
+
+                </nav>
+                <!--<div @click.prevent.stop="selectTab(index)" class="nav-link" v-bind:class="{ 'active': tab.isActive, 'validated': tab.isValidated }" v-for="(tab, index) in tabs" v-bind:key="`tab-${index}`">
+                    <a href="#" v-bind:class="{ 'active': tab.isActive }">
+                        <span class="" v-bind:class="{'badge badge-success': tab.isValidated}">{{index+1}}</span>
+                        <span class="tabLabel">{{tab.title}}</span>
+                    </a>
+                </div>-->
+                <!--<div class="d-flex flex-column flex-sm-row justify-content-between align-items-start">
+                    <div @click.prevent.stop="selectTab(index)" class="p-2 bg-secondary" v-bind:class="{ 'active': tab.isActive, 'validated': tab.isValidated }" v-for="(tab, index) in tabs" v-bind:key="`tab-${index}`">
+                        <a class="step-link" href="#">
+                            <span class="tabStatus">{{index+1}} </span>
                             <span class="tabLabel">{{tab.title}}</span>
                         </a>
                     </div>
-
-                </nav>
-                <!--<div class="d-flex flex-column flex-sm-row justify-content-between align-items-start">
-            <div @click.prevent.stop="selectTab(index)" class="p-2 bg-secondary" v-bind:class="{ 'active': tab.isActive, 'validated': tab.isValidated }" v-for="(tab, index) in tabs" v-bind:key="`tab-${index}`">
-                <a class="step-link" href="#">
-                    <span class="tabStatus">{{index+1}} </span>
-                    <span class="tabLabel">{{tab.title}}</span>
-                </a>
-            </div>
-        </div>-->
+                </div>-->
 
             </div>
-            <div class="p-2">
+            <div>
                 <slot></slot>
             </div>
-            <div class="card-footer text-center">
+            <div class="card-footer text-center p-1">
                 <div class="btn-group" role="group">
                     <template v-if="!submitSuccess">
-                        <button @click="previousTab" v-bind:disabled="currentTab === 0" class="btn btn-secondary">Previous</button>
-                        <button @click="nextTab" v-if="currentTab < totalTabs - 1 && isValid" class="btn btn-primary">Next</button>
+                        <button @click="previousTab" v-bind:disabled="currentTab === 0" class="btn btn-secondary">
+                            <span class="fas fa-fw fa-arrow-left mr-1"></span>Previous
+                        </button>
+                        <button @click="nextTab" v-if="currentTab < totalTabs - 1 && isValid" class="btn btn-primary">
+                            Next<span class="fas fa-fw fa-arrow-right ml-1"></span>
+                        </button>
                         <button @click="onSubmit" v-if="currentTab === totalTabs - 1 && isValid" class="btn btn-success">Submit</button>
                     </template>
                     <template v-else>

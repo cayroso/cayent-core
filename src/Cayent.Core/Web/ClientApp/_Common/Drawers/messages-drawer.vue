@@ -1,6 +1,6 @@
 ﻿<template>
     <b-sidebar id="messagesDrawer" title="Messages" right backdrop shadow>
-        <div v-if="messages.length>0" v-cloak>
+        <div v-if="messages.length>0" class="d-block">
             <a v-for="msg in messages"
                :key="msg.chatId"
                v-on:click="viewChat(msg.chatId)"
@@ -8,19 +8,24 @@
                class="dropdown-item d-flex align-items-center">
                 <b-avatar variant="info" :src="msg.urlPicture"></b-avatar>
 
-                <div class="font-weight-bold ml-1">
-
+                <div class="ml-1">
+                    <div v-if="msg.lastMessageText">
+                        {{msg.lastMessageText | textTruncate(20, '...')}}
+                    </div>
                     <div class="small text-truncate ">{{msg.senderFirstLastName}} {{msg.lastDateSent|moment('calendar')}}</div>
                 </div>
             </a>
         </div>
-        <a class="dropdown-item text-center small text-gray-500" href="/patient/chat">Read More Messages</a>
+        <a class="dropdown-item text-center small text-gray-500" :href="page">Read More Messages</a>
     </b-sidebar>
 </template>
 <script>
     export default {
         props: {
-            messages: Array
+            messages: Array,
+            page: {
+                type: String, required: true
+            }
         },
         data() {
             return {

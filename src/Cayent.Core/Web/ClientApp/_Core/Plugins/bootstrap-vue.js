@@ -4,11 +4,13 @@ import 'bootstrap';
 import {
     BVToastPlugin, ModalPlugin, SidebarPlugin, OverlayPlugin, PopoverPlugin, FormSelectPlugin, CollapsePlugin, FormCheckboxPlugin, PaginationPlugin, FormFilePlugin,
 
-    CarouselPlugin, NavbarPlugin, TabsPlugin, ImagePlugin, FormSpinbuttonPlugin, AvatarPlugin,
+    CarouselPlugin, NavbarPlugin, TabsPlugin, ImagePlugin, FormSpinbuttonPlugin, AvatarPlugin, FormRatingPlugin, FormGroupPlugin,
 
-    ButtonPlugin, AlertPlugin, TooltipPlugin, FormInputPlugin, 
+    EmbedPlugin
 
-    ListGroupPlugin
+    //ButtonPlugin, AlertPlugin, TooltipPlugin, FormInputPlugin, IconsPlugin,
+
+     //ListGroupPlugin
 } from 'bootstrap-vue';
 
 Vue.use(BVToastPlugin);
@@ -29,8 +31,9 @@ Vue.use(TabsPlugin);
 Vue.use(ImagePlugin);
 Vue.use(FormSpinbuttonPlugin);
 Vue.use(AvatarPlugin);
-
-//Vue.use(NavbarPlugin);
+Vue.use(FormRatingPlugin);
+Vue.use(FormGroupPlugin);
+Vue.use(EmbedPlugin);
 
 //Vue.use(ButtonPlugin);
 

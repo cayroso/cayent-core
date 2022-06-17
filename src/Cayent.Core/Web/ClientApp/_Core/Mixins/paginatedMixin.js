@@ -1,5 +1,7 @@
 ﻿'use strict';
 
+import { reactive } from 'vue';
+
 import pageMixin from './pageMixin';
 
 export default {
@@ -35,14 +37,14 @@ export default {
         initializeFilter(cache) {
             const filter = this.filter;
             const urlParams = new URLSearchParams(window.location.search);
-
-            filter.query.criteria = urlParams.get('c') || cache.criteria || filter.query.criteria;
-            filter.query.pageIndex = parseInt(urlParams.get('p'), 10) || cache.pageIndex || filter.query.pageIndex;
-            filter.query.pageSize = parseInt(urlParams.get('s'), 10) || cache.pageSize || filter.query.pageSize;
-            filter.query.sortField = urlParams.get('sf') || cache.sortField || filter.query.sortField;
-            filter.query.sortOrder = parseInt(urlParams.get('so'), 10) || cache.sortOrder || filter.query.sortOrder;
-            filter.visible = cache.visible || filter.visible;
             
+            filter.query.criteria = urlParams.get('c') || cache.criteria || filter.query.criteria || '';
+            filter.query.pageIndex = parseInt(urlParams.get('p'), 10) || cache.pageIndex || filter.query.pageIndex || 1;
+            filter.query.pageSize = parseInt(urlParams.get('s'), 10) || cache.pageSize || filter.query.pageSize || 5;
+            filter.query.sortField = urlParams.get('sf') || cache.sortField || filter.query.sortField || '';
+            filter.query.sortOrder = parseInt(urlParams.get('so'), 10) || cache.sortOrder || filter.query.sortOrder || 1;
+            filter.visible = cache.visible || filter.visible;
+
         },
         getQuery() {
 
@@ -76,6 +78,7 @@ export default {
                 visible: filter.visible
             }));
         },
+
         async _search() {
             const vm = this;
 
@@ -95,22 +98,24 @@ export default {
                 });
 
         },
+
         async search(index) {
             const vm = this;
-            
+
             if (index > 0) {
                 vm.filter.query.pageIndex = index;
             }
 
             await vm._search();
         },
+
         async search_internal(url, query, state, successAction, failAction, finalAction) {
             const vm = this;
             let filter = vm.filter;
 
             try {
                 filter.selected = null;
-                
+
                 await vm.$util.axios(`${url}/${query}`)
                     .then(resp => {
                         filter = Object.assign(filter, resp.data);
@@ -122,9 +127,11 @@ export default {
                             url += '/' + query;
 
                         vm.$util.replaceState(query, state, url);
-                        
+
                         filter.items.forEach(item => {
-                            vm.$set(item, 'expand', false);
+                            //debugger;
+                            item.expand = false;
+                            //vm.$set(item, 'expand', false);
                         });
 
                         successAction();
@@ -138,11 +145,13 @@ export default {
                 vm.scrollIntoView();
             }
         },
+
         getRowNumber(index) {
             const filter = this.filter;
             const rowNum = ((filter.pageIndex - 1) * filter.pageSize) + (index + 1);
             return rowNum;
         },
+
         setSelected(item) {
             const filter = this.filter;
 
@@ -157,6 +166,7 @@ export default {
                 filter.selected.expand = true;
             }
         },
+
         isSelected(item) {
             const filter = this.filter;
 

@@ -12,7 +12,7 @@
             <div class="row no-gutters">
                 <div class="col-md-4 bg-light">
                     <!--<img src="..." class="card-img" alt="...">-->
-                    <b-img-lazy v-if="item.profilePictureId" :src="`/api/files/${item.profilePictureId}`" fluid center class="card-img"></b-img-lazy>
+                    <b-img-lazy v-if="urlProfilePicture" :src="urlProfilePicture" fluid center class="card-img"></b-img-lazy>
                     <div class="text-center mt-3">
                         <button @click="$refs.modalUploadProfilePicture.open(item)" class="btn btn-sm btn-primary">
                             <i class="fas fa-fw fa-upload"></i>
@@ -47,13 +47,13 @@
                             </div>
                         </div>
 
-                        <!--<div class="form-group">
+                        <div class="form-group">
                             <div>
                                 <button @click="$refs.modalUpdatePhoneNumber.open()" class="btn btn-sm btn-info">
                                     Update Phone Number
                                 </button>
                             </div>
-                        </div>-->
+                        </div>
 
                         <div class="form-group">
                             <div>
@@ -93,7 +93,8 @@
             modalUploadProfilePicture
         },
         props: {
-            uid: String,
+            uid: { type: String, required: true },
+            urlProfilePicture: null,
         },
 
         data() {

@@ -26,7 +26,7 @@
             },
             'cy': function (newValue, oldValue) {
                 const vm = this;
-                //debugger
+
                 if (vm.map.setCenter) {
                     vm.centerPosition.lng = newValue;
                     vm.map.setCenter(vm.centerPosition);
@@ -61,7 +61,7 @@
             vm.navigator = navigator;
             vm.navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
 
-            var timerId = setInterval( _ => {
+            var timerId = setInterval(_ => {
                 if (google && google.maps) {
 
                     clearInterval(timerId);
@@ -89,7 +89,7 @@
                 mapTypeIds.push("OSM");
 
                 const lastZoom = Number.parseInt(localStorage.getItem('zoom')) || 15;
-                
+
                 vm.map = new google.maps.Map(document.getElementById(vm.mapName), {
                     center: vm.centerPosition,//{ lat: 13.948779, lng: 120.733035 }, //13.948779,120.733035
                     zoom: lastZoom,
@@ -100,7 +100,7 @@
                         mapTypeIds: mapTypeIds
                     }
                 });
-                
+
                 vm.map.mapTypes.set("OSM", new google.maps.ImageMapType({
                     getTileUrl: function (coord, zoom) {
                         // "Wrap" x (longitude) at 180th meridian properly
@@ -155,7 +155,7 @@
                 vm.geocoder.geocode({ 'location': vm.centerPosition }, function (results, status) {
 
                     if (status === 'OK') {
-                        vm.$emit('onAddress', results[0], { lat: vm.centerPosition.lat(), lng: vm.centerPosition.lng() });
+                        vm.$emit('onAddress', results[0], { lat: vm.centerPosition.lat, lng: vm.centerPosition.lng });
                         //vm.$emit('onGeolocation', { lat: vm.centerPosition.lat(), lng: vm.centerPosition.lng() });
 
                     } else {
@@ -168,19 +168,19 @@
                 const vm = this;
 
                 await vm.navigator.geolocation.getCurrentPosition(function (position) {
-                    
+
                     //if (!vm.fixed) {
-                        vm.centerPosition = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
+                    vm.centerPosition = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
                     };
-                    
+
                     //}
 
                     vm.map.setCenter(vm.centerPosition);
 
                     if (vm.showLocation) {
-                        
+
                         vm.setMarker();
                         //vm.marker = new google.maps.Marker({
                         //    draggable: vm.draggable,
@@ -205,7 +205,7 @@
                     }
 
                 });
-                
+
             },
 
             setMarker() {
@@ -213,7 +213,7 @@
 
                 if (vm.marker && vm.marker.setMap)
                     vm.marker.setMap(null);
-                
+
                 vm.marker = new google.maps.Marker({
                     draggable: vm.draggable,
                     //animation: google.maps.Animation.BOUNCE,
@@ -231,8 +231,13 @@
                 vm.marker.setPosition(vm.centerPosition);
 
                 google.maps.event.addListener(vm.marker, 'dragend', function (event) {
-                    vm.centerPosition = this.getPosition();
+                    //vm.centerPosition = this.getPosition();
+                    const pos = this.getPosition();
+                    
+                    vm.centerPosition.lat = pos.lat();
+                    vm.centerPosition.lng = pos.lng();
                     vm.geocodeLatLng();
+                    
                 });
             },
 

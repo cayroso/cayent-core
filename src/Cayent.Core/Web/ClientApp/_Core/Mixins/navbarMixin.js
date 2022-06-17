@@ -39,12 +39,40 @@ export default {
     async mounted() {
         const vm = this;
 
-        //await vm.getUnreadNotifications();
-        //await vm.getUnreadChats();
+        const elNotif = vm.$refs.notifications;
+        const elMessage = vm.$refs.messages;
+
+        if (elNotif && elNotif.offsetParent) {
+            //await vm.getUnreadNotifications();
+            //debugger;
+        }
+
+        if (elMessage && elMessage.offsetParent) {
+            await vm.getUnreadChats();
+        }
 
         vm.showHiddenElements();
     },
     methods: {
+        async logout() {
+            const vm = this;
+
+            try {
+                await vm.$util.axios.post(`api/authorize/logout`)
+                    .then(resp => {
+                        const url = "/";
+                        vm.$toast.warning('Logout', 'You have logged out of the system.', {
+                            timeOut: 5000,
+                            async onClose() {                                
+                                vm.$util.href(url);
+                            }
+                        })
+
+                    });
+            } catch (e) {
+                vm.$util.handleError(e);
+            }
+        },
         async onChatMarkedAsRead(chatId) {
             let vm = this;
             let found = vm.messages.find(p => p.chatId === chatId);
@@ -82,9 +110,9 @@ export default {
             const vm = this;
 
             try {
-                await vm.$util.axios.get(`/api/notifications/unread/?criteria=&pageIndex=1&pageSize=20`)
+                await vm.$util.axios.get(`api/accounts/unread-notifications`)
                     .then(resp => {
-                        vm.notifications = resp.data.items;
+                        vm.notifications = resp.data;
                     });
             } catch (e) {
                 vm.$util.handleError(e);

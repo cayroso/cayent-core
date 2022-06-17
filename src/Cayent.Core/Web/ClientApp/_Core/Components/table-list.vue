@@ -23,7 +23,7 @@
                     <tr v-for="(item,i) in items"
                         :key="`row1-${item[header.key]}`"
                         @click="onSelectedRow(item)">
-                        <slot name="table" v-bind:item="item" v-bind:index="i">
+                        <slot name="table-row" v-bind:item="item" v-bind:index="i">
                             <td>{{getRowNumber(i)}}</td>
                             <td v-for="col in header.columns">
                                 <a v-if="col.href" :href="col.href(item[header.key])" class="font-weight-bold">
@@ -47,7 +47,7 @@
                  class="border">
 
                 <div class="p-2" v-bind:class="{'b-left':isSelected(item)}">
-                    <slot name="list" v-bind:item="item" v-bind:index="i">
+                    <slot name="table-list" v-bind:item="item" v-bind:index="i">
                         <div v-for="col in header.columns" class="form-group row no-gutters">
                             <label class="col-5 col-form-label">{{col.title}}</label>
                             <div class="col align-self-center">

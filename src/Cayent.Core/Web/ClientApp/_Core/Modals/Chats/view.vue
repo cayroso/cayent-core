@@ -81,8 +81,8 @@
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div class="card p-2 " v-bind:class="{'text-center text-warning': msg.chatMessageType===0}">
-                                            <span v-text="msg.content" style="white-space:pre"></span>
+                                        <div class="card p-2 overflow-auto" v-bind:class="{'text-center text-warning': msg.chatMessageType===0}">
+                                            <span v-text="msg.content" style="white-space:pre-wrap;"></span>
                                             <small class="text-right text-muted text-nowrap mt-1">
                                                 {{msg.dateSent|moment('calendar')}}
                                             </small>
@@ -123,7 +123,7 @@
         methods: {
             async onChatMessageReceived(resp) {
                 let vm = this;
-
+                
                 if (vm.item.chatId !== resp.chatId) {
                     return;
                 }
@@ -214,7 +214,7 @@
             },
             async close() {
                 const vm = this;
-
+                
                 await vm.closeChatHub();
                 await vm.markChatAsRead();
 
@@ -224,10 +224,10 @@
                 const vm = this;
 
                 try {
-                    await vm.$util.axios.get(`api/chat/${vm.chatId}`)
+                    await vm.$util.axios.get(`/api/chat/${vm.chatId}`)
                         .then(async resp => {
                             vm.item = resp.data;
-
+                            
                             for (let i in vm.item.receivers) {
                                 let item = vm.item.receivers[i];
 
@@ -250,7 +250,7 @@
                 const query = `?criteria=&pageIndex=1&pageSize=99`;
 
                 try {
-                    await vm.$util.axios.get(`api/chat/${vm.chatId}/messages/${query}`)
+                    await vm.$util.axios.get(`/api/chat/${vm.chatId}/messages/${query}`)
                         .then(resp => {
 
                             vm.messages = resp.data.items;
@@ -287,7 +287,7 @@
                 };
 
                 try {
-                    await vm.$util.axios.post(`api/chat/message`, payload);
+                    await vm.$util.axios.post(`/api/chat/message`, payload);
                 } catch (e) {
                     vm.$util.handleError(e);
                 }
@@ -301,7 +301,7 @@
                 const vm = this;
 
                 try {
-                    await vm.$util.axios.post(`api/chat/${vm.chatId}/remove`)
+                    await vm.$util.axios.post(`/api/chat/${vm.chatId}/remove`)
                         .then(resp => {
                             vm.close();
                         })
@@ -315,7 +315,7 @@
 
                 if (vm.item.hasPendingMessage) {
                     try {
-                        await vm.$util.axios.post(`api/chat/${vm.chatId}/markAsRead`);
+                        await vm.$util.axios.post(`/api/chat/${vm.chatId}/markAsRead`);
                         vm.$bus.$emit('event:chat-marked-as-read', vm.chatId);
                     } catch (e) {
                         vm.$util.handleError(e);

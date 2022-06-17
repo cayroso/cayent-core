@@ -4,6 +4,9 @@
 import * as signalR from '@microsoft/signalr';
 
 export default {
+    props: {
+        //uid: { type: String, required: true },
+    },
     components: {
     },
     data() {
@@ -18,8 +21,13 @@ export default {
                     completed: 6,
                     cancelled: 7
                 },
+                salutations: {
+                    mr: 1,
+                    mrs: 2,
+                    ms: 3
+                }
             },
-            bottomNavHeightStyle: null,
+
             messageIds: []
         };
     },
@@ -30,9 +38,7 @@ export default {
         //vm.$bus.$on('event:open-notification', vm.onOpenNotification);
         //vm.$bus.$on('event:close-notification', vm.onCloseNotification);
 
-        //vm.$bus.$on('event:open-chat', vm.onOpenChat);
-        //vm.$bus.$on('event:close-chat', vm.onCloseChat);
-        //vm.$bus.$on('event:send-message', vm.onSendMessage);
+
 
         //vm.$bus.$on('event:quick-view-account', vm.onQuickViewAccount);
 
@@ -42,15 +48,11 @@ export default {
     },
     async mounted() {
         const vm = this;
-
-        vm.getBottomNavHeight();
-
+        
         if (vm.uid) {
             //await vm.connectNotificationHub();
 
             //await vm.connectChatHub();
-
-            //await vm.connectAppointmentHub();
 
             //vm.$bus.$on('event:open-chat', vm.onOpenChat);
             //vm.$bus.$on('event:close-chat', vm.onCloseChat);
@@ -62,10 +64,12 @@ export default {
         getBottomNavHeight() {
             const vm = this;
             const bottomNav = vm.$refs.bottomNav;
-            let bottomNavHeight = bottomNav.$el.clientHeight;
+            if (bottomNav) {
+                let bottomNavHeight = bottomNav.$el.clientHeight;
 
-            if (bottomNavHeight > 0) {
-                vm.bottomNavHeightStyle = `padding-bottom:${bottomNavHeight + 10}px;`;
+                if (bottomNavHeight > 0) {
+                    vm.bottomNavHeightStyle = `padding-bottom:${bottomNavHeight + 10}px;`;
+                }
             }
         },
 
@@ -100,7 +104,7 @@ export default {
             //vm.$util.href(href);
             const referrer = document.referrer;
 
-            if (referrer && referrer.includes('/Identity/Account/Login')) {
+            if (referrer && referrer.includes('/account/Login')) {
                 history.go(-2);
             }
             else {
@@ -164,6 +168,104 @@ export default {
                 //debugger;
                 //vm.$util.handleError(err);
             });
+        },
+
+
+        async connectChatHub() {
+            const vm = this;
+
+            const chatHub = new signalR.HubConnectionBuilder()
+                .withUrl('/chatHub')
+                //.configureLogging(signalR.LogLevel.Debug)
+                .withAutomaticReconnect()
+                .build();
+
+            chatHub.on('chatMessageReceived', function (resp) {
+                const uid = vm.uid;
+
+                if (uid !== resp.sender.userId && (vm.currentOpenChatId === null || vm.currentOpenChatId !== resp.chatId)) {
+                    const sender = resp.sender;
+
+                    const h = vm.$createElement;
+                    const vNodesMsg = h(
+                        'div',
+                        [
+                            h('span', `You received a message from ${sender.firstName} ${sender.lastName}`),
+                            h('br'),
+                            h('br'),
+                            h('a', {
+                                attrs: {
+                                    style: 'cursor:pointer'
+                                }, on: {
+                                    click: () => vm.$bus.sendMessage(sender.userId)
+                                }
+                            }, 'Click here to open.')
+                        ]
+                    );
+                    vm.$bvToast.toast([vNodesMsg], {
+                        title: `New Message`,
+                        solid: true,
+                        variant: 'info',
+                        //noAutoHide: true,
+                    });
+                }
+
+                vm.$bus.$emit('event:chat-message-received', resp);
+            });
+
+            await chatHub.start().then(function () {
+                //debugger;
+            }).catch(function (error) {
+                alert(error);
+            });
+        },
+
+        async onSendMessage(userId) {
+            const vm = this;
+
+            if (vm.uid === userId) {
+                vm.$bvToast.toast('Are you sure?', { title: 'Talking to yourself?', variant: 'warning' });
+                return;
+            }
+
+            if (!userId) {
+                vm.$bvToast.toast('Account was not found.', { title: 'Account Not Found', variant: 'warning' });
+                return;
+            }
+
+            try {
+                await vm.$util.axios.post(`/api/chat/add/${userId}`)
+                    .then(async resp => {
+                        await vm.onOpenChat(resp.data);
+                    });
+            } catch (e) {
+                vm.$util.handleError(e);
+            }
+        },
+
+        async onSendTeamMessage(teamId) {
+            const vm = this;
+
+            try {
+                await vm.onOpenChat(teamId);
+            } catch (e) {
+                vm.$util.handleError(e);
+            }
+        },
+
+        async onOpenChat(chatId) {
+            const vm = this;
+
+            vm.currentOpenChatId = chatId;
+
+            vm.$refs.modalViewChat.open(chatId);
+        },
+
+        async onCloseChat() {
+            const vm = this;
+
+            vm.currentOpenChatId = null;
+            vm.$refs.modalViewChat.close();
         },
     }
 }

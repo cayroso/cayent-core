@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 
-import Vue from 'vue';
+import * as Vue from 'vue';
 import MomentVue from 'vue-moment';
 Vue.use(MomentVue);
 
@@ -38,16 +38,26 @@ Vue.filter('toCurrency', function (value) {
 Vue.filter('prettyJson', function (value) {
     return JSON.stringify(value, null,1);
 });
-
-Vue.filter('truncate', function (text, length, suffix) {
+Vue.filter('textTruncate', function (text, length, suffix) {
     if (text.length > length) {
         return text.substring(0, length) + suffix;
     } else {
         return text;
     }
 });
+Vue.filter('formatBytes', function (bytes, decimals = 2) {
+    if (bytes === 0) return '0 Bytes';
 
-import '../_Core/Plugins/bootstrap-vue';
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+});
+
+//import '../_Core/Plugins/bootstrap-vue';
 
 //  global components
 import Pagination from '../_Core/Components/pagination.vue';

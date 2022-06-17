@@ -11,7 +11,7 @@
                 </div>
             </a>
         </div>
-        <!--<a class="dropdown-item text-center small" href="/patient/notifications">Show All Motifications</a>-->
+        <a class="dropdown-item text-center small" :href="page">Show All Motifications</a>
 
         <b-modal ref="modal"
                  :no-close-on-esc="false"
@@ -26,13 +26,14 @@
                         <div class="small">
                             {{item.dateSent|moment('calendar')}}
                         </div>
+                        {{item}}
                     </div>
                 </div>
             </template>
             <template v-slot:modal-footer>
-                <!--<button @click="view" class="btn btn-primary mr-auto">
+                <button v-if="canView" @click="view" class="btn btn-primary mr-auto">
                     <i class="fas fa-fw fa-search mr-1"></i>View
-                </button>-->
+                </button>
                 <button @click="markAsRead" class="btn btn-info">
                     <i class="fas fa-fw fa-check-circle mr-1"></i>Mark As Read
                 </button>
@@ -50,7 +51,9 @@
     export default {
         props: {
             notifications: Array,
-            urlViewOrder: String
+            //urlViewJob: { type: String, required: true },
+            page: { type: String, required: true },
+            roleId: { type: String, required: true }
         },
         data() {
             return {
@@ -62,11 +65,30 @@
 
             //await vm.getUnreadNotifications();
         },
+        computed: {
+            canView() {
+                const vm = this;
+                const item = vm.item;
+
+                if (item.notificationEntityClass === 2)
+                    return true;
+
+                return false;
+
+            }
+        },
         methods: {
             view() {
                 const vm = this;
                 
-                vm.$router.push({ name: vm.urlViewOrder, params: { id: vm.item.referenceId } });
+                switch (vm.item.notificationEntityClass) {
+                    case 2: // job
+                        vm.$util.href(`/${vm.roleId}/jobs/view/${vm.item.referenceId}`);
+                        break;
+                }
+                //vm.$util.href(`${vm.urlViewJob}${vm.item.referenceId}`);
+                //vm.$util.href(`${vm.urlViewJob}${vm.item.referenceId}`);
+                //vm.$router.push({ name: vm.urlView, params: { id: vm.item.referenceId } });
 
                 vm.close();
             },
