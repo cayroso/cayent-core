@@ -13,6 +13,14 @@ namespace Cayent.Core.Common.Extensions
             return dateTime.AddTicks(-(dateTime.Ticks % TimeSpan.FromSeconds(1).Ticks));
         }
 
+        public static DateTimeOffset Truncate(this DateTimeOffset dateTime)
+        {
+            //if (timeSpan == TimeSpan.Zero) return dateTime; // Or could throw an ArgumentException
+            if (dateTime == DateTimeOffset.MinValue || dateTime == DateTimeOffset.MaxValue) return dateTime; // do not modify "guard" values
+            return dateTime.AddTicks(-(dateTime.Ticks % TimeSpan.FromSeconds(1).Ticks));
+        }
+
+
         public static DateTime AsUtc(this DateTime dateTime)
         {
             var dt = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
@@ -20,9 +28,17 @@ namespace Cayent.Core.Common.Extensions
             return dt;
         }
 
+
         public static DateTime AsLocal(this DateTime dateTime)
         {
             var dt = DateTime.SpecifyKind(dateTime, DateTimeKind.Local);
+
+            return dt;
+        }
+
+        public static DateTimeOffset AsLocal(this DateTimeOffset dateTime)
+        {
+            var dt = dateTime.LocalDateTime;// DateTime.SpecifyKind(dateTime, DateTimeKind.Local);
 
             return dt;
         }

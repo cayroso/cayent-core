@@ -1,13 +1,9 @@
 ﻿//using Microsoft.AspNetCore.Mvc;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
 //using System.Security.Claims;
-//using System.Threading.Tasks;
 
-//namespace Web.Controllers
+//namespace Cayent.Core.Web.Server.Controllers
 //{
-//    public class BaseController : ControllerBase
+//    public abstract class BaseController : ControllerBase
 //    {
 //        protected string StoreId
 //        {
@@ -28,17 +24,29 @@
 //        {
 //            get
 //            {
-//                return User.FindFirstValue(ClaimTypes.NameIdentifier);
+//                var item = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+//                return item;
 //            }
 //        }
 
-//        protected string TenantId
+//        protected string TenantIdFromClaims
 //        {
 //            get
 //            {
-//                var storeId = User.FindFirstValue("TenantId");
+//                var item = User.FindFirstValue("TenantId");
 
-//                return storeId;
+//                return item;
+//            }
+//        }
+
+//        protected string TenantIdFromRouteValues
+//        {
+//            get
+//            {
+//                var item = "test";// Request.RouteValues["tenant"]?.ToString();
+
+//                return item;
 //            }
 //        }
 

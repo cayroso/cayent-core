@@ -31,4 +31,19 @@ namespace Cayent.Core.Data.Calendars
 
         //public virtual ICollection<JobStatusHistory> JobStatusHistory { get; set; }
     }
+
+    //public class ClinicConfiguration : Cayent.Core.Data.Components.EntityBaseConfiguration<Clinic>
+    //{
+    //    public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Clinic> b)
+    //    {
+    //        b.ToTable("Clinic");
+    //        b.HasKey(e => e.ClinicId);
+
+    //        b.Property(e => e.ClinicId).HasMaxLength(KeyMaxLength).IsRequired();
+    //        b.Property(e => e.Name).HasMaxLength(NameMaxLength);
+
+    //        b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
+
+    //    }
+    //}
 }

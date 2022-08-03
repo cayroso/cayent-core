@@ -1,0 +1,83 @@
+﻿@typeparam TPagedDto
+@typeparam TItem
+
+<div>
+    @if (PagedItems != null && PagedItems.Items != null && PagedItems.Items.Count > 0)
+    {
+        <div>
+            <div class="d-flex flex-column-reverse flex-sm-row justify-content-center justify-content-sm-between align-items-center">
+                @if (ShowPerPage)
+                {
+                    <div class="small">
+                        <div class="d-flex flex-row">
+                            <span class="me-1 text-nowrap align-self-center">
+                                <span class="me-1 fw-bold">@PagedItems.TotalCount</span>records in <span class="me-1 fw-bold">@PagedItems.TotalPages</span>page(s)
+                            </span>
+                            <div class="d-flex flex-row align-items-center">
+                                <select value="@PagedItems.PageSize" @onchange="ChangePageSize" class="form-select form-select-sm me-1">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="25">25</option>
+                                    <option value="40">40</option>
+                                </select>
+                                <div class="text-nowrap">per page</div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="align-self-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination mb-sm-0">
+                            <li class="page-item @(!CanMoveFirst ? "disabled":"")">
+                                <a class="page-link" href="#" aria-label="Previous" @onclick="MoveFirst" @onclick:preventDefault>
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            @if (PagedItems.PageIndex > 1)
+                            {
+                                <li class="page-item @(!CanMovePrev ? "disabled":"")">
+                                    <a class="page-link" href="#" @onclick="MovePrev" @onclick:preventDefault>
+                                        @(PagedItems.PageIndex-1)
+                                    </a>
+                                </li>
+                            }
+                            <li class="page-item disabled">
+                                <a class="page-link" href.preventDefault="#">
+                                    <b>
+                                        @PagedItems.PageIndex
+                                    </b>
+                                </a>
+                            </li>
+                            @if (PagedItems.PageIndex < PagedItems.TotalPages)
+                            {
+                                <li v-if="filter.pageIndex<filter.totalPages" class="page-item  @(!CanMoveNext ? "disabled":"")">
+                                    <a class="page-link" href="#" @onclick="MoveNext" @onclick:preventDefault>
+                                        @(PagedItems.PageIndex+1)
+                                    </a>
+                                </li>
+                            }
+                            <li class="page-item @(!CanMoveLast ? "disabled":"")">
+                                <a class="page-link" href="#" aria-label="Next" @onclick="MoveLast" @onclick:preventDefault>
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div>
+            <div class="text-info font-weight-bold text-center">
+                @NoRecords
+            </div>
+        </div>
+    }
+</div>

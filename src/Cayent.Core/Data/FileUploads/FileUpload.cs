@@ -22,4 +22,19 @@ namespace Cayent.Core.Data.Fileuploads
             set => _dateCreated = value.Truncate();
         }
     }
+
+    //public class ClinicConfiguration : Cayent.Core.Data.Components.EntityBaseConfiguration<Clinic>
+    //{
+    //    public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Clinic> b)
+    //    {
+    //        b.ToTable("Clinic");
+    //        b.HasKey(e => e.ClinicId);
+
+    //        b.Property(e => e.ClinicId).HasMaxLength(KeyMaxLength).IsRequired();
+    //        b.Property(e => e.Name).HasMaxLength(NameMaxLength);
+
+    //        b.Property(e => e.ConcurrencyToken).HasMaxLength(KeyMaxLength).IsRequired();
+
+    //    }
+    //}
 }

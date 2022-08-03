@@ -1,0 +1,7 @@
+﻿.extra-style {
+    border: 2px dashed blue;
+    padding: 1em;
+    margin: 1em 0;
+    color: magenta;
+    background-image: url('background.png');
+}

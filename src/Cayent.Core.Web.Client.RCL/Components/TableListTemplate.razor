@@ -1,0 +1,46 @@
+﻿@typeparam TItem
+
+<div>
+    <div class="table-responsive m-0 d-none d-@Breakpoint-block">
+        <table class="@TableCss">
+            @if (TableHeader is not null)
+            {
+                <thead class="@TableHeaderCss">
+                    <tr>@TableHeader</tr>
+                </thead>
+            }
+            @if (RowTemplate is not null && Items is not null && Items.Count > 0)
+            {
+                <tbody>
+                    @foreach (var item in Items)
+                    {
+                        @RowTemplate(item)
+                    }
+                </tbody>
+            }
+            @if (TableFooter is not null)
+            {
+                <tfoot class="@TableFooterCss">
+                    @TableFooter
+                </tfoot>
+            }
+        </table>
+    </div>
+    <div class="d-block d-@Breakpoint-none">
+        @if (ListTemplate is not null && Items is not null && Items.Count > 0)
+        {
+            <div class="@ListCss">
+                <div class="@ListContainerCss">
+                    @foreach (var item in Items)
+                    {
+                        <div class="@ListItemCss">
+                            <div class="@(IsItemSelected(item) ? ListItemSelectedCss : ListItemNotSelectedCss)" @onclick="@(async _ => await SetSelectedItem(item))">
+                                @ListTemplate(item)
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,49 @@
+﻿@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<div class="my-component">
+    This component is defined in the <strong>Cayent.Core.BlazorWasm.RCL</strong> library.
+</div>
+
+<div class="alert alert-danger extra-style">
+    Success is bitter sweet.
+
+    <p>
+        <button @onclick="TriggerPrompt">Trigger browser window prompt</button>
+    </p>
+
+    <p>
+        @result
+    </p>
+</div>
+
+@code {
+    private IJSObjectReference? module;
+    private string? result;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            module = await JS.InvokeAsync<IJSObjectReference>("import", 
+                "./_content/Cayent.Core.BlazorWasm.RCL/Component1.razor.js");
+        }
+    }
+
+    private async Task TriggerPrompt()
+    {
+        result = await Prompt("Provide some text!");
+    }
+
+    public async ValueTask<string?> Prompt(string message) =>
+        module is not null ?
+            await module.InvokeAsync<string>("showPrompt", message) : null;
+
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (module is not null)
+        {
+            await module.DisposeAsync();
+        }
+    }
+}
