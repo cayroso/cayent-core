@@ -35,7 +35,7 @@ namespace Cayent.Core.Data.Providers
     {
         private string _categoryName;
         private Func<string, LogLevel, bool> _filter;
-        private int MessageMaxLength = 4000;
+        private int MessageMaxLength = 1000000;
         private string _connectionString;
 
         public DBLogger(string categoryName, Func<string, LogLevel, bool> filter, string connectionString)
