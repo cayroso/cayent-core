@@ -7,10 +7,10 @@ using Cayent.Core.CQRS.Commands;
 using System.Threading;
 using Cayent.Core.CQRS.Common.Chats.Commands.Command;
 using Cayent.Core.CQRS.Services;
-using Microsoft.AspNetCore.SignalR;
 using Cayent.Core.Hubs;
 using Cayent.Core.Data.Chats;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Cayent.Core.CQRS.Common.Chats.Commands.Handler
 {
