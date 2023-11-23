@@ -1,5 +1,4 @@
-﻿using Cayent.Core.Data.Components;
-using Cayent.Core.Data.Components.Settings;
+﻿using Cayent.Core.Data.Components.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

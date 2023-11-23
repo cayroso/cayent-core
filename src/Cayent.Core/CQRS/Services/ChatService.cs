@@ -2,11 +2,6 @@
 using Cayent.Core.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq;
 using Cayent.Core.Common.Extensions;
 using Cayent.Core.Data.Chats;
 

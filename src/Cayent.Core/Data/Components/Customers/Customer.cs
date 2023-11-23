@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Cayent.Core.Data.Components.Orders;
-using Cayent.Core.Common.Extensions;
-using System.ComponentModel.DataAnnotations;
-using Cayent.Core.Data.Components;
+﻿using Cayent.Core.Common.Extensions;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cayent.Core.CQRS.Commands
+﻿namespace Cayent.Core.CQRS.Commands
 {
     public abstract class AbstractCommand : ICommand
     {

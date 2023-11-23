@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cayent.Core.Data.Enums
+﻿namespace Cayent.Core.Data.Enums
 {
     public enum EnumOrderStatus
     {

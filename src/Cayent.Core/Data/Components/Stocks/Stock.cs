@@ -1,8 +1,6 @@
 ﻿using Cayent.Core.Data.Components.Items;
-using Cayent.Core.Data.Components.Stores;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Collections.Generic;
 
 namespace Cayent.Core.Data.Components.Stocks
 {

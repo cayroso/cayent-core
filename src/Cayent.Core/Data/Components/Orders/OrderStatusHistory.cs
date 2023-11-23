@@ -1,8 +1,6 @@
-﻿using System;
-using Cayent.Core.Common.Extensions;
+﻿using Cayent.Core.Common.Extensions;
 using Cayent.Core.Data.Users;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore;
 using Cayent.Core.Data.Enums;
 

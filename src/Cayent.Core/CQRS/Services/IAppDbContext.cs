@@ -4,13 +4,6 @@ using Cayent.Core.Data.Fileuploads;
 using Cayent.Core.Data.Notifications;
 using Cayent.Core.Data.Users;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 
 namespace Cayent.Core.CQRS.Services

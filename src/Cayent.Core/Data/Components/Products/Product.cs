@@ -1,15 +1,6 @@
-﻿using Cayent.Core.Data.Components.BranchStores;
-using Cayent.Core.Data.Components.ItemGroups;
-using Cayent.Core.Data.Components.Orders.OrderLineItems;
-using Cayent.Core.Data.Components.Promotions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Cayent.Core.Data.Components.ItemGroups;
 using Cayent.Core.Common.Extensions;
 using Cayent.Core.Data.Enums;
-using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 

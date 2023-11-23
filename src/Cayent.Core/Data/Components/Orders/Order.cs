@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Cayent.Core.Data.Enums;
+﻿using Cayent.Core.Data.Enums;
 using Cayent.Core.Data.Components.Customers;
 using Cayent.Core.Data.Components.Settings;
 
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using Cayent.Core.Data.Components.Orders.OrderLineItems;
 using Cayent.Core.Data.Components.BranchStores;
 using Cayent.Core.Common.Extensions;
-using Cayent.Core.Data.Components;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 

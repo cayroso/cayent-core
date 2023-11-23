@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cayent.Core.Common.Extensions
+﻿namespace Cayent.Core.Common.Extensions
 {
     public static class DateTimeExtensions
     {

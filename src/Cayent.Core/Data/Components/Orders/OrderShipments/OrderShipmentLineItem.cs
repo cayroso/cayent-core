@@ -1,6 +1,5 @@
 ﻿
 using Cayent.Core.Data.Components.Orders.OrderLineItems;
-using Cayent.Core.Data.Components.Orders.OrderShipments;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

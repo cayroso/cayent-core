@@ -1,7 +1,6 @@
 ﻿
 using Cayent.Core.Common;
 using Cayent.Core.CQRS.Queries;
-using System;
 using Cayent.Core.Common.Extensions;
 
 namespace Cayent.Core.CQRS.Common.Navbar.Queries.Query

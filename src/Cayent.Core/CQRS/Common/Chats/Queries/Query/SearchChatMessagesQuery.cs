@@ -2,7 +2,6 @@
 using Cayent.Core.Common.Extensions;
 using Cayent.Core.CQRS.Queries;
 using Cayent.Core.Data.Chats;
-using System;
 
 namespace Cayent.Core.CQRS.Common.Chats.Queries.Query
 {

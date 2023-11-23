@@ -1,8 +1,6 @@
-﻿using Cayent.Core.Data.Components;
-using Cayent.Core.Data.Components.Products;
+﻿using Cayent.Core.Data.Components.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.ComponentModel.DataAnnotations;
 
 namespace Cayent.Core.Data.Components.BranchStores
 {

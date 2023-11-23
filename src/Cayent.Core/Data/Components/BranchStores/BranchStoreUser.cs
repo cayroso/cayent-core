@@ -1,9 +1,6 @@
-﻿
-using Cayent.Core.Data.Components;
-using Cayent.Core.Data.Users;
+﻿using Cayent.Core.Data.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Cayent.Core.Data.Components.BranchStores
 {

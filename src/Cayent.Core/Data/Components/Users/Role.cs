@@ -1,7 +1,5 @@
-﻿using Cayent.Core.Data.Components;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Collections.Generic;
 
 namespace Cayent.Core.Data.Components.Users
 {

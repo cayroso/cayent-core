@@ -1,5 +1,4 @@
 ﻿using Cayent.Core.CQRS.Queries;
-using System.Collections.Generic;
 
 namespace Cayent.Core.CQRS.Common.Chats.Queries.Query
 {

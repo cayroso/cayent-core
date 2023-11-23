@@ -1,11 +1,6 @@
-﻿
-
-using Cayent.Core.Data.Components;
-using Cayent.Core.Data.Fileuploads;
+﻿using Cayent.Core.Data.Fileuploads;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cayent.Core.Data.Components.Users

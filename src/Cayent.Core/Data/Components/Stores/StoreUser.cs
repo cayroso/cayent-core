@@ -1,7 +1,6 @@
 ﻿using Cayent.Core.Data.Components.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Cayent.Core.Data.Components.Stores
 {
     internal class StoreUserBase
