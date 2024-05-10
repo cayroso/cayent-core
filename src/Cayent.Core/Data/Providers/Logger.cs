@@ -62,13 +62,13 @@ namespace Cayent.Core.Data.Providers
             }
             message = message.Length > MessageMaxLength ? message.Substring(0, MessageMaxLength) : message;
 
-            var eventLog = new EventLog
-            {
-                Message = message,
-                EventId = eventId.Id,
-                LogLevel = logLevel.ToString(),
-                CreatedTime = DateTime.UtcNow
-            };
+            //var eventLog = new EventLog
+            //{
+            //    Message = message,
+            //    EventId = eventId.Id,
+            //    LogLevel = logLevel.ToString(),
+            //    CreatedTime = DateTime.UtcNow
+            //};
             var tableName = "EventLogs_" + DateTime.UtcNow.ToString("yyyy_MM");
 
             var cmdText = $@"
@@ -77,12 +77,13 @@ CREATE TABLE IF NOT EXISTS {tableName}
 	EventLogId INTEGER PRIMARY KEY AUTOINCREMENT,
 	EventId INTEGER NOT NULL,
 	LogLevel INTEGER NOT NULL,
+    Category TEXT NOT NULL,
 	Message TEXT NOT NULL,
 	CreatedTime TEXT NOT null
 );
 
-INSERT INTO {tableName}(EventId, LogLevel, Message, CreatedTime)
-    VALUES  (@EventId, @LogLevel, @Message, @CreatedTime);
+INSERT INTO {tableName}(EventId, LogLevel,Category, Message, CreatedTime)
+    VALUES  (@EventId, @LogLevel, @Category, @Message, @CreatedTime);
 ";
             try
             {
@@ -93,6 +94,7 @@ INSERT INTO {tableName}(EventId, LogLevel, Message, CreatedTime)
 
                     cmd.Parameters.Add("EventId", SqliteType.Integer).Value = eventId.Id;
                     cmd.Parameters.Add("LogLevel", SqliteType.Integer).Value = logLevel;
+                    cmd.Parameters.Add("Category", SqliteType.Text).Value = _categoryName;
                     cmd.Parameters.Add("Message", SqliteType.Text).Value = message;
                     cmd.Parameters.Add("CreatedTime", SqliteType.Text).Value = DateTime.UtcNow;
 
