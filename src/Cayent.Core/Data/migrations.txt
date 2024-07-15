@@ -1,4 +1,4 @@
-﻿add-migration Initial -context identitywebcontext -outputdir Migrations\Identity
+﻿add-migration Initial -context identitywebcontext -outputdir Migrations\Identity -Project Data -StartupProject WebRazor
 
 add-migration Initial -context appdbcontext -outputdir Migrations\App -Project Data -StartupProject WebRazor
 
