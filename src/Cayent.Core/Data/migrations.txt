@@ -1,6 +1,6 @@
 ﻿add-migration Initial -context identitywebcontext -outputdir Migrations\Identity
 
-add-migration Initial -context appdbcontext -outputdir Migrations\App -StartupProject WebRazor
+add-migration Initial -context appdbcontext -outputdir Migrations\App -Project Data -StartupProject WebRazor
 
 Resetting all migrations
 In some extreme cases, it may be necessary to remove all migrations and start over. 
